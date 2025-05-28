@@ -1,7 +1,5 @@
 FROM traefik:v3.4
 
-COPY ./config /etc/traefik/config
-
 CMD [ \
     "--api.insecure=true", \
     "--providers.docker", \

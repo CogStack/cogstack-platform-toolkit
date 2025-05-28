@@ -5,6 +5,8 @@ LABEL traefik.enable="true" \
     traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes="/grafana" \
     traefik.http.routers.grafana-path-router.middlewares="grafana-stripprefix@docker"
 
+RUN mkdir -p /etc/grafana/provisioning/dashboards/site
+
 COPY ./provisioning /etc/grafana/provisioning
 
 ENV GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/default/cogstack/cogstack-availability.json \
