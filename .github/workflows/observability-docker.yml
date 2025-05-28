@@ -30,6 +30,8 @@ jobs:
             dockerfile: observability/traefik/Dockerfile
             image: cogstacksystems/cogstack-observability-traefik
     steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
