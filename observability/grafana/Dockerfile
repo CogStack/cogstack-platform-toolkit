@@ -7,6 +7,8 @@ LABEL traefik.enable="true" \
 
 COPY ./provisioning /etc/grafana/provisioning
 
+RUN mkdir -p /etc/grafana/provisioning/site
+
 ENV GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/default/cogstack/cogstack-availability.json \
     GF_USERS_ALLOW_SIGN_UP=false \
     GF_SERVER_ROOT_URL="%(protocol)s://%(domain)s:%(http_port)s/grafana" \
