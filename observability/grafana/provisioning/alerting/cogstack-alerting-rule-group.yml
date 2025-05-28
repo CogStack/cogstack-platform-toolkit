@@ -1,0 +1,216 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: Availability
+    folder: cogstack
+    interval: 1m
+    rules:
+      - uid: celut8oc1k3k0e
+        title: CogStack Availability (Fast 5m)
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: datasource-prometheus-local-docker
+            model:
+              disableTextWrap: false
+              editorMode: builder
+              exemplar: false
+              expr: avg_over_time(probe_success[5m]) * 100
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              intervalMs: 1000
+              legendFormat: "{{name}} on ({{instance}})"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 10
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: NEzutrbMk
+        panelId: 9
+        noDataState: NoData
+        execErrState: Error
+        for: 1m
+        annotations:
+          __dashboardUid__: NEzutrbMk
+          __panelId__: "9"
+          summary: Service {{ $labels.name }} has been down for 5 minutes
+          description: 5 minute availability rule. If over the last 5 minutes, the percentage of successful probe calls is under 10%, this alert is triggered
+        isPaused: ${ALERTING_PAUSE_AVAILABILITY_5M}
+      - uid: eeluxmyorphj4e
+        title: CogStack Availability (Slow 6h)
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: datasource-prometheus-local-docker
+            model:
+              disableTextWrap: false
+              editorMode: code
+              exemplar: false
+              expr: avg_over_time(probe_success[6h]) * 100
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 80
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: NEzutrbMk
+        panelId: 10
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: NEzutrbMk
+          __panelId__: "10"
+          summary: Service {{ $labels.name }} has been down for an hour over the last 6 hours
+          description: 6 hour availability rule. If over the last 6 hours, the percentage of successful probe calls is under 80%, this alert is triggered
+        isPaused: ${ALERTING_PAUSE_AVAILABILITY_6H}
+      - uid: cogstack-availability-multiburn-1h
+        title: CogStack Availability (1h Burn Rate)
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: datasource-prometheus-local-docker
+            model:
+              editorMode: code
+              expr: instance:probe_burnrate_alerts:multiburn_1h
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        dashboardUid: NEzutrbMk
+        panelId: 10
+        noDataState: OK
+        execErrState: Error
+        for: 1m
+        annotations:
+          __dashboardUid__: NEzutrbMk
+          __panelId__: "10"
+          description: 1 Hour Burn Rate alert. The service is down and consuming 2% of the error budget this hour based on burn rates of 1h and 5m window
+          summary: Service {{ $labels.name }} has been failing for the last 1 hour
+        labels: {}
+        isPaused: ${ALERTING_PAUSE_BURN_RATE}
+      - uid: cogstack-availability-multiburn-6h
+        title: CogStack Availability (6h Burn Rate)
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: datasource-prometheus-local-docker
+            model:
+              editorMode: code
+              expr: instance:probe_burnrate_alerts:multiburn_6h
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        dashboardUid: NEzutrbMk
+        panelId: 10
+        noDataState: OK
+        execErrState: Error
+        for: 1m
+        annotations:
+          __dashboardUid__: NEzutrbMk
+          __panelId__: "10"
+          description: 6 Hour Burn Rate alert. The service is down and consuming 5% of the error budget over the last 6 hours based on burn rates of 6h and 30m windows
+          summary: Service {{ $labels.name }} has been failing for the last 6 hours
+        labels: {}
+        isPaused: ${ALERTING_PAUSE_BURN_RATE}
+      - uid: cogstack-availability-multiburn-3d
+        title: CogStack Availability (3d Burn Rate)
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: datasource-prometheus-local-docker
+            model:
+              editorMode: code
+              expr: instance:probe_burnrate_alerts:multiburn_3d
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        dashboardUid: NEzutrbMk
+        panelId: 10
+        noDataState: OK
+        execErrState: Error
+        for: 1m
+        annotations:
+          __dashboardUid__: NEzutrbMk
+          __panelId__: "10"
+          description: 3 day burn Rate alert. The service is down and consuming 10% of the error budget over the last 3 days based on burn rates of 3 day and 6h windows.
+          summary: Service {{ $labels.name }} has been failing for the last 3 days
+        labels: {}
+        isPaused: ${ALERTING_PAUSE_BURN_RATE}
+

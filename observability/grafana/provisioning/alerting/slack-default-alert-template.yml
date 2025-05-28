@@ -1,0 +1,60 @@
+
+# config file version
+apiVersion: 1
+
+# List of templates to import or update
+templates:
+  - orgId: 1
+    name: Body Template (Custom)
+    template: |
+      {{ define "custom.slack.body" -}}
+
+      {{- if gt (len .Alerts.Resolved) 0 -}}
+      {{ len .Alerts.Resolved }} resolved alert(s)
+      {{ range .Alerts.Resolved -}}
+        {{ template "alert.summary_and_description" . }}
+      {{ end }}
+      {{ end }}
+
+      {{- if gt (len .Alerts.Firing) 0 -}}
+      {{ len .Alerts.Firing }} firing alert(s)
+      {{ range .Alerts.Firing -}}
+        {{ template "alert.summary_and_description" . }}
+      {{ end }}
+      {{ end }}
+      {{ end -}}
+
+      {{ define "alert.summary_and_description" }}
+        Summary: {{.Annotations.summary}}
+        Status: {{ .Status }}
+        Description: {{.Annotations.description}}
+
+        Labels:
+        {{- range .Labels.SortedPairs }}
+          - {{ .Name }}: {{ .Value }}
+        {{- end }}
+
+      ---
+
+      {{ if gt (len .GeneratorURL) 0 }} - Source: {{ .GeneratorURL }}
+      {{ end }}{{ if gt (len .SilenceURL) 0 }} - Silence: {{ .SilenceURL }}
+      {{ end }}{{ if gt (len .DashboardURL) 0 }} - Dashboard: {{ .DashboardURL }}
+      {{ end }}{{ if gt (len .PanelURL) 0 }} - Panel: {{ .PanelURL }}
+      {{ end }}
+
+      {{ end -}}
+  - orgId: 1
+    name: Title Template (Custom)
+    template: |
+        {{ define "custom.slack.title" }}
+        {{- $status := .Status | toUpper -}}
+        {{- $name := .CommonLabels.name -}}
+        {{- $instance := index .CommonLabels "instance" -}}
+        {{- $alertname := index .CommonLabels "alertname" -}}
+
+        {{- if and $name $instance $alertname -}}
+          [{{ $status }}] Alert - {{ $name }} is unavailable on {{ $instance }} - Rule: {{ $alertname }}
+        {{- else -}}
+          [{{ $status }}] Alert - Multiple instances affected - Rule: {{ $alertname }}
+        {{- end -}}
+        {{ end }}

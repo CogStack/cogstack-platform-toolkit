@@ -1,0 +1,99 @@
+groups:
+  - name: sre_recording_rules
+    interval: 10s
+    rules:
+      # Monitoring pattern taken from Google SRE guidelines
+      # https://sre.google/workbook/alerting-on-slos/#recommended_parameters_for_an_slo_based_a
+      
+      # What SLO am I targeting
+      - record: slo_target_over_30_days
+        expr: 0.99 # We target 99% uptime for the observability stack
+        labels:
+          job: "probe-observability-stack"
+      - record: slo_error_budget_over_30_days
+        expr: 1 - slo_target_over_30_days # Error budget is 1 - SLO. EG if SLO is 99% over 30 days, we can have 1% downtime over 30 days. 
+
+
+      # Define my success and error ratio
+      - record: instance:probe_success:avg_over_time_5m # Over the last 5 minutes, what fraction of my probes have been successfull?  EG 0.98 is 98% available
+        expr: avg by (env, instance, ip_address, job, name) (avg_over_time(probe_success[5m]))
+      - record: instance:probe_success:avg_over_time_30m
+        expr: avg by (env, instance, ip_address, job, name) (avg_over_time(probe_success[30m]))
+      - record: instance:probe_success:avg_over_time_1h
+        expr: avg by (env, instance, ip_address, job, name) (avg_over_time(probe_success[1h]))
+      - record: instance:probe_success:avg_over_time_6h
+        expr: avg by (env, instance, ip_address, job, name) (avg_over_time(probe_success[6h]))
+      - record: instance:probe_success:avg_over_time_3d
+        expr: avg by (env, instance, ip_address, job, name) (avg_over_time(probe_success[3d]))
+      - record: instance:probe_success:avg_over_time_30d
+        expr: avg by (env, instance, ip_address, job, name) (avg_over_time(probe_success[30d]))
+
+      # Over the last N minutes, what is my error ratio?  EG 0.02 is 2% Error Ratio
+      - record: instance:probe_failures:avg_over_time_5m 
+        expr: 1 - instance:probe_success:avg_over_time_5m
+      - record: instance:probe_failures:avg_over_time_30m 
+        expr: 1 - instance:probe_success:avg_over_time_30m     
+      - record: instance:probe_failures:avg_over_time_1h 
+        expr: 1 - instance:probe_success:avg_over_time_1h
+      - record: instance:probe_failures:avg_over_time_6h
+        expr:  1 - instance:probe_success:avg_over_time_6h
+      - record: instance:probe_failures:avg_over_time_3d
+        expr: 1 - instance:probe_success:avg_over_time_3d
+      - record: instance:probe_failures:avg_over_time_30d
+        expr: 1 - instance:probe_success:avg_over_time_30d
+
+      # Burn Rate = Error Rate / Error Budget
+      # For this to work here: the labels of your probe_failures must contain a "job" label, which matches the label in the defined SLOs above
+      - record: instance:probe_burnrate:5m
+        expr: instance:probe_failures:avg_over_time_5m  / on(job) group_left slo_error_budget_over_30_days
+      - record: instance:probe_burnrate:30m
+        expr: instance:probe_failures:avg_over_time_30m  / on(job) group_left slo_error_budget_over_30_days
+      - record: instance:probe_burnrate:1h
+        expr: instance:probe_failures:avg_over_time_1h  / on(job) group_left slo_error_budget_over_30_days
+      - record: instance:probe_burnrate:6h
+        expr: instance:probe_failures:avg_over_time_6h / on(job) group_left slo_error_budget_over_30_days
+      - record: instance:probe_burnrate:3d
+        expr: instance:probe_failures:avg_over_time_3d  / on(job) group_left slo_error_budget_over_30_days
+
+      # Burn Rate Alerts with targets. Thresholds from calculation Burn Rate = (Error Budget * SLO Period) / Window Size.
+      # The SLO period is 30 days, or 720 hours. 
+      # The target thresholds are exactly as recommended from Google SRE:
+      # 2% over 1 hour, with short window 5m. This is a target burn rate of (2% * 720 / 1 ) = 14.4.
+      # 5% over 6 hours, with short window 30m. This is a target burn rate of (5% * 720 / 6 ) = 6
+      # 10% over 3 days, with short window 6h. This is a target burn rate of (10% * 720 / 72 ) = 1
+      - record: instance:probe_burnrate_targets:threshold_5m
+        expr: instance:probe_burnrate:5m > 14.4
+      - record: instance:probe_burnrate_targets:threshold_1h
+        expr: instance:probe_burnrate:1h > 14.4
+
+      - record: instance:probe_burnrate_targets:threshold_30m
+        expr: instance:probe_burnrate:30m > 6
+      - record: instance:probe_burnrate_targets:threshold_6h
+        expr: instance:probe_burnrate:6h > 6
+
+      - record: instance:probe_burnrate_targets:threshold_3d
+        expr: instance:probe_burnrate:3d > 1
+
+
+      # Define Multi Burn Rate, Multi WIndo Alerting
+      - record: instance:probe_burnrate_alerts:multiburn_1h
+        expr: (
+          instance:probe_burnrate_targets:threshold_5m 
+          and
+          instance:probe_burnrate_targets:threshold_1h
+          )
+        
+      - record: instance:probe_burnrate_alerts:multiburn_6h
+        expr: (
+          instance:probe_burnrate_targets:threshold_30m 
+          and
+          instance:probe_burnrate_targets:threshold_6h 
+          )
+
+      - record: instance:probe_burnrate_alerts:multiburn_3d
+        expr: (
+          instance:probe_burnrate_targets:threshold_6h 
+          and
+          instance:probe_burnrate_targets:threshold_3d
+          )
+

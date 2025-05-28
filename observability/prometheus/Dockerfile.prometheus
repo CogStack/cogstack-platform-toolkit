@@ -1,0 +1,14 @@
+FROM prom/prometheus
+
+LABEL traefik.enable="true" \
+    traefik.http.routers.prometheus-path-router.rule="PathPrefix(`/prometheus`)" 
+
+COPY ./defaults /etc/prometheus/cogstack/defaults
+
+CMD [ \
+    "--config.file=/etc/prometheus/cogstack/defaults/prometheus.yml", \
+    "--storage.tsdb.path=/prometheus", \
+    "--storage.tsdb.retention.time=30d", \
+    "--web.external-url=/prometheus", \
+    "--web.route-prefix=/prometheus" \
+    ]

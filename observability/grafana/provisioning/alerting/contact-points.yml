@@ -1,0 +1,12 @@
+apiVersion: 1
+contactPoints:
+    - orgId: 1
+      name: Slack
+      receivers:
+        - uid: aeldmuqwg1xj4a
+          type: slack
+          settings:
+            text: '{{ template "custom.slack.body" . }}'
+            title: '{{ template "custom.slack.title" . }}'
+            url: ${SLACK_WEBHOOK_URL}
+          disableResolveMessage: false

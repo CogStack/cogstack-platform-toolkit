@@ -1,0 +1,10 @@
+# Scrape configs for running internal NiFi Stack
+scrape_configs:
+  - job_name: prometheus-exporters # Scrape configurations from deployed exporters
+    file_sd_configs:
+      - files:
+          - /etc/prometheus/cogstack/site/scrape-configs/exporters/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ([0-9.]+):[0-9]+
+        target_label: ip_address
