@@ -6,7 +6,7 @@ services:
     image: cogstacksystems/cogstack-observability-prometheus:latest
     restart: unless-stopped
     volumes:
-      - ./prometheus:/etc/prometheus/cogstack/site
+      - ./probe-simple.yml:/etc/prometheus/cogstack/site/scrape-configs/probers/probe-simple.yml
       - prometheus-data:/prometheus
     networks:
       - observability
@@ -17,8 +17,6 @@ services:
       - grafana-data:/var/lib/grafana
     networks:
       - observability
-    ports:
-     - '3000:3000'
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true # Allows use of grafana without sign in 
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
@@ -28,17 +26,14 @@ services:
      - observability
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "8080:8080"
+      - "180:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
   blackbox-exporter:
     image: cogstacksystems/cogstack-observability-blackbox-exporter:latest
     restart: unless-stopped
-    ports:
-    - "9115:9115"
     networks:
-      - observability-exporters
+      - observability
 networks:
   observability:
     driver: bridge

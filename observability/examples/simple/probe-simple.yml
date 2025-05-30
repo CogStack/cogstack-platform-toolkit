@@ -1,0 +1,11 @@
+# Example of probe targets
+- targets:
+    - https://cogstack.org
+  labels:
+    name: cogstack-homepage
+    job: probe-services
+- targets:
+    - https://google.com
+  labels:
+    name: google
+    job: probe-services
