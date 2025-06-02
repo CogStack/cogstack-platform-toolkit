@@ -1,3 +1,8 @@
+# Custom ignores
+observability/examples/simple/observability-simple
+
+
+# Python ignores
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

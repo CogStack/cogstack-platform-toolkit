@@ -3,4 +3,4 @@
     - https://cogstack.org
   labels:
     name: cogstack-homepage
-    job: "probe-simple-example"
+    job: probe-services
