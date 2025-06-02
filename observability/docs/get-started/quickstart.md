@@ -10,38 +10,19 @@ After completing these steps, you will have a full observability stack running l
 - Docker Compose installed ([install Docker Compose](https://docs.docker.com/compose/install/))
 - A terminal with network access
 
-### Step 1: Download the sample files
+### Step 1: Run the Quickstart script
 
 Run this quickstart script to setup the project
 ```bash
 curl https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/main/observability/examples/simple/quickstart.sh | bash
 ```
+Now go to "http://localhost/grafana" to see the dashboards
 
-Alternatively, create this manually by downloading these two files from github, and creating the folder structure.
-
-- [docker-compose.yml](https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/main/observability/examples/simple/docker-compose.yml)
-- [prometheus/scrape-configs/probers/probe-simple.yml](https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/main/observability/examples/simple/prometheus/scrape-configs/probers/probe-simple.yml)
+Thats everything. The stack is running and you can see the availability.
 
 
-### Step 2: Start the stack
-
-In the folder containing the downloaded files, run:
-
-```bash
-docker compose up -d
-```
-
-### Step 3: Access the dashboards
-Open your web browser and go to:
-
-`localhost/grafana`
-
-You should see the Grafana dashboard displaying the availability of the sample web page.
-
-There it is, you can now see the availability of the cogstack homepage, as well as the observability stack
-
-### Step 4: Probe your own web page
-Now you can look at getting monitoring on your own page.
+### Optional Step: Probe your own web page
+Now you can look at getting monitoring of your own page
 
 In your current folder, edit the file `prometheus/scrape-configs/probers/probe-simple.yml` that you downloaded from git.
 
@@ -57,7 +38,6 @@ Add the following yml to the bottom of the file:
 
 
 The change should get applied automatically, but if you dont want to wait then run
-
 ```
 docker compose restart
 ```

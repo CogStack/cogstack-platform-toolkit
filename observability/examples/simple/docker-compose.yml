@@ -6,7 +6,7 @@ services:
     image: cogstacksystems/cogstack-observability-prometheus:latest
     restart: unless-stopped
     volumes:
-      - ./probe-simple.yml:/etc/prometheus/cogstack/site/scrape-configs/probers/probe-simple.yml
+      - ./prometheus:/etc/prometheus/cogstack/site/
       - prometheus-data:/prometheus
     networks:
       - observability
@@ -26,7 +26,7 @@ services:
      - observability
     restart: unless-stopped
     ports:
-      - "180:80"
+      - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
   blackbox-exporter:
@@ -34,6 +34,16 @@ services:
     restart: unless-stopped
     networks:
       - observability
+  node-exporter:
+    image: prom/node-exporter
+    restart: unless-stopped
+    networks:
+      - observability
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.node-exporter.rule=PathPrefix(`/node-exporter`)"
+      - "traefik.http.middlewares.node-exporter-stripprefix.stripprefix.prefixes=/node-exporter"
+      - "traefik.http.routers.node-exporter.middlewares=node-exporter-stripprefix@docker"
 networks:
   observability:
     driver: bridge
