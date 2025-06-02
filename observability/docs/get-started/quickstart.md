@@ -1,14 +1,16 @@
-## QuickStart
+# QuickStart
 
 This tutorial guides you through running the simplest setup of the observability stack using example configuration files and Docker Compose.
 
 After completing these steps, you will have a full observability stack running locally, showing the availability of web pages you want to target
 
-### Requirements
+## Requirements
 
 - Docker installed ([install Docker](https://docs.docker.com/get-docker/))
 - Docker Compose installed ([install Docker Compose](https://docs.docker.com/compose/install/))
 - A terminal with network access
+
+## Steps
 
 ### Step 1: Run the Quickstart script
 

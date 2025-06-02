@@ -1,3 +1,4 @@
+   
 # Cogstack Observability Stack
 
 This project provides observability of a cogstack deployment.
@@ -14,5 +15,14 @@ It provides the following features:
 See the [Quickstart](./get-started/quickstart.md) to see how to easily run this stack.
 
 
+```{toctree}
+:maxdepth: 2
+get-started/quickstart.md
+get-started/userguide-tutorial.md
+```
 
+## Indices and tables
 
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
