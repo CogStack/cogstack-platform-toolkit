@@ -15,8 +15,7 @@ curl -fsSL -o prometheus/scrape-configs/probers/probe-simple.yml \
 
 echo "Downloading exporters-simple.yml into prometheus/scrape-configs/exporters/..."
 curl -fsSL -o prometheus/scrape-configs/exporters/exporters-simple.yml \
-  https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/main/observability/examples/simple/prometheus/scrape-configs/exporters/exporters-simple.yaml
-
+  https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/refs/heads/main/observability/examples/simple/prometheus/scrape-configs/exporters/exporters-simple.yml
 
 echo "Setup complete in observability-simple/"
 
