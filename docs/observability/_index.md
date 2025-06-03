@@ -16,6 +16,8 @@ See the [Quickstart](./get-started/quickstart.md) to see how to easily run this 
 :maxdepth: 2
 
 get-started/_index
-
+setup/_index
+customization/_index
+reference/_index
 
 ```
