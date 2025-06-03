@@ -1,6 +1,5 @@
-
-## Manual Quickstart
-
+# Manual Quickstart
+//TODO
 The quickstart page uses a script to setup the folders for you.
 
 This page instead details how to do it manually, to provide clarity.
@@ -11,7 +10,8 @@ Create the necessary directory structure
 mkdir -p observability-simple/prometheus/scrape-configs/probers
 mkdir -p observability-simple/prometheus/scrape-configs/exporters
 ```
-
+ Something
+ 
 
 Download these two files from github, and place in the right folder
 

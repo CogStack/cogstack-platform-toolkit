@@ -1,4 +1,4 @@
-# Cogstack Observability Stack
+# Cogstack Observability
 
 This project provides observability of a cogstack deployment.
 
@@ -9,10 +9,15 @@ It provides the following features:
 - Blackbox Probing of services to find service level indicators of uptime and latency
 - A working inventory of what is running where
 
-## Contents
 
 See the [Quickstart](./get-started/quickstart.md) to see how to easily run this stack.
 
+```{toctree}
+:maxdepth: 2
 
+get-started/_index
+setup/_index
+customization/_index
+reference/_index
 
-
+```

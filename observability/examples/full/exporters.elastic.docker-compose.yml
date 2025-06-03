@@ -1,0 +1,21 @@
+# Exporter deployment on each VM for exporting metrics.
+name: "cogstack-observability-exporters"
+services:
+  elasticsearch_exporter:
+    image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
+    restart: unless-stopped
+    command:
+     - '--es.uri=${ES_URL}'
+     - '--es.ssl-skip-verify'
+    ports:
+    - "9114:9114"
+    environment:
+      - ES_USERNAME=${ES_USERNAME}
+      - ES_PASSWORD=${ES_PASSWORD}
+    networks:
+      - observability-exporters
+
+networks:
+  observability-exporters:
+    name: cogstack-observability-exporters_observability-exporters
+    external: true
