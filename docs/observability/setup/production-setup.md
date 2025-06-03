@@ -1,5 +1,4 @@
 # Production Setup Tutorial
-//In Progress
 This tutorial guides you through setting up the **CogStack Observability Stack** for production use.
 
 If you're new, we recommend completing the [Quickstart Tutorial](../quickstart.md) first to get a simplified setup running.
@@ -65,39 +64,28 @@ This will launch Prometheus, Grafana, and all required services with
 ## Step 4: Create Site-Specific Config Files
 
 You must provide your own scrape and recording rules to tell Prometheus what to monitor.
+- Probers: HTTP endpoints you want to monitor for availability
+  - Add files in `scrape-configs/probers/*.yml`
+  - [Configure Probers](./probing.md)
+  
+- Exporters: Targets like Elasticsearch or Docker
+  - Add files in `scrape-configs/exporters/*.yml`
+  - [Add Exporters](./telemetry.md)
 
-* Exporters: Targets like Elasticsearch or Docker
-  → Add files in `scrape-configs/exporters/*.yml`
-
-* Probers: HTTP endpoints you want to monitor for availability
-  → Add files in `scrape-configs/probers/*.yml`
-
-* Recording Rules: Define uptime goals or custom aggregations
-  → Add files in `recording-rules/*.yml`
-
-Refer to the following How-To guides for creating each config:
-
-* [Configure Probers](./probing.md)
-* [Add Exporters](./telemetry.md)
-* [Enable Alerting](./alerting.md)
-* [Customise Setup](../customization/_index.md)
-
----
-
+- Recording Rules: Define uptime goals or custom aggregations
+  - Add files in `recording-rules/*.yml`
+  - [Enable Alerting](./alerting.md)
 
 
 ---
 
 ## What’s Next?
 
-Your observability stack is now monitoring your own services.
+Your observability stack is now monitoring your services, and you have a production ready project setup
 
-Continue with:
+You can now setup prometheus with any telemetry or probers required following the remaining steps in [Setup](./_index.md)
 
-* [Grafana Dashboards](./dashboards.md)
-* [Set up Alerts](./alerting.md)
-* [Create custom views](../customization/_index.md)
+For the last steps, you can 
 
----
-
-Let me know if you'd like to add code snippets for `.yml` examples in each folder.
+- Fully customise with [Customization](../customization/_index.md)
+- Look further into understanding the concepts and details in [Reference](../reference/_index.md)

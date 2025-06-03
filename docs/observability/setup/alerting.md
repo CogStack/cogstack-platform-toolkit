@@ -57,48 +57,10 @@ SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your-webhook
 ---
 
 ## Advanced Customization
-### Customize Alert Contact points
+See [Alerts Customization](../customization/alerts-customization.md) to further customize alerts, for example setting up a different contact, or a new rule.
 
-You can customize where alerts are sent by defining a new contact point in Grafana:
-
-```
-notifiers:
-  - name: "custom-contact"
-    type: "slack"
-    settings:
-      url: "https://hooks.slack.com/services/..."
-```
-
-Mount this file into:
-
-```
-/etc/grafana/provisioning/alerting/custom-contact.yml
-```
-
-Then update the environment variable:
-
-```
-ALERTING_DEFAULT_CONTACT=custom-contact
-```
-
-**Note** to be only mount the exact file, and not override the whole provisioning folder in the image, as this is already used to contain the defaults. 
-
----
-
-### Add Custom Alerts
-To define additional alert rules, create files in:
-
-```
-/etc/grafana/provisioning/alerting/
-```
-
-Grafana will automatically load these at startup.
-
----
 
 ## Further Reading
 
 * [Grafana Alerting Provisioning](https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/)
 * [Google SRE – Burn Rate Alerting](https://sre.google/workbook/alerting-on-slos/#4-alert-on-burn-rate)
-
-Let me know if you'd like to split this into multiple focused guides, e.g., one for basic uptime, one for SLO-based alerts.

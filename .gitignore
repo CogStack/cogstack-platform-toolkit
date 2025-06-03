@@ -1,5 +1,6 @@
 # Custom ignores
 observability/examples/simple/observability-simple
+observability/examples/full/cogstack-observability
 _build
 
 # Python ignores
