@@ -6,7 +6,7 @@
 full-installation.md
 probing.md
 telemetry.md
-alerts.md
+alerting.md
 
 
 ```

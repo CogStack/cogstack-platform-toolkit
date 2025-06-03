@@ -1,4 +1,5 @@
 # Telemetry
+//TODO
 We can get telemetry from our services and VMs displayed in our dashboards. This telemetry gives us things like memory usage, and running container versions.
 
 Using telemetry lets us get feedback from the stack, diagnose problems, and predict issues before they occur.

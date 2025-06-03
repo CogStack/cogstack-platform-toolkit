@@ -51,12 +51,11 @@ Now refresh the grafana dashboard, and you can see the availability of google.co
 This is the end of this quickstart tutorial, that enables probing availability of endpoints.
 
 For the next steps we can:
-
+- Look deeper into the observability dashboards, on [Dashboards Userguide](./userguide-tutorial.md)
 - Productionise our deployment to enable further features
 - Configure *Telemetry* like VM memory usage, and Elasticsearch index size, by running Exporters
 - Enable *Alerting* based on our availability and a defined Service Level Objective (SLO)
 - Setup further *Probing* of our running services to get availability metrics
-- Look further into the available dashboards
 - Fully customize the stack with our own dashboards, recording rules and metrics
 
 

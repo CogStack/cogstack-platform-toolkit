@@ -1,7 +1,12 @@
 # Availability Probing
+//TODO
+
+HTTP Probers are setup to scrape the real endpoints exposed by our services, and we can calculate a percentage uptime and latency based on those.
+
+See the [Reference](../reference/understanding-metrics.md) for more details. 
 
 
-
+## Adding Probers
 - `site/prometheus/scrape-configs/probers/*.yml`. 
 Add yaml files to this folder as probe targets. Any yml files put into this directory, for example "probe.example.yml", will be used as targets to probe for availability using blackbox exporter. Add any URLs that you want to measure the availability of. 
 
@@ -17,3 +22,8 @@ Add yaml files to this folder as probe targets. Any yml files put into this dire
     custom_label: a_custom_label # (Optional)  Any other label
     
 ```
+
+## Configuring Probers
+- How to setup custom exporter module
+- How to use the module in my yml
+

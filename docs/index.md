@@ -1,11 +1,9 @@
    
 # Cogstack Platform Toolit
 
-This project provides utilities for running Cogstack in production
+This project provides utilities for running Cogstack in production.
 
-## Features
-
-- [Observability](observability/_index.md) 
+- [CogStack Observability](observability/_index.md) 
 
 ```{toctree}
 :hidden:

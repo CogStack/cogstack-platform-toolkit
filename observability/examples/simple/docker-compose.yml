@@ -39,11 +39,6 @@ services:
     restart: unless-stopped
     networks:
       - observability
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.node-exporter.rule=PathPrefix(`/node-exporter`)"
-      - "traefik.http.middlewares.node-exporter-stripprefix.stripprefix.prefixes=/node-exporter"
-      - "traefik.http.routers.node-exporter.middlewares=node-exporter-stripprefix@docker"
 networks:
   observability:
     driver: bridge
