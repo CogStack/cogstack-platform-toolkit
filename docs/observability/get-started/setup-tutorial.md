@@ -1,7 +1,5 @@
-
-This page 
-
-
+# Production Setup
+This page shows how to setup the stack for production
 
 ## Run the Observability Stack using Docker Compose
 
