@@ -3,7 +3,7 @@
 ```{toctree}
 :maxdepth: 2
 
-full-installation.md
+production-setup.md
 probing.md
 telemetry.md
 alerting.md

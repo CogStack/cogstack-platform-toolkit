@@ -3,6 +3,7 @@
 ```{toctree}
 :maxdepth: 2
 
-quickstart-manual.md
+project-details.md
+concept-materials.md
 
 ```

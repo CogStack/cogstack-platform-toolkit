@@ -1,0 +1,5 @@
+- targets:
+    - cogstack-observability-node-exporter-1:9100
+  labels:
+    job: node_exporter
+    host: localhost

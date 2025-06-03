@@ -1,0 +1,40 @@
+# Exporter deployment on each VM for exporting metrics.
+name: "cogstack-observability-exporters"
+services:
+  node-exporter:
+    image: prom/node-exporter
+    restart: unless-stopped
+    networks:
+      - observability-exporters
+    ports:
+      - 9100:9100
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.node-exporter.rule=PathPrefix(`/node-exporter`)"
+      - "traefik.http.middlewares.node-exporter-stripprefix.stripprefix.prefixes=/node-exporter"
+      - "traefik.http.routers.node-exporter.middlewares=node-exporter-stripprefix@docker"
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 9116:8080
+    networks:
+      - observability-exporters
+    command:
+      - '-housekeeping_interval=10s'
+      - '-docker_only=true'
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cadvisor.rule=PathPrefix(`/cadvisor`)"
+      - "traefik.http.middlewares.cadvisor-stripprefix.stripprefix.prefixes=/cadvisor"
+      - "traefik.http.routers.cadvisor.middlewares=cadvisor-stripprefix@docker"
+
+networks:
+  observability-exporters:
+    driver: bridge
