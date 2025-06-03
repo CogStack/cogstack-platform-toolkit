@@ -62,8 +62,10 @@ This will launch Prometheus, Grafana, and all required services with
 
 
 ## Step 4: Create Site-Specific Config Files
-
 You must provide your own scrape and recording rules to tell Prometheus what to monitor.
+
+This is probably the hardest step: You will actually need to know what is running, and where it is! Building out these config files will give you that inventory, and give a real definition of what is running where.
+
 - Probers: HTTP endpoints you want to monitor for availability
   - Add files in `scrape-configs/probers/*.yml`
   - [Configure Probers](./probing.md)
@@ -76,6 +78,9 @@ You must provide your own scrape and recording rules to tell Prometheus what to 
   - Add files in `recording-rules/*.yml`
   - [Enable Alerting](./alerting.md)
 
+## Step 5: Run Exporters Everywhere
+The exporters need to be run on each VM that you want information from. It's a pull model, not push.
+
 
 ---
 
@@ -87,5 +92,7 @@ You can now setup prometheus with any telemetry or probers required following th
 
 For the last steps, you can 
 
+- Run the exporters on all the VMs that you want access to 
+- Deploy the stack in produciton
 - Fully customise with [Customization](../customization/_index.md)
 - Look further into understanding the concepts and details in [Reference](../reference/_index.md)
