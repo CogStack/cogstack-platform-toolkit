@@ -1,3 +1,5 @@
+# This is a simple action to check that the documentation is building.
+# Note the real documentation build is done by readthedocs externally, and none of the files created in this action are used.
 name: documentation-build
 
 on:
@@ -15,7 +17,7 @@ jobs:
       working-directory: ./docs
     steps:
       - uses: actions/checkout@v3
-      - name: Build docs
+      - name: Check documentation build
         run: |
           cd docs
           pip3 install -r requirements.txt
