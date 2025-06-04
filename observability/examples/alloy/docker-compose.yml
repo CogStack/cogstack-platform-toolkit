@@ -8,7 +8,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ${BASE_PATH-.}/prometheus:/etc/prometheus/cogstack/site/
+      - ${BASE_DIR-.}/prometheus:/etc/prometheus/cogstack/site/
       - prometheus-data:/prometheus
     networks:
       - observability
@@ -38,6 +38,11 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
+  blackbox-exporter:
+    image: cogstacksystems/cogstack-observability-blackbox-exporter:latest
+    restart: unless-stopped
+    networks:
+      - observability
   alloy:
     image: grafana/alloy:latest
     command:
@@ -49,7 +54,7 @@ services:
     ports:
       - "12345:12345"
     volumes:
-      - ${BASE_PATH-.}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
+      - ${BASE_DIR-.}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
       # CAdvisor
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -59,7 +64,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.cadvisor.rule=PathPrefix(`/alloy`)"
     environment:
-      - PROMETHEUS_URL=http://cogstack-observability-prometheus-1:9090/prometheus/api/v1/write
+      - PROMETHEUS_URL=${PROMETHEUS_URL-http://cogstack-observability-prometheus-1:9090/prometheus/api/v1/write}
+      - ALLOY_HOSTNAME=my-custom-host
+      - ALLOY_IP_ADDRESS=my-custom-ip
     networks:
       - observability
 networks:

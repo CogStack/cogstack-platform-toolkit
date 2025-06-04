@@ -7,12 +7,14 @@ prometheus.remote_write "default" {
   endpoint {
     url = sys.env("PROMETHEUS_URL")
   }
+  external_labels = {
+    host = sys.env("ALLOY_HOSTNAME"),
+    ip_address = sys.env("ALLOY_IP_ADDRESS"),
+  }
 }
 
 prometheus.scrape "exporter" {
-
     scrape_interval = "15s"
-
     targets    = array.concat(
         prometheus.exporter.self.alloy.targets,
         prometheus.exporter.cadvisor.local_cadvisor.targets,

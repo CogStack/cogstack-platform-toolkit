@@ -29,6 +29,11 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
+  blackbox-exporter:
+    image: cogstacksystems/cogstack-observability-blackbox-exporter:latest
+    restart: unless-stopped
+    networks:
+      - observability
 networks:
   observability:
     driver: bridge
