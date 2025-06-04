@@ -5,8 +5,6 @@ services:
   prometheus:
     image: cogstacksystems/cogstack-observability-prometheus:latest
     restart: unless-stopped
-    ports:
-      - "9090:9090"
     volumes:
       - ./prometheus:/etc/prometheus/cogstack/site/
       - prometheus-data:/prometheus
@@ -31,30 +29,6 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
-  alloy:
-    image: grafana/alloy:latest
-    command:
-      - run
-      - --server.http.listen-addr=0.0.0.0:12345
-      - --storage.path=/var/lib/alloy/data
-      - --server.http.ui-path-prefix=/alloy
-      - /etc/alloy/config.alloy
-    ports:
-      - "12345:12345"
-    volumes:
-      - ./grafana-alloy/config.alloy:/etc/alloy/config.alloy
-      # CAdvisor
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cadvisor.rule=PathPrefix(`/alloy`)"
-    environment:
-      - PROMETHEUS_URL=http://cogstack-observability-prometheus-1:9090/prometheus/api/v1/write
-    networks:
-      - observability
 networks:
   observability:
     driver: bridge
