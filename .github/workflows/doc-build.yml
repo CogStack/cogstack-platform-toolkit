@@ -1,0 +1,24 @@
+name: documentation-build
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*.*.*'
+  release:
+    types: [published]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./docs
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build docs
+        run: |
+          cd docs
+          pip3 install -r requirements.txt
+          make clean
+          # Fail buiild on any docs warning
+          make html O=-W 

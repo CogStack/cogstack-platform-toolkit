@@ -4,7 +4,7 @@
 
 To define how a probe behaves (e.g., add basic auth, headers, timeout, method), we will configure a module in the Blackbox Exporter config.
 
-#### Create a Blackbox Exporter Config file
+### 1. Create a Blackbox Exporter Config file
 You will need to create a new file, and then mount it over the existing provided vconfig
 
 
@@ -51,7 +51,7 @@ This example adds a module named `http_2xx_custom` that adds some basic auth cre
 
 ---
 
-#### Reference the new module in your prober config
+### 2. Reference the new module in your prober config
 
 In your probe YAML file, reference the module in the `module` field of the `labels` section:
 
@@ -63,7 +63,7 @@ In your probe YAML file, reference the module in the `module` field of the `labe
         module: http_2xx_custom      # Optional - overrides the default Blackbox module
 ```
 
-#### Mount the config file
+### 3. Mount the config file
 You lastly need to mount the new config file and refer to it in docker compose
 
 ```
@@ -77,5 +77,3 @@ You lastly need to mount the new config file and refer to it in docker compose
     command:
       - "--config.file=/config/custom-blackbox-config.yml" 
 ```
-
----

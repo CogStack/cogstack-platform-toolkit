@@ -40,5 +40,3 @@ To define additional alert rules, create files in:
 
 Grafana will automatically load these at startup.
 
----
-
