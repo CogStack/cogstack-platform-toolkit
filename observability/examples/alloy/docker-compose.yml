@@ -50,7 +50,7 @@ services:
       - --server.http.listen-addr=0.0.0.0:12345
       - --storage.path=/var/lib/alloy/data
       - --server.http.ui-path-prefix=/alloy
-      - /etc/alloy/config.alloy
+      - /etc/alloy
     ports:
       - "12345:12345"
     volumes:
@@ -62,11 +62,11 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cadvisor.rule=PathPrefix(`/alloy`)"
+      - "traefik.http.routers.alloy.rule=PathPrefix(`/alloy`)"
     environment:
       - PROMETHEUS_URL=${PROMETHEUS_URL-http://cogstack-observability-prometheus-1:9090/prometheus/api/v1/write}
-      - ALLOY_HOSTNAME=my-custom-host
-      - ALLOY_IP_ADDRESS=my-custom-ip
+      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME} # Used to add a label to metrics
+      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS} # Used to add a label to metrics
     networks:
       - observability
 networks:
