@@ -10,5 +10,6 @@ CMD [ \
     "--storage.tsdb.path=/prometheus", \
     "--storage.tsdb.retention.time=30d", \
     "--web.external-url=/prometheus", \
-    "--web.route-prefix=/prometheus" \
+    "--web.route-prefix=/prometheus", \
+    "--web.enable-remote-write-receiver" \
     ]
