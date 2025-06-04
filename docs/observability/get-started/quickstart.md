@@ -22,7 +22,7 @@ Now go to "http://localhost/grafana" to see the dashboards
 
 Thats everything. The stack is running and you can see the availability.
 
-If you can't use the script, see the [Manual Quickstart](../advanced-usage/quickstart-manual.md) to setup your own files. 
+If you can't use the script, see the [Manual Quickstart](../reference/quickstart-manual.md) to setup your own files. 
 
 
 ### Optional Step: Probe your own web page

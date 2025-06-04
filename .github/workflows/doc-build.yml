@@ -1,0 +1,26 @@
+# This is a simple action to check that the documentation is building.
+# Note the real documentation build is done by readthedocs externally, and none of the files created in this action are used.
+name: documentation-build
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*.*.*'
+  release:
+    types: [published]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./docs
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check documentation build
+        run: |
+          cd docs
+          pip3 install -r requirements.txt
+          make clean
+          # Fail buiild on any docs warning
+          make html O=-W 

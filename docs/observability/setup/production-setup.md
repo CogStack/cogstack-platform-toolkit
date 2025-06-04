@@ -1,7 +1,7 @@
 # Production Setup Tutorial
 This tutorial guides you through setting up the **CogStack Observability Stack** for production use.
 
-If you're new, we recommend completing the [Quickstart Tutorial](../quickstart.md) first to get a simplified setup running.
+If you're new, we recommend completing the [Quickstart Tutorial](../get-started/quickstart.md) first to get a simplified setup running.
 
 By the end of the tutorial, you will have a complete stack offering all the observability features, customized to your usage. 
 
