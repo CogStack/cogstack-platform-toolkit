@@ -1,10 +1,6 @@
 logging {
-  level  = "debug"
+  level  = "info"
   format = "logfmt"
-}
-
-livedebugging {
-  enabled = true
 }
 
 prometheus.remote_write "default" {

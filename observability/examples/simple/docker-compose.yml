@@ -2,11 +2,17 @@
 # Depends on docker-compose.exporters.yml for the network
 name: "cogstack-observability"
 services:
+  alloy:
+    image: cogstacksystems/cogstack-observability-alloy:latest
+    restart: unless-stopped
+    volumes:
+      - ${BASE_DIR-.}/alloy/probers:/etc/alloy/probers
+    networks:
+      - observability
   prometheus:
     image: cogstacksystems/cogstack-observability-prometheus:latest
     restart: unless-stopped
     volumes:
-      - ./prometheus:/etc/prometheus/cogstack/site/
       - prometheus-data:/prometheus
     networks:
       - observability
@@ -29,16 +35,7 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
-  blackbox-exporter:
-    image: cogstacksystems/cogstack-observability-blackbox-exporter:latest
-    restart: unless-stopped
-    networks:
-      - observability
-  node-exporter:
-    image: prom/node-exporter
-    restart: unless-stopped
-    networks:
-      - observability
+
 networks:
   observability:
     driver: bridge

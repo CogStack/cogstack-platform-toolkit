@@ -1,4 +1,5 @@
 # Production Setup Tutorial
+
 This tutorial guides you through setting up the **CogStack Observability Stack** for production use.
 
 If you're new, we recommend completing the [Quickstart Tutorial](../get-started/quickstart.md) first to get a simplified setup running.
@@ -14,12 +15,13 @@ Your project configuration should follow this structure:
 ```
 observability.docker-compose.yml
 exporters.docker-compose.yml
+alloy/
+    probers/           # HTTP endpoints to check availability
+        blackbox-exporter/     # (Optional) Custom Probe configuration
 prometheus/
     scrape-configs/
         exporters/         # Targets that expose metrics (e.g. Elasticsearch, Docker, VMs)
-        probers/           # HTTP endpoints to check availability
     recording-rules/       # Prometheus recording rules (e.g. for SLOs, summaries)
-    blackbox-exporter/     # (Optional) Custom Probe configuration
 grafana/                   # (Optional) Custom Grafana dashboards and config
 ```
 

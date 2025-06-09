@@ -44,7 +44,7 @@ discovery.relabel "probe_observability_stack_results" {
 
 // Blackbox Exporter - Probe External Services
 discovery.file "probe_target_files" {
-  files = ["/etc/alloy/probes/*.yml"]
+  files = ["/etc/alloy/probers/*.yml"]
   refresh_interval = "5m"
 }
 

@@ -1,21 +1,29 @@
-# Exporter deployment on each VM for exporting metrics.
+# Run to get elasticsearch metrics into prometheus
 name: "cogstack-observability-exporters"
 services:
-  elasticsearch_exporter:
-    image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
+  alloy:
+    image: cogstacksystems/cogstack-observability-alloy:latest
     restart: unless-stopped
-    command:
-     - '--es.uri=${ES_URL}'
-     - '--es.ssl-skip-verify'
     ports:
-    - "9114:9114"
+      - "12345:12345"
+    volumes:
+      - ${BASE_DIR-.}/probers:/etc/alloy/probers
+      - ${BASE_DIR-.}/alloy/elasticsearch.alloy:/etc/alloy/elasticsearch.alloy # Enable Elastic Exporter
+      # CAdvisor
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     environment:
-      - ES_USERNAME=${ES_USERNAME}
-      - ES_PASSWORD=${ES_PASSWORD}
+      - PROMETHEUS_URL=http://cogstack-observability-prometheus-1:9090/prometheus
+      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME-localhost} # Used to add a label to metrics
+      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS-localhost} # Used to add a label to metrics
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL-https://elassticsearch-1:9200}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME-user} # Used to get metrics from Elasticsearch
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD-pass} # Used to get metrics from Elasticsearch
     networks:
       - observability-exporters
 
 networks:
   observability-exporters:
-    name: cogstack-observability-exporters_observability-exporters
-    external: true
+    driver: bridge

@@ -1,6 +1,6 @@
 
 prometheus.exporter.elasticsearch "elasticsearch" {
-    address = "https://host.docker.internal:9200"
+    address = sys.env("ELASTICSEARCH_URL")
     basic_auth {
         username = sys.env("ELASTICSEARCH_USERNAME")
         password =  sys.env("ELASTICSEARCH_PASSWORD")
