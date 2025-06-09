@@ -1,6 +1,0 @@
-# Example of probe targets in a different file. 
-- targets:
-    - https://cogstack.org
-  labels:
-    name: cogstack-homepage
-    job: probe-internal-services

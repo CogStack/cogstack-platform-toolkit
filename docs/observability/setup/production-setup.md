@@ -42,11 +42,12 @@ Downloads the example docker compose files:
 - [exporters.docker-compose.yml](../../../observability/examples/full/exporters.docker-compose.yml)
 - [exporters.elastic.docker-compose.yml](../../../observability/examples/full/exporters.elastic.docker-compose.yml)
 
-Downloads the prometheus configurations:
+Downloads the configurations:
+- [alloy/probers/probe-external.yml](../../../observability/examples/full/alloy/probers/probe-external.yml)
+- [alloy/probers/probe-internal.yml ](../../../observability/examples/full/alloy/probers/probe-internal.yml)
 - [prometheus/scrape-configs/exporters/exporters.yml](../../../observability/examples/full/prometheus/scrape-configs/exporters/exporters.yml)
-- [prometheus/scrape-configs/probers/probe-external.ymll](../../../observability/examples/full/prometheus/scrape-configs/probers/probe-external.yml)
-- [prometheus/scrape-configs/probers/probe-internal.yml ](../../../observability/examples/full/prometheus/scrape-configs/probers/probe-internal.yml)
 - [prometheus/scrape-configs/recording-rules/slo.yml](../../../observability/examples/full/prometheus/scrape-configs/recording-rules/slo.yml)
+
 
 
 Inspect the results in your local directory, and see that it matches the folder layout defined in step 1. 

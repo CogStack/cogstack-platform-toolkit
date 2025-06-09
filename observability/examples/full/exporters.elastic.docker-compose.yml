@@ -4,10 +4,7 @@ services:
   alloy:
     image: cogstacksystems/cogstack-observability-alloy:latest
     restart: unless-stopped
-    ports:
-      - "12345:12345"
     volumes:
-      - ${BASE_DIR-.}/probers:/etc/alloy/probers
       - ${BASE_DIR-.}/alloy/elasticsearch.alloy:/etc/alloy/elasticsearch.alloy # Enable Elastic Exporter
       # CAdvisor
       - /:/rootfs:ro

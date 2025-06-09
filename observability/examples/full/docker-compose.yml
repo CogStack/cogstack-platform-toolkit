@@ -7,7 +7,7 @@ services:
     ports:
       - "12345:12345"
     volumes:
-      - ${BASE_DIR-.}/probers:/etc/alloy/probers
+      - ${BASE_DIR-.}/alloy/probers:/etc/alloy/probers
       # CAdvisor
       - /:/rootfs:ro
       - /var/run:/var/run:rw
