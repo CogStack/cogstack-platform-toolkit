@@ -1,0 +1,8 @@
+groups:
+  - name:  slo-target-rules
+    rules:
+      # What SLO am I targeting
+      - record: slo_target_over_30_days
+        expr: 0.95 # We target 95% uptime over 30 days
+        labels:
+          job: "probe-external-demo-apps" #Job here must match the job in the probe targets

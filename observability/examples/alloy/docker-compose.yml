@@ -1,0 +1,78 @@
+# Observability main stack. Prometheus and Grafana. 
+# Depends on docker-compose.exporters.yml for the network
+name: "cogstack-observability"
+services:
+  prometheus:
+    image: cogstacksystems/cogstack-observability-prometheus:latest
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ${BASE_DIR-.}/prometheus:/etc/prometheus/cogstack/site/
+      - prometheus-data:/prometheus
+    networks:
+      - observability
+    command: 
+    - "--config.file=/etc/prometheus/cogstack/defaults/prometheus.yml"
+    - "--storage.tsdb.path=/prometheus"
+    - "--storage.tsdb.retention.time=30d"
+    - "--web.external-url=/prometheus"
+    - "--web.route-prefix=/prometheus"
+    - "--web.enable-remote-write-receiver"
+  grafana:
+    image: cogstacksystems/cogstack-observability-grafana:latest
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - observability
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true # Allows use of grafana without sign in 
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+  traefik:
+    image: cogstacksystems/cogstack-observability-traefik:latest
+    networks:
+     - observability
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
+  blackbox-exporter:
+    image: cogstacksystems/cogstack-observability-blackbox-exporter:latest
+    restart: unless-stopped
+    networks:
+      - observability
+  alloy:
+    image: grafana/alloy:latest
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+      - --server.http.ui-path-prefix=/alloy
+      - /etc/alloy
+    ports:
+      - "12345:12345"
+    volumes:
+      - ${BASE_DIR-.}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
+      # CAdvisor
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.alloy.rule=PathPrefix(`/alloy`)"
+    environment:
+      - PROMETHEUS_URL=${PROMETHEUS_URL-http://cogstack-observability-prometheus-1:9090/prometheus/api/v1/write}
+      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME} # Used to add a label to metrics
+      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS} # Used to add a label to metrics
+    networks:
+      - observability
+networks:
+  observability:
+    driver: bridge
+
+volumes:
+  prometheus-data:
+  grafana-data:
