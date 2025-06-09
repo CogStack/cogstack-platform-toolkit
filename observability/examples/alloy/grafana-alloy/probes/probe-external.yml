@@ -1,0 +1,12 @@
+# Example of probe targets
+- targets:
+    - https://cogstack.org
+  labels:
+    name: cogstack-homepage
+    job: probe-services-alloy
+- targets:
+    - https://cogstack.org
+  labels:
+    name: admin_probe
+    job: probe-services-alloy-2
+    module: http_admin_get_200
