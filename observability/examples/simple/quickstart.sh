@@ -1,21 +1,16 @@
 #!/bin/bash
 set -e
 
-mkdir -p observability-simple/prometheus/scrape-configs/probers
-mkdir -p observability-simple/prometheus/scrape-configs/exporters
+mkdir -p observability-simple/alloy/probers
 cd observability-simple
 
 echo "Downloading docker-compose.yml..."
 curl -fsSL -o docker-compose.yml \
   https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/main/observability/examples/simple/docker-compose.yml
 
-echo "Downloading probe-simple.yml into prometheus/scrape-configs/probers/..."
-curl -fsSL -o prometheus/scrape-configs/probers/probe-simple.yml \
-  https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/main/observability/examples/simple/prometheus/scrape-configs/probers/probe-simple.yml
-
-echo "Downloading exporters-simple.yml into prometheus/scrape-configs/exporters/..."
-curl -fsSL -o prometheus/scrape-configs/exporters/exporters-simple.yml \
-  https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/refs/heads/main/observability/examples/simple/prometheus/scrape-configs/exporters/exporters-simple.yml
+echo "Downloading probe-simple.yml into alloy/probers/..."
+curl -fsSL -o probers/probe-simple.yml \
+  https://raw.githubusercontent.com/CogStack/cogstack-platform-toolkit/main/observability/examples/simple/probers/probe-simple.yml
 
 echo "Setup complete in observability-simple/"
 

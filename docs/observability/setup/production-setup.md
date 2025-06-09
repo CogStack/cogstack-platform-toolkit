@@ -1,4 +1,5 @@
 # Production Setup Tutorial
+
 This tutorial guides you through setting up the **CogStack Observability Stack** for production use.
 
 If you're new, we recommend completing the [Quickstart Tutorial](../get-started/quickstart.md) first to get a simplified setup running.
@@ -14,12 +15,13 @@ Your project configuration should follow this structure:
 ```
 observability.docker-compose.yml
 exporters.docker-compose.yml
+alloy/
+    probers/           # HTTP endpoints to check availability
+        blackbox-exporter/     # (Optional) Custom Probe configuration
 prometheus/
     scrape-configs/
         exporters/         # Targets that expose metrics (e.g. Elasticsearch, Docker, VMs)
-        probers/           # HTTP endpoints to check availability
     recording-rules/       # Prometheus recording rules (e.g. for SLOs, summaries)
-    blackbox-exporter/     # (Optional) Custom Probe configuration
 grafana/                   # (Optional) Custom Grafana dashboards and config
 ```
 
@@ -40,11 +42,12 @@ Downloads the example docker compose files:
 - [exporters.docker-compose.yml](../../../observability/examples/full/exporters.docker-compose.yml)
 - [exporters.elastic.docker-compose.yml](../../../observability/examples/full/exporters.elastic.docker-compose.yml)
 
-Downloads the prometheus configurations:
+Downloads the configurations:
+- [alloy/probers/probe-external.yml](../../../observability/examples/full/alloy/probers/probe-external.yml)
+- [alloy/probers/probe-internal.yml ](../../../observability/examples/full/alloy/probers/probe-internal.yml)
 - [prometheus/scrape-configs/exporters/exporters.yml](../../../observability/examples/full/prometheus/scrape-configs/exporters/exporters.yml)
-- [prometheus/scrape-configs/probers/probe-external.ymll](../../../observability/examples/full/prometheus/scrape-configs/probers/probe-external.yml)
-- [prometheus/scrape-configs/probers/probe-internal.yml ](../../../observability/examples/full/prometheus/scrape-configs/probers/probe-internal.yml)
 - [prometheus/scrape-configs/recording-rules/slo.yml](../../../observability/examples/full/prometheus/scrape-configs/recording-rules/slo.yml)
+
 
 
 Inspect the results in your local directory, and see that it matches the folder layout defined in step 1. 

@@ -1,0 +1,114 @@
+
+// Blackbox Exporter - Probe Observability Stack
+prometheus.exporter.blackbox "probe_observability_stack" {
+  config_file = "/etc/alloy/blackbox-exporter.yml"
+  target {
+    name    = "grafana"
+    address = "cogstack-observability-traefik-1/grafana/api/health"
+    module  = "http_get_200"
+    labels = {
+      "name" = "grafana",
+      "host" = "localhost",
+    }
+  }
+
+  target {
+    name    = "prometheus"
+    address = "cogstack-observability-traefik-1/prometheus/-/healthy"
+    module  = "http_get_200"
+    labels = {
+      "name" = "prometheus",
+      "host" = "localhost",
+    }
+  }
+}
+discovery.relabel "probe_observability_stack_results" {
+  targets = prometheus.exporter.blackbox.probe_observability_stack.targets
+
+  rule {
+    source_labels = ["__param_target"]
+    target_label = "instance"
+    regex = "([^/]+)/(.*)"
+    replacement = "prometheus-host/$2"
+  }
+
+  rule {
+    target_label = "job"
+    replacement = "probe-observability-stack"
+  }
+  rule {
+    target_label = "host"
+    replacement = "prometheus-host"
+  }
+}
+
+// Blackbox Exporter - Probe External Services
+discovery.file "probe_target_files" {
+  files = ["/etc/alloy/probers/*.yml"]
+  refresh_interval = "5m"
+}
+
+discovery.relabel "probe_target_files_with_defaults" {
+  targets = discovery.file.probe_target_files.targets
+
+  rule {
+    source_labels = ["job"] // Alloy overrides the job field, this works around it. 
+    target_label = "group"
+  }
+  rule {
+   // Add default module to all calls
+   source_labels =  ["module"]
+   target_label =  "module"
+   regex =  ""
+   replacement =  "http_get_200"
+  }
+  rule {
+    // Alloy takes the "name" field from the yml file, puts it into the job field as a suffix, then removes name. This brings name back.
+    source_labels = ["name"]
+    target_label = "service_name"
+  }
+}
+
+prometheus.exporter.blackbox "probe_discovered_targets" {
+  config_file = "/etc/alloy/blackbox-exporter.yml"
+  targets = discovery.relabel.probe_target_files_with_defaults.output
+}
+
+
+discovery.relabel "probe_discovered_targets_results" {
+  targets = prometheus.exporter.blackbox.probe_discovered_targets.targets
+
+  rule {
+    source_labels = ["__param_target"]
+    target_label = "instance"
+  }
+  rule {
+    // Bring name back
+    source_labels = ["service_name"]
+    target_label = "name"
+  }
+    rule {
+    // Bring job back
+    source_labels = ["group"]
+    target_label = "job"
+  }
+
+  rule {
+    regex   = "group"
+    action  = "labeldrop"
+  }
+  rule {
+    regex   = "service_name"
+    action  = "labeldrop"
+  }
+}
+
+// Scrape Probe targets
+prometheus.scrape "blackbox_exporter" {
+    scrape_interval = "15s"
+    targets    = array.concat(
+        discovery.relabel.probe_discovered_targets_results.output,
+        discovery.relabel.probe_observability_stack_results.output,
+    )
+    forward_to = [prometheus.remote_write.default.receiver]
+}

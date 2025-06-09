@@ -1,4 +1,33 @@
 # Custom Prometheus Configuration
+
+Prometheus can be fully customized, still using the provided defaults. To do this you can mount files in the right directories in docker. 
+
+## Custom Prometheus Exporters
+
+Grafana Alloy is used by default in the stack to get metrics for telemetry. If desired, it is also possible to get metrics by having prometheus scrape APIs
+
+To do this, add the host and IPs into a yaml file in `prometheus/scrape-configs/exporters/` to tell prometheus where to scrape.
+
+Mount these files under `site/prometheus/scrape-configs/exporters/*.yml` in docker
+
+
+### Add Exporters to Prometheus
+- `prometheus/scrape-configs/exporters/` -
+ Add yaml files into this folder. These file should contain all exporter prometheus metrics, for example from node_exporter or CAdvisor. Add any hosts and ip addresses you want to collect /metrics from will be retrieved
+
+```yaml 
+# Exporter example yml
+- targets:
+    - 123.0.0.1:9100 # Enter your IP address and port of a target
+  labels:
+    job: node_exporter # Mandatory  - Enter the type of metric being collected
+    host: my-host-name  # (Optional) A readable hostname
+    custom_label: a_custom_label # (Optional)
+    # __metrics_path__: /path/metrics  # Optionally override the metrics path, the default is just /metrics
+# ... add all targets
+```
+## Custom Prometheus Scrape Configs
+
 You can add compeltely custom prometheus scrape configs and recording rules by mounting in docker.
 
 - `site/prometheus/scrape-configs/*.yml`. This is for advanced configuration. 
