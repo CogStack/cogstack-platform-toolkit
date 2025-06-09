@@ -24,5 +24,12 @@
 	// "remoteUser": "root"
 	"workspaceFolder": "${localWorkspaceFolder}",
 	"workspaceMount": "source=${localWorkspaceFolder},target=${localWorkspaceFolder},type=bind",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Grafana.grafana-alloy"
+			]
+		}
+	},
 
 }

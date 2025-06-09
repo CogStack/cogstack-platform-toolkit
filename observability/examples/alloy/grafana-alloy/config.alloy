@@ -3,6 +3,10 @@ logging {
   format = "logfmt"
 }
 
+livedebugging {
+  enabled = true
+}
+
 prometheus.remote_write "default" {
   endpoint {
     url = sys.env("PROMETHEUS_URL")
@@ -10,7 +14,7 @@ prometheus.remote_write "default" {
   external_labels = {
     host = sys.env("ALLOY_HOSTNAME"),
     ip_address = sys.env("ALLOY_IP_ADDRESS"),
-  }
+  } 
 }
 
 prometheus.scrape "exporter" {

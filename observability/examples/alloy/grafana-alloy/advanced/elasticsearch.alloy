@@ -1,0 +1,29 @@
+
+prometheus.exporter.elasticsearch "elasticsearch" {
+    address = "https://host.docker.internal:9200"
+    basic_auth {
+        username = sys.env("ELASTICSEARCH_USERNAME")
+        password =  sys.env("ELASTICSEARCH_PASSWORD")
+    }
+    ssl_skip_verify = true
+
+}
+discovery.relabel "elasticsearch" {
+    targets = prometheus.exporter.elasticsearch.elasticsearch.targets
+
+    rule {
+        target_label    = "cluster"
+        replacement     = "elasticsearch-cogstack-cluster"
+    }
+    rule {
+        target_label    = "host"
+        replacement     = "elasticsearch_host"
+    }
+}
+
+prometheus.scrape "elasticsearch_exporter" {
+    scrape_interval = "15s"
+    targets    =  discovery.relabel.elasticsearch.output
+    forward_to = [prometheus.remote_write.default.receiver]
+
+}

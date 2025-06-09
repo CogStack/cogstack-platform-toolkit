@@ -54,7 +54,8 @@ services:
     ports:
       - "12345:12345"
     volumes:
-      - ${BASE_DIR-.}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
+      - ${BASE_DIR-.}/grafana-alloy:/etc/alloy
+      # - ${BASE_DIR-.}/grafana-alloy/advanced/elasticsearch.alloy:/etc/alloy/elasticsearch.alloy # Enable Elastic Exporter
       # CAdvisor
       - /:/rootfs:ro
       - /var/run:/var/run:rw
