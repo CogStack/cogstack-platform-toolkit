@@ -13,11 +13,6 @@ scrape_configs:
           name: grafana # collect grafana metrics like dashboard usage
           __metrics_path__: /metrics
       - targets:
-          - cogstack-observability-traefik-1 # Collect blackbox-exporter metrics like number of probes
-        labels:
-          name: blackbox-exporter
-          __metrics_path__: /blackbox-exporter/metrics
-      - targets:
           - cogstack-observability-traefik-1:8080  # Collect Traefik metrics like number of success calls
         labels:
           name: traefik 
@@ -26,32 +21,3 @@ scrape_configs:
           replacement: observability-stack
         - target_label: host
           replacement: prometheus-host
-  - job_name: "probe-observability-stack" # Probe if the observability services are running
-    metrics_path: /blackbox-exporter/probe
-    params:
-      module: [http_get_200]
-    static_configs:
-      - targets:
-          - cogstack-observability-traefik-1/grafana/api/health
-        labels:
-          name: grafana
-      - targets:
-          - cogstack-observability-traefik-1/prometheus/-/healthy
-        labels:
-          name: prometheus
-    relabel_configs:
-      - source_labels: [__address__]
-        regex: ([0-9.]+):[0-9]+
-        target_label: ip_address
-      - target_label: env
-        replacement: observability-stack
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__address__]
-        regex: ([^/]+)/(.*)
-        target_label: instance
-        replacement: prometheus-host/$2
-      - target_label: host
-        replacement: prometheus-host
-      - target_label: __address__
-        replacement: cogstack-observability-traefik-1 # The blackbox exporter's real host:port.

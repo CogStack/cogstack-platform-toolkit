@@ -1,7 +1,7 @@
 
 // Blackbox Exporter - Probe Observability Stack
 prometheus.exporter.blackbox "probe_observability_stack" {
-  config_file = "/etc/alloy/blackbox.yml"
+  config_file = "/etc/alloy/blackbox-exporter.yml"
   target {
     name    = "grafana"
     address = "cogstack-observability-traefik-1/grafana/api/health"
@@ -60,7 +60,7 @@ discovery.relabel "probe_target_files_with_defaults" {
    source_labels =  ["module"]
    target_label =  "module"
    regex =  ""
-   replacement =  "http_200_ok"
+   replacement =  "http_get_200"
   }
   rule {
     // Alloy takes the "name" field from the yml file, puts it into the job field as a suffix, then removes name. This brings name back.
@@ -70,7 +70,7 @@ discovery.relabel "probe_target_files_with_defaults" {
 }
 
 prometheus.exporter.blackbox "probe_discovered_targets" {
-  config_file = "/etc/alloy/blackbox.yml"
+  config_file = "/etc/alloy/blackbox-exporter.yml"
   targets = discovery.relabel.probe_target_files_with_defaults.output
 }
 

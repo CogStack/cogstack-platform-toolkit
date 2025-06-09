@@ -5,20 +5,11 @@ services:
   prometheus:
     image: cogstacksystems/cogstack-observability-prometheus:latest
     restart: unless-stopped
-    ports:
-      - "9090:9090"
     volumes:
-      - ${BASE_DIR-.}/prometheus:/etc/prometheus/cogstack/site/
+      - ./prometheus:/etc/prometheus/cogstack/site/
       - prometheus-data:/prometheus
     networks:
       - observability
-    command: 
-    - "--config.file=/etc/prometheus/cogstack/defaults/prometheus.yml"
-    - "--storage.tsdb.path=/prometheus"
-    - "--storage.tsdb.retention.time=30d"
-    - "--web.external-url=/prometheus"
-    - "--web.route-prefix=/prometheus"
-    - "--web.enable-remote-write-receiver"
   grafana:
     image: cogstacksystems/cogstack-observability-grafana:latest
     restart: unless-stopped
@@ -38,36 +29,22 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro       # So that Traefik can listen to the Docker events
-  blackbox-exporter:
-    image: cogstacksystems/cogstack-observability-blackbox-exporter:latest
-    restart: unless-stopped
-    networks:
-      - observability
   alloy:
-    image: grafana/alloy:latest
-    command:
-      - run
-      - --server.http.listen-addr=0.0.0.0:12345
-      - --storage.path=/var/lib/alloy/data
-      - --server.http.ui-path-prefix=/alloy
-      - /etc/alloy
+    image: cogstacksystems/cogstack-observability-alloy:latest
     ports:
       - "12345:12345"
     volumes:
-      - ${BASE_DIR-.}/grafana-alloy:/etc/alloy
+      - ${BASE_DIR-.}/grafana-alloy/probes:/etc/alloy/probes
       # - ${BASE_DIR-.}/grafana-alloy/advanced/elasticsearch.alloy:/etc/alloy/elasticsearch.alloy # Enable Elastic Exporter
       # CAdvisor
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.alloy.rule=PathPrefix(`/alloy`)"
     environment:
-      - PROMETHEUS_URL=${PROMETHEUS_URL-http://cogstack-observability-prometheus-1:9090/prometheus/api/v1/write}
-      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME} # Used to add a label to metrics
-      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS} # Used to add a label to metrics
+      - PROMETHEUS_URL=http://cogstack-observability-prometheus-1:9090/prometheus
+      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME-localhost} # Used to add a label to metrics
+      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS-localhost} # Used to add a label to metrics
     networks:
       - observability
 networks:

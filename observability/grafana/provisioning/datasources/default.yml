@@ -24,7 +24,7 @@ datasources:
     uid: datasource-prometheus-local-docker
     # <string> Sets the data source's URL, including the
     # port.
-    url: ${PROMETHEUS_DATASOURCE_URL}
+    url: ${PROMETHEUS_URL}
     isDefault: true
     # <bool> Allows users to edit data sources from the
     # Grafana UI.

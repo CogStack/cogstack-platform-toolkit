@@ -29,6 +29,10 @@ jobs:
             context: observability/traefik
             dockerfile: observability/traefik/Dockerfile
             image: cogstacksystems/cogstack-observability-traefik
+          - name: alloy
+            context: observability/grafana-alloy
+            dockerfile: observability/grafana-alloy/Dockerfile
+            image: cogstacksystems/cogstack-observability-alloy
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
