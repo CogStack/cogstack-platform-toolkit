@@ -14,4 +14,4 @@ CMD [ \
     ] 
 
 ENV PROMETHEUS_URL=http://cogstack-observability-prometheus-1:9090/prometheus
-full/prometheus/scrape-configs/probers/probe-external.ym
+
