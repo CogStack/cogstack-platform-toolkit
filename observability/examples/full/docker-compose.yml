@@ -6,6 +6,8 @@ services:
     image: cogstacksystems/cogstack-observability-alloy:latest
     ports:
       - "12345:12345"
+    networks:
+      - observability
     volumes:
       - ${BASE_DIR-.}/alloy/probers:/etc/alloy/probers
       # CAdvisor

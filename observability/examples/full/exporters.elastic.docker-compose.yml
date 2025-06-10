@@ -15,7 +15,7 @@ services:
       - PROMETHEUS_URL=http://cogstack-observability-prometheus-1:9090/prometheus
       - ALLOY_HOSTNAME=${ALLOY_HOSTNAME-localhost} # Used to add a label to metrics
       - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS-localhost} # Used to add a label to metrics
-      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL-https://elassticsearch-1:9200}
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL-https://elasticsearch-1:9200}
       - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME-user} # Used to get metrics from Elasticsearch
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD-pass} # Used to get metrics from Elasticsearch
     networks:

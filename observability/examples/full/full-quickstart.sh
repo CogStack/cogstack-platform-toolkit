@@ -10,6 +10,7 @@ download_to() {
   curl -fsSL -o "$path" "$url"
 }
 
+mkdir -p cogstack-observability/alloy/probers
 mkdir -p cogstack-observability/prometheus/scrape-configs/probers
 mkdir -p cogstack-observability/prometheus/scrape-configs/exporters
 mkdir -p cogstack-observability/prometheus/scrape-configs/recording-rules

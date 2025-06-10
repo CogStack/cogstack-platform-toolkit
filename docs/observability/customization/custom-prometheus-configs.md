@@ -12,7 +12,7 @@ Mount these files under `site/prometheus/scrape-configs/exporters/*.yml` in dock
 
 
 ### Add Exporters to Prometheus
-- `prometheus/scrape-configs/exporters/` -
+- `prometheus/scrape-configs/exporters/`
  Add yaml files into this folder. These file should contain all exporter prometheus metrics, for example from node_exporter or CAdvisor. Add any hosts and ip addresses you want to collect /metrics from will be retrieved
 
 ```yaml 
@@ -26,6 +26,9 @@ Mount these files under `site/prometheus/scrape-configs/exporters/*.yml` in dock
     # __metrics_path__: /path/metrics  # Optionally override the metrics path, the default is just /metrics
 # ... add all targets
 ```
+
+Note that this project is setup to run Grafana Alloy to push metrics from individual VMs. The config in `prometheus/scrape-configs/exporters/` is an alternative way, allowing you to pull metrics from any other services.
+
 ## Custom Prometheus Scrape Configs
 
 You can add compeltely custom prometheus scrape configs and recording rules by mounting in docker.

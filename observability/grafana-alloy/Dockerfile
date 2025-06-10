@@ -3,6 +3,8 @@ FROM grafana/alloy:latest
 LABEL traefik.enable="true" \
     traefik.http.routers.alloy.rule="PathPrefix(`/alloy`)" 
 
+RUN mkdir -p /etc/alloy/probers
+
 COPY ./defaults /etc/alloy
 
 CMD [ \
