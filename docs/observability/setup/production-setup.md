@@ -6,6 +6,12 @@ If you're new, we recommend completing the [Quickstart Tutorial](../get-started/
 
 By the end of the tutorial, you will have a complete stack offering all the observability features, customized to your usage. 
 
+We will run the stack and then:
+- Configure *Telemetry* like VM memory usage, and Elasticsearch index size, by running Exporters
+- Enable *Alerting* based on our availability and a defined Service Level Objective (SLO)
+- Setup further *Probing* of our running services to get availability metrics
+
+
 ---
 
 ## Step 1: Understand the Folder Structure
@@ -63,6 +69,7 @@ The files come with basic defaults, so we can now run the stack
 This will launch Prometheus, Grafana, and Alloy
 
 
+
 ## Step 4: Create Site-Specific Config Files
 You must provide your own scrape and recording rules to tell Prometheus what to monitor.
 
@@ -71,7 +78,10 @@ This is probably the hardest step: You will actually need to know what is runnin
 - Probers: HTTP endpoints you want to monitor for availability
   - Add files in `alloy/probers/*.yml`
   - [Configure Probers](./probing.md)
-  
+
+- Telemetry: Run Grafana Alloy on every VM you want telemetry from
+    - [Configure Telemetry](./probing.md)
+
 - Recording Rules: Define uptime goals or custom aggregations
   - Add files in `recording-rules/*.yml`
   - [Enable Alerting](./alerting.md)
@@ -92,7 +102,7 @@ Your observability stack is now monitoring your services, and you have a product
 
 You can now setup prometheus with any telemetry or probers required following the remaining steps in [Setup](./_index.md)
 
-For the last steps, you can 
+For the last steps, you can:
 
 - Run the exporters on all the VMs that you want access to 
 - Deploy the stack in produciton

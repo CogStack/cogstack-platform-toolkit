@@ -10,7 +10,6 @@ Grafana Alloy is used to get telemetry. These features are configured by default
 - Elastic Search Exporter: Get ES metrics like index size
 - CAdvisor: This gives docker metrics, eg what containers are running
 
-
 ## How to get Telemetry
 
 - Copy this docker compose file: (exporters.docker-compose.yml)[observability/examples/full/exporters.docker-compose.yml]

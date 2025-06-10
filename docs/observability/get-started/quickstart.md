@@ -28,7 +28,7 @@ If you can't use the script, see the [Manual Quickstart](../reference/quickstart
 ### Optional Step: Probe your own web page
 Now you can look at getting monitoring of your own page
 
-1. In your current folder, in the file `prometheus/scrape-configs/probers/probe-simple.yml` add the following yml to the bottom of the file:
+1. In your current folder, in the file `alloy/probers/probe-observability.yml` add the following yml to the bottom of the file:
 
 ```yaml
 - targets:
@@ -52,11 +52,7 @@ This is the end of this quickstart tutorial, that enables probing availability o
 
 For the next steps we can:
 - Look deeper into the observability dashboards, on [Dashboards Userguide](./userguide-tutorial.md)
-- Productionise our deployment to enable further features
-- Configure *Telemetry* like VM memory usage, and Elasticsearch index size, by running Exporters
-- Enable *Alerting* based on our availability and a defined Service Level Objective (SLO)
-- Setup further *Probing* of our running services to get availability metrics
-- Fully customize the stack with our own dashboards, recording rules and metrics
+- Productionise our deployment to enable further features  by following [Production Setup](../setup/production-setup.md)
 
 
 
