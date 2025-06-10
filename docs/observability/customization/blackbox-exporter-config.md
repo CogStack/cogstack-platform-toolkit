@@ -16,7 +16,7 @@ You will need to create a new file, and then mount it over the existing provided
 
 2. Add the existing defaults
 
-```  
+```yaml
 modules:
     http_get_200:
         prober: http
@@ -31,7 +31,7 @@ modules:
 ```
 
 3. Add your own module to the modules in that file
-```
+```yaml
   http_2xx_custom:
     prober: http
     timeout: 5s
@@ -55,7 +55,7 @@ This example adds a module named `http_2xx_custom` that adds some basic auth cre
 
 In your probe YAML file, reference the module in the `module` field of the `labels` section:
 
-```
+```yaml
     - targets:
         - https://myservice.example.com/health
       labels:
@@ -66,7 +66,7 @@ In your probe YAML file, reference the module in the `module` field of the `labe
 ### 3. Mount the config file
 You lastly need to mount the new config file and refer to it in docker compose
 
-```
+```yaml
  alloy:
     image: cogstacksystems/cogstack-observability-alloy:latest
 ...
