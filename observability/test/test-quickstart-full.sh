@@ -6,7 +6,7 @@ echo "🚀 Starting deployment test..."
 
 # Run the quickstart script
 echo "📦 Running quickstart..."
-cd ${SCRIPT_DIR}../examples/full/
+cd ${SCRIPT_DIR}/../examples/full/
 bash ./full-quickstart.sh
 
 # Run the health check

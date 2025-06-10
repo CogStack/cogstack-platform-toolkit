@@ -2,7 +2,6 @@
 set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-
 echo "🚀 Starting deployment test..."
 
 # Run the quickstart script

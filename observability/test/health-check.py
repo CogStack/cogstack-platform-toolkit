@@ -2,6 +2,7 @@
 import requests
 import time
 import sys
+import os
 from urllib3.exceptions import InsecureRequestWarning
 
 # Disable SSL warnings for localhost
@@ -30,10 +31,13 @@ def check_service_health(url, service_name, timeout=120):
     return False
 
 def main():
+    ''' Check if services are running. For use in a container, first export HEALTH_CHECK_URL env var to be host.docker.internal '''
+    
+    localhost_url = os.environ.get('HEALTH_CHECK_URL', "localhost")
     services = [
-        ("http://host.docker.internal/grafana", "Grafana"),
-        ("http://host.docker.internal/prometheus", "Prometheus"),
-        ("http://host.docker.internal/alloy", "Prometheus"),
+        (f"http://{localhost_url}/grafana", "Grafana"),
+        (f"http://{localhost_url}/prometheus", "Prometheus"),
+        (f"http://{localhost_url}/alloy", "Prometheus"),
     ]
     
     all_healthy = True
