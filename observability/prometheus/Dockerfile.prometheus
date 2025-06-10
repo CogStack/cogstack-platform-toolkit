@@ -3,6 +3,9 @@ FROM prom/prometheus
 LABEL traefik.enable="true" \
     traefik.http.routers.prometheus-path-router.rule="PathPrefix(`/prometheus`)" 
 
+RUN mkdir -p /etc/prometheus/cogstack/site/scrape-targets/probers
+RUN mkdir -p /etc/prometheus/cogstack/site/scrape-targets/exporters
+
 COPY ./defaults /etc/prometheus/cogstack/defaults
 
 CMD [ \
