@@ -7,31 +7,13 @@ If you're new, we recommend completing the [Quickstart Tutorial](../get-started/
 By the end of the tutorial, you will have a complete stack offering all the observability features, customized to your usage. 
 
 We will run the stack and then:
-- Configure *Telemetry* like VM memory usage, and Elasticsearch index size, by running Exporters
-- Enable *Alerting* based on our availability and a defined Service Level Objective (SLO)
 - Setup further *Probing* of our running services to get availability metrics
-
+- Configure *Telemetry* like VM memory usage, and Elasticsearch index size, by running Grafana Alloy
+- Enable *Alerting* based on our availability and a defined Service Level Objective (SLO)
 
 ---
 
-## Step 1: Understand the Folder Structure
-
-Your project configuration should follow this structure:
-
-```
-observability.docker-compose.yml
-exporters.docker-compose.yml
-alloy/
-    probers/           # HTTP endpoints to check availability
-        blackbox-exporter/     # (Optional) Custom Probe configuration
-prometheus/
-    scrape-configs/
-        exporters/         # Targets that expose metrics (e.g. Elasticsearch, Docker, VMs)
-    recording-rules/       # Prometheus recording rules (e.g. for SLOs, summaries)
-grafana/                   # (Optional) Custom Grafana dashboards and config
-```
-
-## Step 2: Initialise the project
+## Step 1: Initialise the project
 
 Run:
 ```bash
@@ -56,11 +38,28 @@ Downloads the configurations:
 
 
 
-Inspect the results in your local directory, and see that it matches the folder layout defined in step 1. 
+## Step 2: Understand the Folder structure
+
+Your project configuration will be created with follow this structure:
+
+```
+observability.docker-compose.yml
+exporters.docker-compose.yml
+alloy/
+    probers/           # HTTP endpoints to check availability
+        blackbox-exporter/     # (Optional) Custom Probe configurations like auth details
+prometheus/
+    scrape-configs/
+        exporters/         # Targets that expose metrics (e.g. Elasticsearch, Docker, VMs)
+    recording-rules/       # Prometheus recording rules (e.g. for SLOs, summaries)
+grafana/                   # (Optional) Custom Grafana dashboards and config
+```
+
+Inspect the results of the script and see that it matches this layout
+
 
 ## Step 3: Run the Stack
 The files come with basic defaults, so we can now run the stack
-
 
    ```
    docker compose up -d
@@ -68,9 +67,10 @@ The files come with basic defaults, so we can now run the stack
 
 This will launch Prometheus, Grafana, and Alloy
 
+Navigate to the dashboard urls on `http://localhost/grafana` to view the dashboards.
 
 
-## Step 4: Create Site-Specific Config Files
+## Step 4: Create Site-Specific Probing files
 You must provide your own scrape and recording rules to tell Prometheus what to monitor.
 
 This is probably the hardest step: You will actually need to know what is running, and where it is! Building out these config files will give you that inventory, and give a real definition of what is running where.
@@ -78,9 +78,6 @@ This is probably the hardest step: You will actually need to know what is runnin
 - Probers: HTTP endpoints you want to monitor for availability
   - Add files in `alloy/probers/*.yml`
   - [Configure Probers](./probing.md)
-
-- Telemetry: Run Grafana Alloy on every VM you want telemetry from
-    - [Configure Telemetry](./probing.md)
 
 - Recording Rules: Define uptime goals or custom aggregations
   - Add files in `recording-rules/*.yml`
@@ -94,6 +91,9 @@ Use the example docker compose file in [exporters.docker-compose.yml](../../../o
    ```
    docker compose -f exporters.docker-compose.yml up -d
    ```
+
+See [Configure Telemetry](./telemetry.md) for the full details
+
 ---
 
 ## What’s Next?

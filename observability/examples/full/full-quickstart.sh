@@ -20,10 +20,15 @@ download_to docker-compose.yml
 download_to exporters.docker-compose.yml
 download_to exporters.elastic.docker-compose.yml
 
-download_to alloy/probers/probe-internal.yml
+download_to alloy/probers/probe-observability.yml
 download_to alloy/probers/probe-external.yml
 download_to prometheus/scrape-configs/exporters/exporters.yml
 download_to prometheus/scrape-configs/recording-rules/slo.yml
 
-
 echo "Setup complete in cogstack-observability/"
+
+echo "Starting the observability stack"
+
+docker compose up -d
+
+echo "Please open http://localhost/grafana in your browser"
