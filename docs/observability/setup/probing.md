@@ -1,6 +1,6 @@
 # Availability
 
-This guide explains how to configure HTTP probers using Blackbox Exporter to monitor the availability of your services. These probers generate uptime and latency metrics, which can then be visualized in Grafana.
+This guide explains how to configure HTTP probers using Blackbox Exporter in Grafana Alloy to monitor the availability of your services. These probers generate uptime and latency metrics, which can then be visualized in Grafana.
 
 See the [Reference](../reference/understanding-metrics.md) for an explanation of the metrics this generates.
 
@@ -13,7 +13,7 @@ To add a new prober target:
 1. Navigate to the folder:
 
    ```
-    prometheus/scrape-configs/probers/
+    alloy/probers/
    ```
 
 2. Create a new YAML file (e.g., `probe.my-services.yml`) with the following structure:
@@ -27,10 +27,10 @@ To add a new prober target:
         job: my-services             # Mandatory - used to group probes in dashboards
         ip_address: "10.0.0.12"      # Optional - IP of the host being probed
         host: service-hostname       # Optional - Human-readable hostname
-        region: eu-west              # Optional - Any additional metadata label
+        any_custom_field: anything   # Optional - Add as many labels as desired here
    ```
 
-3. Ensure the folder is mounted in docker under `/etc/prometheus/cogstack/site/prometheus/scrape-configs/probers`, which it should be by default if you've followed the setup guids. Any valid `.yml` files in this folder will be automatically picked up and used as Blackbox targets.
+3. Ensure the folder is mounted in docker under `/etc/alloy/probers`, which it should be by default if you've followed the setup guids. Any valid `.yml` files in this folder will be automatically picked up and used as Blackbox targets.
 
 ---
 

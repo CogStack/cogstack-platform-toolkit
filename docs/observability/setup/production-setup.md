@@ -70,7 +70,7 @@ This will launch Prometheus, Grafana, and Alloy
 Navigate to the dashboard urls on `http://localhost/grafana` to view the dashboards.
 
 
-## Step 4: Create Site-Specific Config Files
+## Step 4: Create Site-Specific Probing files
 You must provide your own scrape and recording rules to tell Prometheus what to monitor.
 
 This is probably the hardest step: You will actually need to know what is running, and where it is! Building out these config files will give you that inventory, and give a real definition of what is running where.
@@ -78,9 +78,6 @@ This is probably the hardest step: You will actually need to know what is runnin
 - Probers: HTTP endpoints you want to monitor for availability
   - Add files in `alloy/probers/*.yml`
   - [Configure Probers](./probing.md)
-
-- Telemetry: Run Grafana Alloy on every VM you want telemetry from
-    - [Configure Telemetry](./probing.md)
 
 - Recording Rules: Define uptime goals or custom aggregations
   - Add files in `recording-rules/*.yml`
@@ -94,6 +91,9 @@ Use the example docker compose file in [exporters.docker-compose.yml](../../../o
    ```
    docker compose -f exporters.docker-compose.yml up -d
    ```
+
+See [Configure Telemetry](./telemetry.md) for the full details
+
 ---
 
 ## What’s Next?

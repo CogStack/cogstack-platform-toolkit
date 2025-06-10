@@ -11,7 +11,7 @@ You will need to create a new file, and then mount it over the existing provided
 1. Create a new file:
 
    ```
-    prometheus/blackbox-exporter/custom-blackbox-config.yml
+    alloy/blackbox-exporter.yml
    ```
 
 2. Add the existing defaults
@@ -67,13 +67,10 @@ In your probe YAML file, reference the module in the `module` field of the `labe
 You lastly need to mount the new config file and refer to it in docker compose
 
 ```
-  blackbox-exporter:
-    image: cogstacksystems/cogstack-observability-blackbox-exporter:latest
-    restart: unless-stopped
-    networks:
-      - observability
+ alloy:
+    image: cogstacksystems/cogstack-observability-alloy:latest
+...
     volumes:
-      - ./prometheus/blackbox-exporter:/config
-    command:
-      - "--config.file=/config/custom-blackbox-config.yml" 
+      - ${BASE_DIR-.}/alloy/blackbox-exporter.yml:/etc/alloy/blackbox-exporter.yml
+...
 ```
