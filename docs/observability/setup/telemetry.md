@@ -12,9 +12,23 @@ Grafana Alloy is used to get telemetry. These features are configured by default
 
 ## How to get Telemetry
 
+We have to run Grafana Alloy on every single VM to get telemetry.
+
+Alloy is setup to push metrics to a central prometheus instance.
+
 - Copy this docker compose file: [exporters.docker-compose.yml](../../../observability/examples/full/exporters.docker-compose.yml)
-- Edit the environment variables to point to your prometheus URL
-- Run `docker compose -f exporters.docker-compose.yml up -d ` on every VM you want metrics from
+- Edit the environment variables to point to your prometheus URL:
+
+```yaml
+    environment:
+      - PROMETHEUS_URL=http://some-host:9090/prometheus # The URL that is running prometheus.
+      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME-localhost}      # Used to add a label to metrics
+      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS-localhost}  # Used to add a label to metrics
+```
+
+Now you have the setup, you will have to run this on every VM you want metrics from. This is a good opportunity to look into orchestrating deployments from a central place.
+
+- On each specific VM, run `docker compose -f exporters.docker-compose.yml up -d ` 
 
 
 ### Elastic Search Metrics
