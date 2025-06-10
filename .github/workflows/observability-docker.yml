@@ -89,29 +89,14 @@ jobs:
     - name: Run Simple quickstart test
       run: |
         echo "🧪 Running Simple quickstart test..."
-        bash observability/test/test-quickstart-simple.sh
+        bash observability/test/test-quickstart.sh
         
     - name: Report test result
       if: always()
       run: |
         if [ $? -eq 0 ]; then
-          echo "✅ Full quickstart test PASSED"
+          echo "✅ quickstart test PASSED"
         else
-          echo "❌ Full quickstart test FAILED"
+          echo "❌ quickstart test FAILED"
           exit 1
         fi
-
-    - name: Run full quickstart test
-      run: |
-        echo "🧪 Running full quickstart test..."
-        ./observability/test/test-quickstart-full.sh
-        
-    - name: Report test result
-      if: always()
-      run: |
-        if [ $? -eq 0 ]; then
-          echo "✅ Full quickstart test PASSED"
-        else
-          echo "❌ Full quickstart test FAILED"
-          exit 1
-       
