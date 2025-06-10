@@ -1,48 +1,6 @@
-
-// Blackbox Exporter - Probe Observability Stack
-prometheus.exporter.blackbox "probe_observability_stack" {
-  config_file = "/etc/alloy/blackbox-exporter.yml"
-  target {
-    name    = "grafana"
-    address = "cogstack-observability-traefik-1/grafana/api/health"
-    module  = "http_get_200"
-    labels = {
-      "name" = "grafana",
-      "host" = "localhost",
-    }
-  }
-
-  target {
-    name    = "prometheus"
-    address = "cogstack-observability-traefik-1/prometheus/-/healthy"
-    module  = "http_get_200"
-    labels = {
-      "name" = "prometheus",
-      "host" = "localhost",
-    }
-  }
-}
-discovery.relabel "probe_observability_stack_results" {
-  targets = prometheus.exporter.blackbox.probe_observability_stack.targets
-
-  rule {
-    source_labels = ["__param_target"]
-    target_label = "instance"
-    regex = "([^/]+)/(.*)"
-    replacement = "prometheus-host/$2"
-  }
-
-  rule {
-    target_label = "job"
-    replacement = "probe-observability-stack"
-  }
-  rule {
-    target_label = "host"
-    replacement = "prometheus-host"
-  }
-}
-
 // Blackbox Exporter - Probe External Services
+// Mount any yaml into the discovery folder, and this will probe it
+
 discovery.file "probe_target_files" {
   files = ["/etc/alloy/probers/*.yml"]
   refresh_interval = "5m"
@@ -104,11 +62,8 @@ discovery.relabel "probe_discovered_targets_results" {
 }
 
 // Scrape Probe targets
-prometheus.scrape "blackbox_exporter" {
+prometheus.scrape "probe_targets_scrape" {
     scrape_interval = "15s"
-    targets    = array.concat(
-        discovery.relabel.probe_discovered_targets_results.output,
-        discovery.relabel.probe_observability_stack_results.output,
-    )
+    targets    = discovery.relabel.probe_discovered_targets_results.output
     forward_to = [prometheus.remote_write.default.receiver]
 }
