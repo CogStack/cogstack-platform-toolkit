@@ -11,7 +11,7 @@ bash ./full-quickstart.sh
 
 # Run the health check
 echo "🔍 Running health check..."
-python ../../test/health-check.py
+python -u ../../test/health-check.py
 
 # Check if health check was successful
 if [ $? -eq 0 ]; then

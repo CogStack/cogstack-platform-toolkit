@@ -37,7 +37,7 @@ def main():
     services = [
         (f"http://{localhost_url}/grafana", "Grafana"),
         (f"http://{localhost_url}/prometheus", "Prometheus"),
-        (f"http://{localhost_url}/alloy", "Prometheus"),
+      #  (f"http://{localhost_url}/alloy", "Alloy"),
     ]
     
     all_healthy = True
