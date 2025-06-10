@@ -12,7 +12,7 @@ Grafana Alloy is used to get telemetry. These features are configured by default
 
 ## How to get Telemetry
 
-- Copy this docker compose file: [exporters.docker-compose.yml](observability/examples/full/exporters.docker-compose.yml)
+- Copy this docker compose file: [exporters.docker-compose.yml](../../../observability/examples/full/exporters.docker-compose.yml)
 - Edit the environment variables to point to your prometheus URL
 - Run `docker compose -f exporters.docker-compose.yml up -d ` on every VM you want metrics from
 
@@ -20,7 +20,7 @@ Grafana Alloy is used to get telemetry. These features are configured by default
 ### Elastic Search Metrics
 To get elasticsearch metrics we have to mount an alloy config file into the image.
 
-- Copy this docker compose file: [exporters.elastic.docker-compose.yml](observability/examples/full/exporters.elastic.docker-compose.yml)
+- Copy this docker compose file: [exporters.elastic.docker-compose.yml](../../../observability/examples/full/exporters.elastic.docker-compose.yml)
 - Copy this configuration file [elasticsearch.alloy](../../../observability/examples/full/alloy/elasticsearch.alloy) into `alloy/elasticsearch.alloy`
 
 In the docker compose file, we can see there are two changes to the usual exporter:
