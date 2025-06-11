@@ -72,8 +72,6 @@ jobs:
           cache-from: type=registry,ref=${{ matrix.image}}:buildcache
           cache-to: type=registry,ref=${{ matrix.image}}:buildcache,mode=max
 
-
-
   test-observability-quickstart-scripts:
     runs-on: ubuntu-latest
     name: Test observability Quickstart scripts
@@ -86,6 +84,7 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
+        cache: pip
         
     - name: Install Python dependencies
       run: pip install -r observability/test/requirements.txt
