@@ -13,9 +13,9 @@ Further in development projects are [here](https://github.com/orgs/CogStack/repo
 
 | Tool | Description |
 |:-----|:------------|
-| <img src="overview/attachments/36c0d23f-a632-4fbf-9f7c-6669e88bbd39.png" width="100"/> <br/> [**CogStack-Nifi**](https://cogstack-nifi.readthedocs.io/en/latest/main.html) | Data flow orchestration using Apache NiFi |
-| <img src="overview/attachments/09a8bb60-9864-41fa-be7b-cf9a9dc04498.png" width="100"/> <br/> [**MedCAT**](https://medcat.readthedocs.io/en/latest/) | Medical Concept Annotation Toolkit |
-| <img src="overview/attachments/09a8bb60-9864-41fa-be7b-cf9a9dc04498.png" width="100"/> <br/> [**MedCATTrainer**](https://medcattrainer.readthedocs.io/en/latest/) | Web-based annotation and training interface for MedCAT |
+| ![CogStack-Nifi](overview/attachments/36c0d23f-a632-4fbf-9f7c-6669e88bbd39.png){width=100} <br/> [**CogStack-Nifi**](https://cogstack-nifi.readthedocs.io/en/latest/main.html) | Data flow orchestration using Apache NiFi |
+| ![MedCAT](overview/attachments/09a8bb60-9864-41fa-be7b-cf9a9dc04498.png){width=100} <br/> [**MedCAT**](https://medcat.readthedocs.io/en/latest/) | Medical Concept Annotation Toolkit |
+| ![MedCATTrainer](overview/attachments/09a8bb60-9864-41fa-be7b-cf9a9dc04498.png){width=100} <br/> [**MedCATTrainer**](https://medcattrainer.readthedocs.io/en/latest/) | Web-based annotation and training interface for MedCAT |
 
 
 ```{toctree}
