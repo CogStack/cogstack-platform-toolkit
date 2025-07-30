@@ -10,11 +10,11 @@ print("Hello")
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'CogStack Platform Toolkit'
+project = 'CogStack Documentation'
 copyright = '2025, CogStack Org'
 author = 'CogStack Org'
 release = 'latest'
-html_title = "CogStack Platform Toolkit"
+html_title = "CogStack Documentation"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

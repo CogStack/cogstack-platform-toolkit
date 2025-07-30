@@ -3,7 +3,7 @@
 
 # Natural Language Processing
 
-# Overview
+## Overview
 
 CogStack ecosystem provides a standard set of natural language processing applications that are used either as standalone applications or implemented as RESTful services with uniform API, each running in a Docker container. These NLP applications when used inside the data processing pipeline cover one of the key steps of information extraction. These NLP applications may include extracting medical concepts from free-text notes using a specific terminology, such as [SNOMED CT](https://en.wikipedia.org/wiki/SNOMED_CT) or using all the terminologies as available in [UMLS](https://www.nlm.nih.gov/research/umls/index.html). Often, more specialised applications will be built on top of the standard set of NLP applications provided in CogStack, utilising both structured and unstructured information tailored to a defined use-case. These custom applications can be further integrated into CogStack and used as a part of standard set of NLP applications.
 
@@ -13,9 +13,9 @@ CogStack ecosystem provides a standard set of natural language processing applic
 > [!TIP]
 > Apart from being integrated directly in the data processing pipeline, many NLP applications are often used as standalone applications and have a rich set of tools build around them – please see below for more details.
 
-# MedCAT - Medical Concept Annotation Tool
+## MedCAT - Medical Concept Annotation Tool
 
-## Overview
+### Overview
 
 One of the key tools is MedCAT – a Medical Concept Annotation Tool that is used for Named Entity Recognition and Linking (NER+L) tasks for clinical concepts from free-text documents.
 
@@ -29,7 +29,7 @@ One of the key tools is MedCAT – a Medical Concept Annotation Tool that is use
 > [!IMPORTANT]
 > When deploying MedCAT into data processing pipelines one may be interested in training and tailoring the MedCAT models as a part of model preparation. This can be done directly by using MedCAT Trainer or MedCAT library working with a corpus of input documents. Such trained model can be in the next step provided into MedCAT Service that will be deployed as a service and used in the data pipeline.
 
-## MedCAT Python module
+### MedCAT Python module
 
 Key resources:
 
@@ -58,9 +58,9 @@ Key resources:
 > [!TIP]
 > Please note that there is available public MedCAT model trained on MedMentions corpus that can be used to play with.
 
-# GATE NLP applications
+## GATE NLP applications
 
-## Overview of GATE NLP suite
+### Overview of GATE NLP suite
 
 [GATE NLP suite](https://gate.ac.uk/) is a well established and rich set of open-source technologies implementing full-lifecycle solution for text processing. The GATE ecosystem is very broad and outside of the scope of this documentation – here we will only focus on two applications:
 
@@ -76,7 +76,7 @@ GATE Embedded, on the other hand, is an object-oriented framework (or class libr
 
 Although there have been developed and published many applications in GATE NLP suite, in this page we only briefly cover Bio-YODIE.
 
-## Bio-YODIE
+### Bio-YODIE
 
 Bio-YODIE is a named entity linking system derived from GATE YODIE system. It links mentions in biomedical text to their referents in the UMLS. It defines a broad set of types such as `Disease` , `Drug`, `Observation` and many more all of the types belonging to `Bio` group – for detailed information please refer to [the official documentation](https://gate.ac.uk/applications/bio-yodie.html).
 
@@ -91,17 +91,17 @@ Bio-YODIE can be run either within GATE Developer application or as a service wi
 > [!WARNING]
 > Please note that Bio-YODIE requires resources to be prepared using UMLS. These are limited by individual license and cannot be openly shared.
 
-## GATE NLP Runner service
+### GATE NLP Runner service
 
 CogStack implements a GATE NLP Runner service that serves the GATE NLP applications as a service exposing RESTful API. It is using GATE Embedded to execute the GATE applications that are provided either in *gapp* or *xgapp* format. The API specification is provided in the sections below.
 
 For more information please refer to the official GitHub with code and documentation: <https://github.com/CogStack/gate-nlp-service>
 
-# NLP REST API
+## NLP REST API
 
 CogStack defines a simple, uniform, RESTful API for free-text documents processing. It’s primary focus has been on providing an application independent and uniform interface for extracting entities from the free-text. The data exchange should be stateless and synchronous. The use-case is: given a document (or a corpus of documents) extract the recognised named entities with associated meta-data. This way, any NLP application can be used or any NLP model can be served in the data processing pipeline as long as it stays compatible with the interface.
 
-## REST API definition
+### REST API definition
 
 The API defines 3 endpoints, that consume and return data in JSON format:
 
@@ -111,14 +111,14 @@ The API defines 3 endpoints, that consume and return data in JSON format:
 
 The full definition is available as [OpenAPI or Swagger](https://github.com/CogStack/gate-nlp-service/tree/devel/api-specs) specification.
 
-### GET `/api/info`
+#### GET `/api/info`
 
 Returns information about the used NLP application. The returned fields are:
 
 - `name`, `version`, `language` of the underlying NLP application
 - `parameters` – a generic JSON object representing any relevant parameters that have been specified to the application (optional)
 
-### POST `/api/process`
+#### POST `/api/process`
 
 Returns the annotations extracted from the provided document.
 
@@ -143,7 +143,7 @@ The response message payload JSON consists of an object `result` that has follow
 - `errors` – an array of NLP processor errors (present only in case when `success` is `false`)
 - `footer` – the footer object as provided in the request payload (present only when provided in the request message)
 
-### POST `/api/process_bulk`
+#### POST `/api/process_bulk`
 
 Returns the annotations extracted from a list of documents.
 
@@ -154,12 +154,12 @@ The request message payload JSON consists of following objects
 
 Here, the `content` object holds an array of single document content to be processed as defined above in (\*\*\*).
 
-## Example use
+### Example use
 
 > [!TIP]
 > Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) to see how to deploy example NLP services, i.e. MedCAT with a public MedMentions model and example GATE NLP Drug application.
 
-### MedCAT
+#### MedCAT
 
 Assuming that the application is running on the `localhost` with the API exposed on port `5000`, one can run:
 

@@ -3,11 +3,11 @@
 
 # Elasticsearch
 
-# Introduction
+## Introduction
 
 In CogStack the Elasticsearch ecosystem is being used extensively. It plays a key role of being the main data store and one of the key analytics tools able to fast query the free-text data.
 
-# Elasticsearch
+## Elasticsearch
 
 [Elasticsearch](https://www.elastic.co/guide/) is a leading NoSQL search engine based on the Lucene library that provides a distributed full-text search engine storing the data as schema-free JSON documents. Inside CogStack platform it is usually used as a data store for processed EHR free-text and annotation data.
 
@@ -19,7 +19,7 @@ Depending on the use-case, the processed EHR data is usually stored in indices a
 - the official [Elasticsearch documentation](https://www.elastic.co/guide/)
 - the official [Elasticsearch use-case examples](https://github.com/elastic/examples)
 
-# OpenDistro for Elasticsearch distribution
+## OpenDistro for Elasticsearch distribution
 
 [OpenDistro for Elasticsearch](https://opendistro.github.io/for-elasticsearch/) is a fully open-source, free and community-driven fork of Elasticseach. It implements many of the X-pack components functionality, such as advanced security module, alerting module or SQL support. Nonetheless, the standard core functionality and APIs the official Elasticsearch and OpenDistro remain the same. Hence OpenDistro can be used as a drop-in replacement.
 
@@ -31,7 +31,7 @@ Depending on the use-case, the processed EHR data is usually stored in indices a
 > [!TIP]
 > For example use and deployment of CogStack with Elasticsearch please see the tutorial: [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy)
 
-# Kibana
+## Kibana
 
 [Kibana](https://www.elastic.co/products/kibana) is a data visualisation application for Elasticsearch that be easily used to explore and query the data. In sample CogStack platform deployments it can be used as a ready-to-use data exploration tool.
 
@@ -41,7 +41,7 @@ Below is presented an example dashboard.
 
 ![](./attachments/f7a03376-ae0e-4980-929a-e3897da5d186.jpg)
 
-# Security
+## Security
 
 OpenDistro implements many of the commercial X-Pack components functionality, such as advanced security module, alerting module or SQL support. Some of the features include:
 

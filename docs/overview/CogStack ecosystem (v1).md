@@ -3,15 +3,9 @@
 
 # CogStack ecosystem (v1)
 
-|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Overview  <br/> In this part are covered the available services that can be running in an example CogStack deployment. To such deployment with many running services we refer as an  *ecosystem* or a *platform*. Below is presented a high-level perspective of CogStack platform with the possibilities it enables through many components and services. <br/> []() <br/>  <br/> In practice, many of the functionalities that CogStack platform enables are implemented as separate, but interconnected services working inside the ecosystem. <br/>  <br/> | > [!NOTE] **On this page :**  <br/> <ul class="toc-indentation"><br/><li><a href="#CogStackecosystem(v1)-Overview">Overview</a></li><br/><li><a href="#CogStackecosystem(v1)-platform-coreCoreservices">Core services</a></li><br/><li><a href="#CogStackecosystem(v1)-platform-pipelineCogStackPipeline">CogStack Pipeline</a></li><br/><li><a href="#CogStackecosystem(v1)-platform-postgres"></a></li><br/><li><a href="#CogStackecosystem(v1)-PostgreSQL">PostgreSQL</a></li><br/><li><a href="#CogStackecosystem(v1)-platform-esElasticSearch">ElasticSearch</a></li><br/><li><a href="#CogStackecosystem(v1)-platform-kibanaKibana">Kibana</a></li><br/><li><a href="#CogStackecosystem(v1)-platform-nginxNGINX">NGINX</a></li><br/><li><a href="#CogStackecosystem(v1)-platform-fluentdFluentd">Fluentd</a></li><br/></ul>   <br/> |
+In this part are covered the available services that can be running in an example CogStack deployment. To such deployment with many running services we refer as an  *ecosystem* or a *platform*. Below is presented a high-level perspective of CogStack platform with the possibilities it enables through many components and services. In practice, many of the functionalities that CogStack platform enables are implemented as separate, but interconnected services working inside the ecosystem. 
 
----
-
----
-
-# Core services
+## Core services
 
 In most scenarios CogStack platform will consist of *core* services tailored to specific use-cases. Additional application and services can be run on top of it, such as [SemEHR](../../CogStack%20General/CogStack%20Wiki/CogStack%20projects/SemEHR.md), [Patient Timeline](../../CogStack%20General/CogStack%20Wiki/CogStack%20projects/Patient%20Timeline.md), Live Alerting (through ElasticSearch plugins) or any other custom developed applications. For an ease-of-use, when deploying a sample CogStack platform, we always emphasise to use Docker Compose (see: [Running CogStack](Running%20CogStack.md)).
 
@@ -41,7 +35,7 @@ It is essential to note that presented is a very simplified scenario, which can 
 
 ---
 
-# CogStack Pipeline
+### CogStack Pipeline
 
 CogStack Pipeline is the main data processing service used inside the CogStack platform. Within the ecosystem it's main responsibilities is to ingest the EHR data from a specified data source, process the data (e.g. by applying the text extraction methods, records de-identification or extracting the NLP annotations) and store the resulting data in the specified sink.
 
@@ -60,9 +54,9 @@ The information about available data processing components offered by CogStack P
 
 ---
 
-# 
 
-# PostgreSQL
+
+### PostgreSQL
 
 [PostgreSQL](https://www.postgresql.org/) is a widely used object-relational database management system. In CogStack platform it is primarily used as a job repository, for storing the jobs execution status of running CogStack Pipeline instances. However, there may be cases where one may need to store the partial results treating PostgreSQL DB either as a data cache (see: [Examples](Examples.md) ) or an auxiliary data sink.
 
@@ -88,7 +82,7 @@ When used as a job repository, it requires defining appropriate tables with a us
 
 ---
 
-# ElasticSearch
+### ElasticSearch
 
 [ElasticSearch](https://www.elastic.co/guide/) is a popular NoSQL search engine based on the Lucene library that provides a distributed full-text search engine storing the data as schema-free JSON documents. Inside CogStack platform it is usually used as a primary data store for processed EHR data by CogStack Pipeline.
 
@@ -151,7 +145,7 @@ Depending on the use-case, the processed EHR data is usually stored in indices a
 
 ---
 
-# Kibana
+### Kibana
 
 [Kibana](https://www.elastic.co/products/kibana) is a data visualisation module for ElasticSeach that be easily used to explore and query the data. In sample CogStack platform deployments it can be used as a ready-to-use data exploration tool.
 
@@ -168,7 +162,7 @@ Apart from providing exploratory data analysis functionality it also offers admi
 
 ---
 
-# NGINX
+### NGINX
 
 NGINX is a popular, open-source web server that can also be used as a reverse proxy, load balancer, HTTP cache and more. In CogStack platform deployments, it can be used as a reverse-proxy and providing a basic security access to the exposed data stores and service endpoints. Some of the functionality may include general user-based authentication, IP filtering and selective service access. A more detailed description of security features offered by NGINX can be found in the [official documentation](https://docs.nginx.com/nginx/admin-guide/security-controls/).
 
@@ -185,7 +179,7 @@ NGINX is a popular, open-source web server that can also be used as a reverse pr
 
 ---
 
-# Fluentd
+### Fluentd
 
 [Fluentd](https://www.fluentd.org/) is an open source data collector providing a unified logging layer. In sample CogStack platform deployments it can be used running as a service collecting the logs from all the running services which can be used for auditing.
 

@@ -3,32 +3,32 @@
 
 # Data pipelines
 
-# Introduction
+## Introduction
 
 This page covers the data pipelines used in CogStack ecosystem.
 
 > [!WARNING]
 > Please note that CogStack-Pipeline was the initial implementation of CogStack platform and this pipeline engine is being deprecated – we are moving forward with porting the existing pipeline functionality using Apache NiFi as the main data processing engine (see below: **CogStack-NiFi**).
 
-# CogStack-Pipeline
+## CogStack-Pipeline
 
-## Overview
+### Overview
 
 CogStack-Pipeline is an application for executing data pipelines for performing EHR data ingestion from databases to ElasticSearch (primarily) or other databases. It implements a fixed set of ETL operations including extraction of text from binary documents using Apache Tika, running NLP applications based on [GATE NLP suite](https://gate.ac.uk/) and a custom de-identification application based on text scrubbing. It was build in Spring Batch and implements only a document-oriented data processing model. For a complete description on CogStack-Pipeline please refer to [the official documentation](https://cogstack.atlassian.net/wiki/spaces/COGDOC).
 
 > [!IMPORTANT]
 > The latest version of CogStack Pipeline is 1.3.1.
 
-## Key resources
+### Key resources
 
 - Documentation: [https://cogstack.atlassian.net/wiki/spaces/COGDOC](/wiki/spaces/COGDOC)
 - Deployment examples: [Examples](Examples.md)
 - GitHub: <https://github.com/CogStack/CogStack-Pipeline>
 - DockerHub: <https://cloud.docker.com/repository/docker/cogstacksystems/cogstack-pipeline>
 
-# CogStack-NiFi
+## CogStack-NiFi
 
-## Overview
+### Overview
 
 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |                                                              |
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------|
@@ -37,7 +37,7 @@ CogStack-Pipeline is an application for executing data pipelines for performing 
 > [!IMPORTANT]
 > Please note that CogStack-NiFi project is still under active development with the newest version **0.1.0**.
 
-## **Apache NiFi – overview**
+### **Apache NiFi – overview**
 
 *From the official documentation:* Apache NiFi is a dataflow system based on the concepts of flow-based programming. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. NiFi has a web-based user interface for design, control, feedback, and monitoring of dataflows. It is highly configurable along several dimensions of quality of service, such as loss-tolerant versus guaranteed delivery, low latency versus high throughput, and priority-based queuing. NiFi provides fine-grained data provenance for all data received, forked, joined cloned, modified, sent, and ultimately dropped upon reaching its configured end-state.
 
@@ -61,7 +61,7 @@ Some of the key features of Apache NiFi engine are:
 
 For a detailed description of Apache NiFi, it’s functionality and broad set of features please refer to [the official documentation](https://nifi.apache.org/docs.html) and [the official Apache NiFi website](https://nifi.apache.org/).
 
-## Major changes from CogStack-Pipeline
+### Major changes from CogStack-Pipeline
 
 There are some key major changes when using and deploying Apache NiFi as compared with CogStack-Pipeline.
 
@@ -76,6 +76,6 @@ Moreover, fixed ETL operations (implemented as modules in CogStack-Pipeline) can
 > [!IMPORTANT]
 > Please note that the recommended minimal resources requirements for running Apache NiFi will be higher than for CogStack-Pipeline and these will depend on the actual use-case.
 
-## Example deployment and services
+### Example deployment and services
 
 Please see [CogStack-NiFI example deployment with workflow examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) .
