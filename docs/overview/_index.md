@@ -1,11 +1,10 @@
 
 ```{toctree}
-:maxdepth: 2
-CogStack Documentation.md
-CogStack ecosystem (v1).md
-CogStack Product Documentation.md
-Data pipelines.md
-Elasticsearch.md
-Natural Language Processing.md
-Server specification guide.md
+:maxdepth: 1
+CogStack Documentation
+CogStack ecosystem (v1)
+CogStack Product Documentation
+Data pipelines
+Elasticsearch
+Natural Language Processing
 ```

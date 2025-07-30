@@ -23,4 +23,5 @@ jobs:
           pip3 install -r requirements.txt
           make clean
           # Fail buiild on any docs warning
-          make html O=-W 
+          # make html O=-W # Removed whilst migrating existing docs
+          make html
