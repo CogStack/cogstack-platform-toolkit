@@ -26,15 +26,15 @@ This script will setup all the folder structure, and download all the relevant f
 The script automates making folders, and downloading these files:
 
 Downloads the example docker compose files:
-- [docker-compose.yml](../../../observability/examples/full/docker-compose.yml)
-- [exporters.docker-compose.yml](../../../observability/examples/full/exporters.docker-compose.yml)
-- [exporters.elastic.docker-compose.yml](../../../observability/examples/full/exporters.elastic.docker-compose.yml)
+- [docker-compose.yml](../../../../observability/examples/full/docker-compose.yml)
+- [exporters.docker-compose.yml](../../../../observability/examples/full/exporters.docker-compose.yml)
+- [exporters.elastic.docker-compose.yml](../../../../observability/examples/full/exporters.elastic.docker-compose.yml)
 
 Downloads the configurations:
-- [alloy/probers/probe-external.yml](../../../observability/examples/full/alloy/probers/probe-external.yml)
-- [alloy/probers/probe-observability.yml ](../../../observability/examples/full/alloy/probers/probe-observability.yml)
-- [prometheus/scrape-configs/exporters/exporters.yml](../../../observability/examples/full/prometheus/scrape-configs/exporters/exporters.yml)
-- [prometheus/scrape-configs/recording-rules/slo.yml](../../../observability/examples/full/prometheus/scrape-configs/recording-rules/slo.yml)
+- [alloy/probers/probe-external.yml](../../../../observability/examples/full/alloy/probers/probe-external.yml)
+- [alloy/probers/probe-observability.yml ](../../../../observability/examples/full/alloy/probers/probe-observability.yml)
+- [prometheus/scrape-configs/exporters/exporters.yml](../../../../observability/examples/full/prometheus/scrape-configs/exporters/exporters.yml)
+- [prometheus/scrape-configs/recording-rules/slo.yml](../../../../observability/examples/full/prometheus/scrape-configs/recording-rules/slo.yml)
 
 
 
@@ -86,7 +86,7 @@ This is probably the hardest step: You will actually need to know what is runnin
 ## Step 5: Run Grafana Alloy on every VM
 The Grafana Alloy image needs to be run on each VM that you want to get information from. 
 
-Use the example docker compose file in [exporters.docker-compose.yml](../../../observability/examples/full/exporters.docker-compose.yml) which will start up alloy and get metrics
+Use the example docker compose file in [exporters.docker-compose.yml](../../../../observability/examples/full/exporters.docker-compose.yml) which will start up alloy and get metrics
 
    ```
    docker compose -f exporters.docker-compose.yml up -d

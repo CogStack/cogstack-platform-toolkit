@@ -173,7 +173,7 @@ Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/C
 
 Assuming that the application is running on the `localhost` with the API exposed on port `5000`, one can run:
 
-```java
+```bash
 curl -XPOST http://localhost:5000/api/process \
   -H 'Content-Type: application/json' \
   -d '{"content":{"text":"The patient was diagnosed with leukemia."}}'
@@ -182,7 +182,7 @@ curl -XPOST http://localhost:5000/api/process \
 
 and the received result:
 
-```java
+```json
 {
   "result": {
     "text": "The patient was diagnosed with leukemia.",
@@ -211,7 +211,7 @@ and the received result:
 
 Bio-YODIE is being run as a service using CogStack GATE NLP Runner Service as described above. In this example Bio-YODIE application will only output annotations of `Disease` type from `Bio` group (defined in the service configuration file). Assuming that the service is running on the `localhost` with the API exposed on port `8095`, so one can run:
 
-```java
+```bash
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"content":{"text": "lung cancer diagnosis"}}' \
@@ -220,7 +220,7 @@ curl --header "Content-Type: application/json" \
 
 and the received result:
 
-```java
+```json
 {
   "result": {
     "text": "lung cancer diagnosis",
@@ -270,7 +270,7 @@ As an extra example, a simple application for extracting drug names from the fre
 
 Similarly as in above, assuming that the application is running on the `localhost` with the API exposed on port `8095`, one can run:
 
-```java
+```bash
 curl -XPOST http://localhost:8095/api/process \
   -H 'Content-Type: application/json' \
   -d '{"content":{"text":"The patient was prescribed with Aspirin."}}'
@@ -279,7 +279,7 @@ curl -XPOST http://localhost:8095/api/process \
 
 and the received result:
 
-```java
+```json
 {
   "result": {
     "text": "The patient was prescribed with Aspirin.",
