@@ -26,9 +26,16 @@ overview/_index
 
 ```{toctree}
 :hidden:
-:caption: CogStack Platform
+:caption: CogStack NLP
 MedCAT <https://docs.cogstack.org/projects/nlp>
 MedCAT Trainer <hhttps://medcattrainer.readthedocs.io//>
+
+```
+
+```{toctree}
+:hidden:
+:caption: CogStack Platform
+
 NiFi <https://cogstack-nifi.readthedocs.io/en/latest/>
 
 platform/_index
