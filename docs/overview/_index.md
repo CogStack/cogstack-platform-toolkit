@@ -2,7 +2,7 @@
 
 ```{toctree}
 :maxdepth: 1
-CogStack Documentation
+cogstack-documentation
 CogStack ecosystem (v1)
 Data pipelines
 Elasticsearch

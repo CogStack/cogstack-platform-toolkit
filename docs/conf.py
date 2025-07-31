@@ -24,7 +24,9 @@ extensions = [
     'sphinx.ext.autodoc',
     'myst_parser',
     'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx'
 ]
+
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
@@ -35,6 +37,11 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = "furo"
 html_static_path = ['_static']
 
+
+intersphinx_mapping = {
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+}
+intersphinx_disabled_reftypes = ["*"]
 
 myst_enable_extensions = [
     "amsmath",

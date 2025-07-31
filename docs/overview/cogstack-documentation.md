@@ -11,10 +11,9 @@ CogStack is a lightweight distributed, fault tolerant database processing archit
 
 The CogStack ecosystem has been developed as an open source project with the code available on GitHub: [https://github.com/CogStack/](https://github.com/CogStack/CogStack-Pipeline) .
 
-> [!IMPORTANT]
-> ### Tip
->
-> Starting from version 1.2 CogStack is preferably being run as an ecosystem using a set of different microservices and deployed using [Docker Compose](https://docs.docker.com/compose/). The ready-to-use CogStack images are available to pull directly from the official Docker Hub under [cogstacksystems](https://hub.docker.com/u/cogstacksystems/) organisation. We’re actively pursuing running the stack in a K8s cluster also.
+:::{tip}
+Starting from version 1.2 CogStack is preferably being run as an ecosystem using a set of different microservices and deployed using [Docker Compose](https://docs.docker.com/compose/). The ready-to-use CogStack images are available to pull directly from the official Docker Hub under [cogstacksystems](https://hub.docker.com/u/cogstacksystems/) organisation. We’re actively pursuing running the stack in a K8s cluster also.
+:::
 
 ## Why does this project exist?
 

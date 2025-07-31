@@ -1,6 +1,3 @@
-
-
-
 # CogStack ecosystem (v1)
 
 In this part are covered the available services that can be running in an example CogStack deployment. To such deployment with many running services we refer as an  *ecosystem* or a *platform*. Below is presented a high-level perspective of CogStack platform with the possibilities it enables through many components and services. In practice, many of the functionalities that CogStack platform enables are implemented as separate, but interconnected services working inside the ecosystem. 
@@ -22,18 +19,13 @@ A CogStack platform presented here consists of such core services:
 
 It is essential to note that presented is a very simplified scenario, which can be easily deployed even on a local machine with limited resources. We are also using here an optional Kibana as an out-of-the-box and easy to use solution to explore the data, although many other data analysis or BI tools can be used. Moreover, there are also available connectors to ElasticSearch in many languages, such as Java, Python, R or JavaScript allowing for fast development of custom user applications.
 
-> [!TIP]
-> Note
->
->  
->
-> In the picture we only presented ElasticSearch using a single node. However, in practice, one should consider using at least 3 ElasticSearch nodes deployed as a cluster which greatly improves resilience, query performance and reliability.
->
-> Similarly, in the picture we only presented one CogStack Pipeline instance and only one data source. However, in practice, there may be multiple sources available with multiple Pipeline components running in parallel. This is why, when considering deploying CogStack platform in production, one should keep in mind the aspects of the scalability and resilience of the platform and running services.
+:::{tip}
+Note
+ 
+In the picture we only presented ElasticSearch using a single node. However, in practice, one should consider using at least 3 asticSearch nodes deployed as a cluster which greatly improves resilience, query performance and reliability.
+Similarly, in the picture we only presented one CogStack Pipeline instance and only one data source. However, in practice, there may be multiple sources available with multiple Pipeline components running in parallel. This is why, when considering deploying CogStack platform in production, one should keep in mind the aspects of the scalability and resilience of the platform and running services.
+:::
 
----
-
----
 
 ### CogStack Pipeline
 
@@ -43,12 +35,9 @@ Usually, the sink will be the ElasticSearch store, keeping the processed EHRs wh
 
 The information about available data processing components offered by CogStack Pipeline can be found in [CogStack Pipeline](CogStack%20Pipeline.md) part.
 
-> [!IMPORTANT]
-> Info
->
->  
->
-> We recommend using CogStack Pipeline component in the newest version 1.3.0.
+:::{ifno}
+We recommend using CogStack Pipeline component in the newest version 1.3.0.
+:::
 
 ---
 
@@ -62,25 +51,16 @@ The information about available data processing components offered by CogStack P
 
 When used as a job repository, it requires defining appropriate tables with a user that will be used by CogStack Pipeline running instance(s). This schema is defined by [Spring Batch META-DATA schema definition](https://docs.spring.io/spring-batch/trunk/reference/html/metaDataSchema.html) and is also available in `CogStack-Pipeline/examples/docker-common/pgjobrepo/create_repo.sh` script.
 
-> [!IMPORTANT]
-> Info
->
->  
->
-> We recommend using PostgreSQL in versions >= 10.
->
-> In the [Examples](Examples.md) part we use PostgreSQL in version 11.1.
+:::{Info}
+We recommend using PostgreSQL in versions >= 10.
+In the [Examples](Examples.md) part we use PostgreSQL in version 11.1.
+:::
 
-> [!WARNING]
-> Note
->
->  
->
-> PostgreSQL by default has a connection limit of 100.  Since a single CogStack Pipeline instance using multiple processing threads uses a connection pool both for retrieving the EHR data from the database source and to update the job repository, one may need to increase the default connection limit with the available memory buffers. To do so, one may specify parameters: `"-c 'shared_buffers=256MB' -c 'max_connections=1000'"` when initialising the database.
-
----
-
----
+:::{warning}
+Note
+ 
+PostgreSQL by default has a connection limit of 100.  Since a single CogStack Pipeline instance using multiple processing threads uses a connection pool both for retrieving the EHR data from the database source and to update the job repository, one may need to increase the default connection limit with the available memory buffers. To do so, one may specify parameters: `"-c 'shared_buffers=256MB' -c 'max_connections=1000'"` when initialising the database.
+:::
 
 ### ElasticSearch
 
@@ -88,58 +68,44 @@ When used as a job repository, it requires defining appropriate tables with a us
 
 Depending on the use-case, the processed EHR data is usually stored in indices as defined in corresponding CogStack Pipeline job description property files (see: [CogStack Pipeline](CogStack%20Pipeline.md)). Once stored, it can be easily queried either by using the own's REST API (see: [ElasticSearch Search API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)), queried using [Kibana](#kibana) or queried using a ElasticSearch connector available in many programming languages. ElasticSearch apart from standard functionality and features provided in its open-source free version also offers more advanced ones distributed as [Elastic Stack](https://www.elastic.co/products/stack) (formerly: X-Pack extension) which require license. These include modules for machine learning, alerting, monitoring, security and more.
 
-> [!TIP]
-> Info
->
->  
->
-> In our [Examples](Examples.md) we use the free, open-source version of ElasticSearch without the Elastic Stack modules included. It needs to be noted that in cases when one requires a secure and/or granular access to the processed EHR data in ElasticSearch sink, one should explore the [Security](https://www.elastic.co/guide/en/x-pack/current/elasticsearch-security.html) module (formerly: Shield) offered in the Elastic Stack. Some of the features include (as stated the official website):
->
-> - Preventing unauthorised access with password protection, role-based access control (even per index- or single document-level), and IP filtering.
-> - Preserving the integrity of your data with message authentication and SSL/TLS encryption.
-> - Maintaining an audit trail so one know who’s doing what to your cluster and the data it stores.
->
-> CogStack Pipeline fully supports the functionality provided by the ElasticSearch Security module used to securely access the node(s).
+:::{tip}
+In our [Examples](Examples.md) we use the free, open-source version of ElasticSearch without the Elastic Stack modules included. It needs to be noted that in cases when one requires a secure and/or granular access to the processed EHR data in ElasticSearch sink, one should explore the [Security](https://www.elastic.co/guide/en/x-pack/current/elasticsearch-security.html) module (formerly: Shield) offered in the Elastic Stack. Some of the features include (as stated the official website):
+- Preventing unauthorised access with password protection, role-based access control (even per index- or single document-level), and IP filtering.
+- Preserving the integrity of your data with message authentication and SSL/TLS encryption.
+- Maintaining an audit trail so one know who’s doing what to your cluster and the data it stores.
+CogStack Pipeline fully supports the functionality provided by the ElasticSearch Security module used to securely access the node(s).
+:::
 
-> [!IMPORTANT]
-> Info
->
->  
->
-> In our [Examples](Examples.md) we use a simple, single-node ElasticSearch deployment. However, in practice, one should consider using at least 3 ElasticSearch nodes deployed as a cluster which greatly improves resilience, query performance and reliability.
+:::{Info}
+In our [Examples](Examples.md) we use a simple, single-node ElasticSearch deployment. However, in practice, one should consider using at least 3 ElasticSearch nodes deployed as a cluster which greatly improves resilience, query performance and reliability.
+:::
 
-> [!IMPORTANT]
-> Info
->
->  
->
-> We recommend using ElasticSearch in versions >= 6.0.
+:::{important}
+We recommend using ElasticSearch in versions >= 6.0.
+:::
 
-> [!WARNING]
-> Note
->
->  
->
-> If ElasticSearch service does not start up and such error is reported:
->
-> > elasticsearch    | ERROR: [1] bootstrap checks failed
-> >
-> > elasticsearch    | [1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]
->
-> one may need to increase the number of available file descriptors on the **host** machine – please refer to: <https://www.elastic.co/guide/en/elasticsearch/reference/current/file-descriptors.html>
 
-> [!WARNING]
-> Note
->
->  
->
-> If ElasticSearch service does not start up and such error is reported:
->
-> > elasticsearch    | ERROR: [1] bootstrap checks failed
-> >
-> > elasticsearch    | [1]: max virtual memory areas vm.max\_map\_count [65530] is too low, increase to at least [262144]
->
-> one may need to increase the number of available virtual memory on the **host** machine – please refer to: <https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html>
+:::{warning}
+Note
+ 
+If ElasticSearch service does not start up and such error is reported:
+
+> elasticsearch    | ERROR: [1] bootstrap checks failed
+> elasticsearch    | [1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]
+
+one may need to increase the number of available file descriptors on the **host** machine – please refer to: <https://www.elastic.co/guide/en/elasticsearch/reference/current/file-descriptors.html>
+:::
+
+:::{warning}
+Note
+ 
+If ElasticSearch service does not start up and such error is reported:
+
+> elasticsearch    | ERROR: [1] bootstrap checks failed
+> elasticsearch    | [1]: max virtual memory areas vm.max\_map\_count [65530] is too low, increase to at least [262144]
+
+one may need to increase the number of available virtual memory on the **host** machine – please refer to: <https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html>
+:::
 
 ---
 
@@ -151,12 +117,9 @@ Depending on the use-case, the processed EHR data is usually stored in indices a
 
 Apart from providing exploratory data analysis functionality it also offers administrative options over the ElasticSearch data store, such as adding/removing/updating the documents using command line or creating/removing indices. Moreover, custom user dashboards can be created according to use-case requirements. For a more detailed description of the available functionality please refer to the [official documentation](https://www.elastic.co/guide/en/kibana/current/introduction.html).
 
-> [!IMPORTANT]
-> Info
->
->  
->
-> In all our [Examples](Examples.md) we provide ElasticSearch bundled with Kibana.
+:::{info}
+In all our [Examples](Examples.md) we provide ElasticSearch bundled with Kibana.
+:::
 
 ---
 
@@ -168,12 +131,9 @@ NGINX is a popular, open-source web server that can also be used as a reverse pr
 
 [Examples](Examples.md) covers a simple use-case with NGINX serving as a basic authentication module. The example configuration of NGINX running as a proxy can be found in `CogStack-Pipeline/examples/docker-common/nginx/config/` directory.
 
-> [!IMPORTANT]
-> Info
->
->  
->
-> It needs to be noted, however, that the security and granularity of access to the data stored in ElasticSearch offered by NGINX is inferior to using the [Security](https://www.elastic.co/guide/en/x-pack/current/elasticsearch-security.html) module from Elastic Stack.
+:::{info}
+It needs to be noted, however, that the security and granularity of access to the data stored in ElasticSearch offered by NGINX is inferior to using the [Security](https://www.elastic.co/guide/en/x-pack/current/elasticsearch-security.html) module from Elastic Stack.
+:::
 
 ---
 
