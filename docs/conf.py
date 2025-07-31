@@ -10,11 +10,11 @@ print("Hello")
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'CogStack Platform Toolkit'
+project = 'CogStack Documentation'
 copyright = '2025, CogStack Org'
 author = 'CogStack Org'
 release = 'latest'
-html_title = "CogStack Platform Toolkit"
+html_title = "CogStack Documentation"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -24,10 +24,11 @@ extensions = [
     'sphinx.ext.autodoc',
     'myst_parser',
     'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx'
 ]
+
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -35,3 +36,26 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = "furo"
 html_static_path = ['_static']
+html_logo = "cogstack-logo.png"
+
+intersphinx_mapping = {
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+}
+intersphinx_disabled_reftypes = ["*"]
+
+myst_enable_extensions = [
+    "amsmath",
+    "attrs_inline",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "fieldlist",
+    "html_admonition",
+    "html_image",
+    # "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    "substitution",
+    "tasklist",
+]
