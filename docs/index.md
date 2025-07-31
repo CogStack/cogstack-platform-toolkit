@@ -19,9 +19,18 @@ Further in development projects are [here](https://github.com/orgs/CogStack/repo
 
 ```{toctree}
 :hidden:
-
+:maxdepth: 5
 overview/_index
-platform/_index
 
+```
+
+```{toctree}
+:hidden:
+:caption: CogStack Platform
+MedCAT <https://docs.cogstack.org/projects/nlp>
+MedCAT Trainer <hhttps://medcattrainer.readthedocs.io//>
+NiFi <https://cogstack-nifi.readthedocs.io/en/latest/>
+
+platform/_index
 ```
 

@@ -40,7 +40,7 @@ The latest version of CogStack Pipeline is 1.3.1.
 Please note that CogStack-NiFi project is still under active development with the newest version **0.1.0**.
 :::
 
-### **Apache NiFi – overview**
+### Apache NiFi – overview
 
 *From the official documentation:* Apache NiFi is a dataflow system based on the concepts of flow-based programming. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. NiFi has a web-based user interface for design, control, feedback, and monitoring of dataflows. It is highly configurable along several dimensions of quality of service, such as loss-tolerant versus guaranteed delivery, low latency versus high throughput, and priority-based queuing. NiFi provides fine-grained data provenance for all data received, forked, joined cloned, modified, sent, and ultimately dropped upon reaching its configured end-state.
 

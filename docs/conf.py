@@ -36,7 +36,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = "furo"
 html_static_path = ['_static']
-
+html_logo = "cogstack-logo.png"
 
 intersphinx_mapping = {
     "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
