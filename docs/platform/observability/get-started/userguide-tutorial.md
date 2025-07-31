@@ -2,7 +2,7 @@
 This guide walks you through how to monitor your stack using the included Grafana dashboards. It shows how to use each dashboard, and some ideas of what things to look out for.
 
 ## Availability - How well are things running?
-![Availability Dashboard](../../_static/screenshots-dashboards-availability.png)
+![Availability Dashboard](../../../_static/screenshots-dashboards-availability.png)
 
 Open the Cogstack Monitoring Dashboard on [localhost/grafana](http://localhost/grafana/d/NEzutrbMk/cogstack-monitoring-dashboard) 
 
@@ -20,7 +20,7 @@ Use the filters at the top, or click in the table to better filter the view down
 See [Setup Probing](../setup/probing.md) to do the full setup of probers.
 
 ## Inventory - What is running? 
-![Docker Metrics Dashboard](../../_static/screenshots-dashboards-docker-metrics.png)
+![Docker Metrics Dashboard](../../../_static/screenshots-dashboards-docker-metrics.png)
 
 Use the Docker Metrics dashboard to check which containers are running, where, and whether they're healthy. This is useful for verifying deployments or diagnosing issues.
 
@@ -36,7 +36,7 @@ See [telemetry](../setup/telemetry.md) to set this up
 Some additional dashboards are setup to provide more metrics.
 
 ### VM Metrics
-![ VM Metrics dashboard ](../../_static/screenshots-dashboards-vm-metrics.png)
+![ VM Metrics dashboard ](../../../_static/screenshots-dashboards-vm-metrics.png)
 
 Open the VM Metrics dashboard on [localhost/grafana](http://localhost/grafana/d/rYdddlPWk/vm-metrics-in-cogstack)
 
@@ -50,7 +50,7 @@ Look for things like:
 - Trends over time, by setting the time filter to 30 days. Is your disk usage increasing over time?
 
 ### Elasticsearch Metrics
-![ElasticSearch Metrics Dashboard](../../_static/screenshots-dashboards-es-metrics.png)
+![ElasticSearch Metrics Dashboard](../../../_static/screenshots-dashboards-es-metrics.png)
 Open the Elasticsearch Metrics dashboard on [localhost/grafana](http://localhost/grafana/d/n_nxrE_mk/elasticsearch-metrics-in-cogstack)
 
 This dashboard helps you understand how your ElasticSearch or Opensearch cluster is behaving. 
@@ -66,7 +66,7 @@ See [telemetry](../setup/telemetry.md) to set this up
 Alerting is setup using Grafana Alerts, but paused by default
 
 When alerts are setup, the grafana graphs will show when the alerts were fired.
-![Alerts Firing on dashboard](../../_static/screenshots-dashboards-alerts.png)
+![Alerts Firing on dashboard](../../../_static/screenshots-dashboards-alerts.png)
 
 Two sets of rules are defined in this project:
 
