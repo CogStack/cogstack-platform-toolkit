@@ -28,7 +28,7 @@ overview/_index
 :hidden:
 :caption: CogStack NLP
 MedCAT <https://docs.cogstack.org/projects/nlp>
-MedCAT Trainer <hhttps://medcattrainer.readthedocs.io//>
+MedCAT Trainer <https://docs.cogstack.org/projects/medcat-trainer/>
 
 ```
 
@@ -36,7 +36,7 @@ MedCAT Trainer <hhttps://medcattrainer.readthedocs.io//>
 :hidden:
 :caption: CogStack Platform
 
-NiFi <https://cogstack-nifi.readthedocs.io/en/latest/>
+NiFi <https://docs.cogstack.org/projects/nifi/>
 
 platform/_index
 ```
