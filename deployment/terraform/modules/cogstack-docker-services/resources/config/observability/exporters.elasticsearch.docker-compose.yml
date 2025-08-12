@@ -1,0 +1,25 @@
+# Run Exporters on every VM you want metrics from. Grafana Alloy provides multiple components for this
+name: "cogstack-observability-exporters"
+services:
+  alloy:
+    image: cogstacksystems/cogstack-observability-alloy:latest
+    volumes:
+      - ${BASE_DIR-.}/observability/alloy/elasticsearch.alloy:/etc/alloy/elasticsearch.alloy # Enable Elastic Exporter
+      # CAdvisor
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - ${DOCKER_LIB_PATH-/var/lib/docker/}:/var/lib/docker:ro
+    environment:
+      - PROMETHEUS_URL=${PROMETHEUS_URL}
+      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME} # Used to add a label to metrics
+      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS} # Used to add a label to metrics
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL-https://elasticsearch-1:9200}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME-user} # Used to get metrics from Elasticsearch
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD-pass} # Used to get metrics from Elasticsearch
+    networks:
+      - observability-exporters
+
+networks:
+  observability-exporters:
+    driver: bridge

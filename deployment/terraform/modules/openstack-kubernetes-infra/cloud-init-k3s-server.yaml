@@ -1,0 +1,45 @@
+#cloud-config
+# create the docker group
+groups:
+  - docker
+
+# Add default auto created user to docker group
+system_info:
+  default_user:
+    groups: [docker]
+
+write_files:
+  - path: /etc/profile.d/k3s-kubeconfig.sh
+    permissions: '0644'
+    # Sets up kubectl CLI to work on login
+    content: |
+      export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+
+runcmd:
+# Install Docker
+  - echo "Installing Docker"
+  # Add Docker's official GPG key:
+  - sudo apt-get update
+  - sudo apt-get install ca-certificates curl
+  - sudo install -m 0755 -d /etc/apt/keyrings
+  - sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  - sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+  # Add the repository to Apt sources:
+  - |
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+      $(. /etc/os-release && echo "$${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  - sudo apt-get update
+  - sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  - echo "Completed Installing Docker"
+
+  #  Run K3s
+  - echo "Installing K3S"
+  - sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" K3S_TOKEN="${TF_K3S_TOKEN}" sh -
+  - echo "Completed Installing K3S"
+  - sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+
+  # Install Helm CLI
+  - sudo curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash

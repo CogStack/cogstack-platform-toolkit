@@ -1,0 +1,14 @@
+name: cogstack-medcat-service
+services:
+  medcat-service:
+    image: cogstacksystems/medcat-service:latest
+    restart: unless-stopped
+    environment:
+      ${ENVIRONMENT_VARIABLES}
+    ports:
+      - "5000:5000"
+    volumes:
+    - medcat-models:/cat/models/downloaded/
+
+volumes:
+  medcat-models:
