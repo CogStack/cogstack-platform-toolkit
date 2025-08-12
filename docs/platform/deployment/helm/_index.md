@@ -14,7 +14,7 @@ To understand how the Helm charts are structured and how they work under the hoo
 :maxdepth: 2
 
 tutorial
-architecture
 cogstack-helm-module
+charts/_index
 
 ```
