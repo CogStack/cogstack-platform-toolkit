@@ -6,9 +6,9 @@ We use Docker Compose internally during development to run services individually
 
 ## Note
 :::{tip}
-We are actively working on moving away from docker compose and VMs. Instead we plan to primarily support deployment on Kubernetes and Helm.
+We are actively working on moving away from docker compose and VMs as the primary way of doing production deployments. Instead we plan to focus more on deployment with Kubernetes and Helm.
 
-Many of the exsigint project instructions will still show how to use docker compose to bring up standalone instances.
+Many of the existing project instructions in github for CogStack will still show how to use docker compose to bring up standalone instances.
 :::
 
 ## How to run

@@ -28,6 +28,7 @@ Along with kubernetes, it is also possible to run CogStack through docker compos
 - Keep your Terraform code in your own Git repository and adopt GitOps practices
 
 
+## Contents
 ```{toctree}
 :maxdepth: 2
 
