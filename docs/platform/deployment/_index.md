@@ -16,17 +16,16 @@ If you want to get started quickly, check out the [Quickstart](./get-started/qui
 
 Our recommended deployment method is on Kubernetes using Helm charts. This makes installing and managing CogStack easy and consistent. For a detailed walkthrough, see [Helm](./helm/_index) .
 
-You can run Kubernetes anywhere — on your own hardware or through cloud providers like AWS (EKS) or Azure (AKS). To help with this, we provide basic examples that deploy infrastructure, CogStack, and tests using Terraform. These are available in the [Examples](./examples/_index) folder.
+You can run Kubernetes anywhere — on your own hardware or through cloud providers like AWS (EKS) or Azure (AKS). To help with this, we provide basic examples using Terraform that will deploy the infrastructure, services, and perform tests using a few terraform commands. These are available in the [Examples](./examples/_index) folder.
 
 Along with kubernetes, it is also possible to run CogStack through docker compose. See the [Reference](./reference/_index) folder for this. 
 
-
-## Recommendations
+## Deployment Recommendations
 
 - Deploy CogStack on Kubernetes for best scalability and reliability.
 - Use Helm to install and manage your CogStack instances.
 - Manage your infrastructure declaratively with Terraform.
-- Keep your Terraform code in a Git repository and adopt GitOps workflows so all infrastructure changes go through version control
+- Keep your Terraform code in your own Git repository and adopt GitOps practices
 
 
 ```{toctree}
