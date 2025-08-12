@@ -8,12 +8,11 @@ See the Quickstart guide for a tutorial that will install a local kubernetes usi
 The primary thing you will need to arrange is a trained model to be used for the natural language processing functionality of CogStack. We provide small free models, though to get access to better performing models please contact us
 
 ## Technologies and Tools
+Our recommended deployment method is on **Kubernetes** by using **Helm** charts
 
-These technologies and tools can be used to deploy CogStack. Not all are required depending on the method of deployment you want to use.
+These are some of the terms and technologies relevant to deploying CogStack:
 
-Our recommended deployment method is on Kubernetes by using Helm charts
-
-- [GitOps](https://www.redhat.com/en/topics/devops/what-is-gitops)
+- [GitOps](https://en.wikipedia.org/wiki/DevOps#GitOps)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Terraform](https://www.terraform.io/downloads)
 - [Kubernetes](https://kubernetes.io/)
@@ -22,7 +21,7 @@ Our recommended deployment method is on Kubernetes by using Helm charts
 - [Ansible](https://docs.ansible.com/ansible/latest/index.html)
 - [Portainer](https://www.portainer.io/)
 
-See the official documentation on these tools for the best documentation for installation and setup. 
+See the official documentation on these tools for the best documentation for installation and setup. Not all of these are needed depending on which deployment method is used.
 
 ## Cloud Accounts & Permissions
 
