@@ -1,0 +1,9 @@
+# Probe Targets for the new cogstack environment
+
+- targets:
+    - "http://{{ MEDCAT_SERVICE_IP }}:5000/api/info"
+  labels:
+    name: medcat_service
+    ip_address: "{{ MEDCAT_SERVICE_IP }}"
+    host: "{{ MEDCAT_SERVICE_HOSTNAME }}"
+    job: probe-cogstack

@@ -1,0 +1,27 @@
+- name: Distribute configuration files
+  hosts: "all"
+  vars:
+    LOCAL_SOURCE_DIRECTORY: "{{ playbook_dir }}/../resources" # this is the /deployment directory in this project
+    DEPLOY_DIRECTORY: /home/ubuntu/cogstack/deployment
+  tasks:
+    - name: Create config directory
+      ansible.builtin.file:
+        path: "{{ DEPLOY_DIRECTORY }}"
+        state: directory
+        mode: "0755"
+    - name: Copy all configs to the VM
+      ansible.posix.synchronize:
+        src: "{{ LOCAL_SOURCE_DIRECTORY }}/config/"
+        dest: "{{ DEPLOY_DIRECTORY }}/config"
+        delete: true
+        recursive: yes
+    - name: Copy and template prober file with new addresses
+      ansible.builtin.template:
+        src: "{{ LOCAL_SOURCE_DIRECTORY }}/config/observability/alloy/probers/probe.cogstack.yml.tmpl"
+        dest: "{{ DEPLOY_DIRECTORY }}/config/observability/alloy/probers/probe.cogstack.yml"
+        mode: '0644'
+    - name: Copy and template observability prober file with new addresses
+      ansible.builtin.template:
+        src: "{{ LOCAL_SOURCE_DIRECTORY }}/config/observability/alloy/probers/probe.observability.yml.tmpl"
+        dest: "{{ DEPLOY_DIRECTORY }}/config/observability/alloy/probers/probe.observability.yml"
+        mode: '0644'

@@ -1,0 +1,21 @@
+# Run Exporters on every VM you want metrics from. Grafana Alloy provides multiple components for this
+name: "cogstack-observability-exporters"
+services:
+  alloy:
+    image: cogstacksystems/cogstack-observability-alloy:latest
+    volumes:
+      # CAdvisor
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - ${DOCKER_LIB_PATH-/var/lib/docker/}:/var/lib/docker:ro
+    environment:
+      - PROMETHEUS_URL=${PROMETHEUS_URL}
+      - ALLOY_HOSTNAME=${ALLOY_HOSTNAME} # Used to add a label to metrics
+      - ALLOY_IP_ADDRESS=${ALLOY_IP_ADDRESS} # Used to add a label to metrics
+    networks:
+      - observability-exporters
+
+networks:
+  observability-exporters:
+    driver: bridge

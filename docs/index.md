@@ -37,7 +37,7 @@ MedCAT Trainer <https://docs.cogstack.org/projects/medcat-trainer/>
 :caption: CogStack Platform
 
 NiFi <https://docs.cogstack.org/projects/nifi/>
-
+platform/deployment/_index.md
 platform/_index
 ```
 

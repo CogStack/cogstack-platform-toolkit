@@ -35,7 +35,7 @@ Usually, the sink will be the ElasticSearch store, keeping the processed EHRs wh
 
 The information about available data processing components offered by CogStack Pipeline can be found in [CogStack Pipeline](CogStack%20Pipeline.md) part.
 
-:::{ifno}
+:::{info}
 We recommend using CogStack Pipeline component in the newest version 1.3.0.
 :::
 

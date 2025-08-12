@@ -1,0 +1,10 @@
+openstack_environment = {
+    openstack_application_credential_id = "credential_id"
+    openstack_application_credential_secret = "credential_secret"
+    openstack_auth_url = "https://openstack_auth_url:8000"
+    region = "RegionOne"
+}
+
+allowed_ingress_ips_cidr = "10.0.0.1/23"
+
+ubuntu_immage_name = "my_ubuntu_image"
