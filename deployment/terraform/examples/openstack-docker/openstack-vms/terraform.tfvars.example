@@ -6,12 +6,6 @@ openstack_environment = {
     region = "RegionOne"
 }
 
-portainer_secrets = {
-    agent_secret = "portainer_agent_secret"
-    snapshot_password = "portainer_snapshot_password"
-    api_key = "portainer_api_key"
-}
-
 allowed_ingress_ips_cidr = "10.0.0.1/23"
 
 ubuntu_immage_name = "my_ubuntu_image"
