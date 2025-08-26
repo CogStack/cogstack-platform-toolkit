@@ -10,6 +10,7 @@ system_info:
 
 runcmd:
 # Install Docker
+  - echo "Installing Docker"
   # Add Docker's official GPG key:
   - sudo apt-get update
   - sudo apt-get install ca-certificates curl
@@ -25,9 +26,10 @@ runcmd:
       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
   - sudo apt-get update
   - sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
+  - echo "Completed Installing Docker"
 
 # Run Portainer
+  - echo "Running Portainer"
   - docker network create portainer-network 
   - docker pull portainer/agent:latest
   - |
@@ -40,4 +42,7 @@ runcmd:
       -v /var/run/docker.sock:/var/run/docker.sock \
       -l 'traefik.enable="true"' \
       -l 'traefik.http.routers.portainer-path-router.rule="PathPrefix(`/portainer-agent`)"' \
-      portainer/agent:latest
+      portainer/agent:2.33.0
+  - echo "Completed running Portainer"
+
+  - echo "Completed Cloud Init"

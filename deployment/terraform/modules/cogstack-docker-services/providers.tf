@@ -2,10 +2,10 @@ terraform {
   required_providers {
     portainer = {
       source  = "portainer/portainer"
-      version = "1.4.2"
+      version = ">= 1.10"
     }
     ansible = {
-      version = "~> 1.3.0"
+      version = ">= 1.3"
       source  = "ansible/ansible"
     }
   }

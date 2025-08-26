@@ -61,21 +61,22 @@ data "cloudinit_config" "init_docker" {
   }
 }
 
+
 data "cloudinit_config" "init_docker_controller" {
   part {
     filename     = "cloud-init-controller.yaml"
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/cloud-init-controller.yaml",
       {
-        PORTAINER_AGENT_SECRET      = var.portainer_secrets.agent_secret,
-        PORTAINER_SNAPSHOT_PASSWORD = var.portainer_secrets.snapshot_password
+        PORTAINER_AGENT_SECRET   = var.portainer_secrets.agent_secret,
+        PORTAINER_ADMIN_PASSWORD = local.portainer_admin_password_bcrypt_hash
       }
     )
   }
 }
 
 data "openstack_compute_flavor_v2" "available_compute_flavors" {
-  for_each = toset(["2cpu4ram", "8cpu16ram"])
+  for_each = toset([for vm in var.host_instances : vm.flavour])
   name     = each.value
 }
 

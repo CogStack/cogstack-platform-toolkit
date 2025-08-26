@@ -30,14 +30,3 @@ variable "service_targets" {
   }
 }
 
-variable "portainer_secrets" {
-  type = object({
-    api_key = string,
-  })
-
-  description = <<EOT
-agent_secret = Portainer agent secret for connection to portainer
-snapshot_password = Portainer password to open snapshot for initialization
-api_key = Portainer API Key preset in the initialization snapshot
-EOT
-}

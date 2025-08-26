@@ -9,7 +9,6 @@ locals {
   controller_host_instance = openstack_compute_instance_v2.cogstack_ops_compute[local.controller_host.name]
 }
 
-
 resource "random_id" "server" {
   keepers = {
     # Generate a new id each time we recreate the hosts
@@ -18,4 +17,13 @@ resource "random_id" "server" {
   }
 
   byte_length = 4
+}
+
+resource "random_password" "portainer_password" {
+  count  = var.portainer_secrets.admin_password != null ? 0 : 1
+  length = 16
+}
+locals {
+  portainer_admin_password_bcrypt_hash = var.portainer_secrets.admin_password != null ? bcrypt(var.portainer_secrets.admin_password) : random_password.portainer_password[0].bcrypt_hash
+  portainer_admin_password             = var.portainer_secrets.admin_password != null ? var.portainer_secrets.admin_password : random_password.portainer_password[0].result
 }

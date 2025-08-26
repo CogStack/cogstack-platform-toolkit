@@ -1,0 +1,15 @@
+portainer_instance = {
+    endpoint = "https://10.0.0.1:9443"
+    username = ""
+    password = ""
+}
+
+hosts = {
+  "cogstack-devops" = {
+    "ip_address" = "10.0.0.1"
+    "name" = "cogstack-devops"
+    "unique_name" = "w6R2tw-cogstack-devops"
+  }
+}
+
+ssh_private_key_file = "~/my-key.pem"

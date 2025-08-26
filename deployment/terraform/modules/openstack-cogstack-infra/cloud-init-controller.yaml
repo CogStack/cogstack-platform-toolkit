@@ -8,88 +8,10 @@ system_info:
   default_user:
     groups: [docker]
 
-write_files:
-  - path: /opt/cogstack/init/portainer-init-snapshot.tar.gz
-    encoding: b64
-    permissions: '0644'
-    owner: root:root
-    content: |
-      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
-
 
 runcmd:
 # Install Docker
+  - echo "Installing Docker"
   # Add Docker's official GPG key:
   - sudo apt-get update
   - sudo apt-get install ca-certificates curl
@@ -105,10 +27,11 @@ runcmd:
       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
   - sudo apt-get update
   - sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
+  - echo "Completed Installing Docker"
 
 # Run Portainer
-  - docker pull portainer/portainer-ce:lts
+  - echo "Running Portainer"
+  - docker pull portainer/portainer-ce:2.33.0
   - docker network create portainer-network 
   - docker volume create portainer-data
   - |
@@ -121,8 +44,9 @@ runcmd:
       -v portainer-data:/data \
       -l 'traefik.enable="true"' \
       -l 'traefik.http.routers.portainer-path-router.rule="PathPrefix(`/portainer`)"' \
-      portainer/portainer-ce:lts
-  - docker pull portainer/agent:latest
+      portainer/portainer-ce:2.33.0 \
+      --admin-password='${PORTAINER_ADMIN_PASSWORD}'
+  - docker pull portainer/agent:2.33.0
   - |
     docker run -d \
       --name portainer_agent \
@@ -133,17 +57,7 @@ runcmd:
       -v /var/run/docker.sock:/var/run/docker.sock \
       -l 'traefik.enable="true"' \
       -l 'traefik.http.routers.portainer-path-router.rule="PathPrefix(`/portainer-agent`)"' \
-      portainer/agent:latest
+      portainer/agent:2.33.0
+  - echo "Completed running Portainer"
 
-  - PORTAINER_URL=https://localhost:9443
-
-  - INIT_FILE=/opt/cogstack/init/portainer-init-snapshot.tar.gz
-
-  - |
-    curl --insecure --request POST \
-    --url $${PORTAINER_URL}/api/restore \
-    --header 'Content-Type: multipart/form-data' \
-    --form file=@$${INIT_FILE} \
-    --form fileName=backup \
-    --form password=${PORTAINER_SNAPSHOT_PASSWORD}
-    
+  - echo "Completed Cloud Init"

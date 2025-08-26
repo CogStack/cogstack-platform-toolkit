@@ -26,3 +26,12 @@ output "compute_keypair" {
   }
   description = "Absolute path to a public and private SSH key pair that is granted login on created VMs"
 }
+
+output "portainer_instance" {
+  sensitive = true
+  value = {
+    endpoint = "https://${local.controller_host_instance.access_ip_v4}:9443"
+    username = "admin"
+    password = local.portainer_admin_password
+  }
+}

@@ -1,11 +1,13 @@
 variable "portainer_secrets" {
   type = object({
-    agent_secret      = string,
-    snapshot_password = string,
+    agent_secret   = optional(string, "portainer_agent_secret")
+    admin_password = optional(string, null),
   })
+  default = {
+  }
   description = <<EOT
 agent_secret = Portainer agent secret for connection to portainer
-snapshot_password = Portainer password to open snapshot for initialization
+admin_password = Optional Portainer password to create admin account with. If not supplied one will be generated.
 EOT
 }
 

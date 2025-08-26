@@ -23,9 +23,27 @@ Create a `terraform.tfvars` file, based on `terraform.tfvars.example`, containin
 
 ### 2. Run Terraform
 
+Terraform is run on two modules, so we will run one terraform apply in one folder, then another terraform apply in a second folder. This split is needed to solve dependency ordering with terraform providers. 
+
 ```bash
+# Create VMs in openstack
+cd openstack-vms
 terraform init
-terraform apply
+terraform apply --auto-approve
+
+# Export the created values as environment variables, for usage as terraform variables
+OPENSTACK_HOSTS=$(terraform output -json created_hosts)
+PORTAINER_INSTANCE=$(terraform output -json portainer_instance)
+SSH_PRIVATE_KEY=$(terraform output -json ssh_keys | jq -r .private_key_file)
+
+export TF_VAR_portainer_instance=$PORTAINER_INSTANCE
+export TF_VAR_hosts=$OPENSTACK_HOSTS
+export TF_VAR_ssh_private_key_file=$SSH_PRIVATE_KEY
+
+# Deploy services using docker and portainer 
+cd ../docker-deployment
+terraform init
+terraform apply --auto-approve
 ```
 
 Initial provisioning takes up to 10 minutes, where time is mostly downloading large docker images
@@ -35,28 +53,16 @@ Initial provisioning takes up to 10 minutes, where time is mostly downloading la
 Once the deployment is complete and all services are running, you can access the CogStack platform and its components using the following URLs:
 
 ```bash
-terraform output service_urls
+terraform output 
 ```
 
-## Troubleshooting
-
-
-### unsupported protocol scheme
-If you make changes to the created VM infrastructure, and want to reapply, you can run into this error
-
-```
-│ Error: Get "/api/endpoints/4": unsupported protocol scheme ""
-│ 
-│   with module.cogstack_docker_services.portainer_environment.portainer_envs["cogstack-devops"],
-│   on ../../modules/cogstack-docker-services/environments.tf line 3, in resource "portainer_environment" "portainer_envs":
-│    3: resource "portainer_environment" "portainer_envs" {
+```hcl
+created_services = {
+  "service_urls" = {
+    "grafana" = "http://10.0.0.1/grafana"
+    "medcat_service" = "http://10.0.0.1:5000"
+    "prometheus" = "http://10.0.0.1/prometheus"
+  }
+}
 ```
 
-Fix by targetting just the infra module first:
-
-```bash
-terraform apply -target=module.openstack_cogstack_infra
-terraform apply
-```
-
-For details: the error specifically occurs after making a change to the controller host, forcing it to be deleted and recreated, however terraform still uses the IP address in the portainer provider. Targetting just the infra module first, means terraform wont call any APIs during the plan stage using the old IP address.
