@@ -34,7 +34,6 @@ runcmd:
   - docker pull portainer/portainer-ce:2.33.0
   - docker network create portainer-network 
   - docker volume create portainer-data
-  - echo "Admin password is ${PORTAINER_ADMIN_PASSWORD} - ok?"
   - |
     docker run -d \
       --name portainer \
