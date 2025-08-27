@@ -24,6 +24,5 @@ resource "random_password" "portainer_password" {
   length = 16
 }
 locals {
-  portainer_admin_password_bcrypt_hash = var.portainer_secrets.admin_password != null ? bcrypt(var.portainer_secrets.admin_password) : random_password.portainer_password[0].bcrypt_hash
-  portainer_admin_password             = var.portainer_secrets.admin_password != null ? var.portainer_secrets.admin_password : random_password.portainer_password[0].result
+  portainer_admin_password = var.portainer_secrets.admin_password != null ? var.portainer_secrets.admin_password : random_password.portainer_password[0].result
 }

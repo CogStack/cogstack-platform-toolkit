@@ -69,7 +69,7 @@ data "cloudinit_config" "init_docker_controller" {
     content = templatefile("${path.module}/cloud-init-controller.yaml",
       {
         PORTAINER_AGENT_SECRET   = var.portainer_secrets.agent_secret,
-        PORTAINER_ADMIN_PASSWORD = local.portainer_admin_password_bcrypt_hash
+        PORTAINER_ADMIN_PASSWORD = local.portainer_admin_password
       }
     )
   }

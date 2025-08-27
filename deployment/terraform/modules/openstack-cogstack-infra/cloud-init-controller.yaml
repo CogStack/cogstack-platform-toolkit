@@ -8,6 +8,8 @@ system_info:
   default_user:
     groups: [docker]
 
+packages:
+  - apache2-utils
 
 runcmd:
 # Install Docker
@@ -31,6 +33,7 @@ runcmd:
 
 # Run Portainer
   - echo "Running Portainer"
+  - bcrypted_pw=$(htpasswd -nb -B admin "${PORTAINER_ADMIN_PASSWORD}" | cut -d ":" -f 2)
   - docker pull portainer/portainer-ce:2.33.0
   - docker network create portainer-network 
   - docker volume create portainer-data
@@ -45,7 +48,7 @@ runcmd:
       -l 'traefik.enable="true"' \
       -l 'traefik.http.routers.portainer-path-router.rule="PathPrefix(`/portainer`)"' \
       portainer/portainer-ce:2.33.0 \
-      --admin-password='${PORTAINER_ADMIN_PASSWORD}'
+      --admin-password="$${bcrypted_pw}"
   - docker pull portainer/agent:2.33.0
   - |
     docker run -d \
