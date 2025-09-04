@@ -1,0 +1,27 @@
+apiVersion: v1
+data:
+  CONCEPT_SEARCH_SERVICE_HOST: solr
+  CONCEPT_SEARCH_SERVICE_PORT: "8983"
+  CSRF_TRUSTED_ORIGINS: ""
+  DB_BACKUP_DIR: /home/api/db-backup
+  DB_DIR: /home/api/db
+  DB_PATH: /home/api/db/db.sqlite3
+  DEBUG: "1"
+  EMAIL_HOST: mail.cogstack.org
+  EMAIL_PASS: to be changed
+  EMAIL_PORT: "465"
+  EMAIL_USER: example@cogstack.org
+  ENV: non-prod
+  LOAD_EXAMPLES: "1"
+  LOAD_NUM_DOC_PAGES: "10"
+  MAX_DATASET_SIZE: "10000"
+  MAX_MEDCAT_MODELS: "2"
+  MEDCAT_CONFIG_FILE: /home/configs/base.txt
+  OPENBLAS_NUM_THREADS: "1"
+  RESUBMIT_ALL_ON_STARTUP: "0"
+  UNIQUE_DOC_NAMES_IN_DATASETS: "True"
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: medcattrainer-env
+  name: env
