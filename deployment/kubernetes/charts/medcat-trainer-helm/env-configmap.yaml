@@ -2,7 +2,7 @@ apiVersion: v1
 data:
   CONCEPT_SEARCH_SERVICE_HOST: solr
   CONCEPT_SEARCH_SERVICE_PORT: "8983"
-  CSRF_TRUSTED_ORIGINS: ""
+  CSRF_TRUSTED_ORIGINS: "http://localhost:8000"
   DB_BACKUP_DIR: /home/api/db-backup
   DB_DIR: /home/api/db
   DB_PATH: /home/api/db/db.sqlite3

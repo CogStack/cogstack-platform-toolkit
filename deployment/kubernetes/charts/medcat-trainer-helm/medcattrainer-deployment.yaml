@@ -28,6 +28,7 @@ spec:
             - -c
             - /etc/supervisord.conf
           env:
+
             - name: CONCEPT_SEARCH_SERVICE_HOST
               valueFrom:
                 configMapKeyRef:

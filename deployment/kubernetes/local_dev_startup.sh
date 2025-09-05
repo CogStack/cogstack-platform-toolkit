@@ -17,3 +17,6 @@ helm test medcat-service --logs
 # Test with host header set for ingress routing
 # HOST_IP=10.211.112.82
 # curl --resolve chart-example.local:80:${HOST_IP} http://chart-example.local/api/info
+
+# Test medcat trainer
+# kubectl port-forward svc/nginx 8000:8000
