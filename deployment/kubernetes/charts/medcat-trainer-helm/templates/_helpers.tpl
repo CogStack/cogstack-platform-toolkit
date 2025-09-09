@@ -65,12 +65,14 @@ Create the name of the service account to use
 
 {{- /*
 Return Solr host: either user-supplied or constructed from release name
+
+TODO: Make Solr use the chart fullname instead of release name
 */ -}}
 {{- define "medcat-trainer-helm.solrHost" -}}
 {{- if .Values.solrHost }}
 {{ .Values.solrHost }}
 {{- else }}
-{{- include "medcat-trainer-helm.fullname" . }}-solr
+{{- .Release.Name }}-solr
 {{- end }}
 {{- end }}
 

@@ -144,7 +144,7 @@ data:
     }
   sitesenabled.medcattrainer: |
     server {
-        listen 8000;
+        listen {{ .Values.service.port }};
         server_name localhost;
         charset utf-8;
         large_client_header_buffers 4 32k;
