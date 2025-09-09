@@ -168,6 +168,16 @@ resources: {}
 #   httpGet:
 #     path: /
 #     port: http
+nginx:
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /healthz
+      port: http
+
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:

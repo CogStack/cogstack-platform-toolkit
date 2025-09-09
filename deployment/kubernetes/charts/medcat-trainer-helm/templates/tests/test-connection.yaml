@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "medcat-trainer-helm.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "medcat-trainer-helm.fullname" . }}-nginx:{{ .Values.service.port }}/healthz', '-U helm-test {{ .Chart.Name }}-v{{ .Chart.Version }}']
   restartPolicy: Never

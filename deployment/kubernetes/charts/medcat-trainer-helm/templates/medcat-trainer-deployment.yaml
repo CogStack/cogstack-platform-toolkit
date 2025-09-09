@@ -75,7 +75,7 @@ spec:
               name: api-db
             - mountPath: /home/api/db-backup
               name: api-db-backup
-            - mountPath: /home/configs
+            - mountPath: /home/configs/base.txt
               name: medcat-trainer-config
               subPath: medcat-base.txt
             - mountPath: /etc/supervisord.conf

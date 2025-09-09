@@ -171,5 +171,10 @@ data:
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 
+        location /healthz {
+          access_log off;
+          return 200 'OK';
+          add_header Content-Type text/plain;
+         }
     }
 
