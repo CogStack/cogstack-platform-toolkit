@@ -61,3 +61,33 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{- /*
+Return Solr host: either user-supplied or constructed from release name
+*/ -}}
+{{- define "medcat-trainer-helm.solrHost" -}}
+{{- if .Values.solrHost }}
+{{ .Values.solrHost }}
+{{- else }}
+{{- include "medcat-trainer-helm.fullname" . }}-solr
+{{- end }}
+{{- end }}
+
+{{- /*
+Return Solr port: either user-supplied or default from values
+*/ -}}
+{{- define "medcat-trainer-helm.solrPort" -}}
+{{- if .Values.solrPort }}
+{{ .Values.solrPort }}
+{{- else }}
+{{- .Values.solr.service.ports.http }}
+{{- end }}
+{{- end }}
+
+{{- /*
+Return full Solr URL: combines host and port
+*/ -}}
+{{- define "medcat-trainer-helm.solrURL" -}}
+http://{{ include "medcat-trainer-helm.solrHost" . }}:{{ include "medcat-trainer-helm.solrPort" . }}
+{{- end }}

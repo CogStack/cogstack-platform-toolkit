@@ -2,6 +2,58 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+env:
+  CSRF_TRUSTED_ORIGINS: "http://localhost:8000"
+  DB_ENGINE: "sqlite3"
+  DEBUG: "1"
+  EMAIL_HOST: "mail.cogstack.org"
+  EMAIL_PASS: "to-be-changed"
+  EMAIL_PORT: "465"
+  EMAIL_USER: "example@cogstack.org"
+  ENV: "non-prod"
+  LOAD_EXAMPLES: "1"
+  LOAD_NUM_DOC_PAGES: "10"
+  MAX_DATASET_SIZE: "10000"
+  MAX_MEDCAT_MODELS: "2"
+  OPENBLAS_NUM_THREADS: "1"
+  RESUBMIT_ALL_ON_STARTUP: "0"
+  UNIQUE_DOC_NAMES_IN_DATASETS: "True"
+
+
+persistence:
+  media:
+    # Size of PVC for files like model packs and other media downloaded by medcat trainer
+    size: 8Gi
+  static:
+    # Size of the PVC for the static HTML site
+    size: 100Mi
+  sqlite:
+    # Size of the PVC for the Sqlite database 
+    size: 100Mi
+    # Size of the PVC for the Sqlite backups
+    backupDbSize: 300Mi
+  storageClassName: ""
+  # Engine can be 'sqlite3' or 'postgresql'
+  dbEngine: sqlite3
+
+# MedCAT config as described here: https://github.com/CogStack/cogstack-nlp/blob/main/medcat-v2/medcat/config/config.py
+medcatConfig: |
+    cat.linking.optim = {'type': 'standard', 'lr': 0.1}
+    cat.linking.filter_before_disamb = True
+    # 20 - INFO; 10 - DEBUG
+    cat.general.log_level = 20
+    # Recommended is to have this one negative
+    cat.linking.similarity_threshold = -5
+    # And this one to be used as the real th
+    cat.linking.similarity_threshold_trainer = -5
+    # Used for limiting the number of occ of a concept in a project
+    cat.general.cui_count_limit = 100000000
+    # Is unlink full
+    cat.general.full_unlink = False
+    # use this spacy model
+    cat.general.spacy_model = 'en_core_web_md'
+
+
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 
@@ -122,19 +174,6 @@ tolerations: []
 
 affinity: {}
 
-persistence:
-  media:
-    size: 8Gi
-  static:
-    size: 100Mi
-  sqlite:
-    size: 100Mi
-    backupDbSize: 300Mi
-  storageClassName: ""
-  dbEngine: sqlite3
-
-
-
 solr:
   # replicaCount: 1
   # collectionShards: 1
@@ -144,4 +183,5 @@ solr:
   persistence:
     size: 1Gi
   auth:
+    # TODO: support SOLR auth from medcat trainer API
     enabled: false

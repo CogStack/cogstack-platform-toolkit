@@ -4,6 +4,7 @@ metadata:
   name: {{ include "medcat-trainer-helm.fullname" . }}-api-media # This stores the uploaded CDB and Vocab models
   labels:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: medcat-trainer
 spec:
   {{- with .Values.persistence.media.storageClassName }}
   storageClassName: {{.}}
@@ -20,6 +21,7 @@ metadata:
   name: {{ include "medcat-trainer-helm.fullname" . }}-api-static # This stores the HTML for the website. Disk use was 72MB.
   labels:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: medcat-trainer
 spec:
   {{- with .Values.persistence.media.storageClassName }}
   storageClassName: {{.}}
@@ -37,6 +39,7 @@ metadata:
   name: {{ include "medcat-trainer-helm.fullname" . }}-api-db # SQLiteDB
   labels:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: medcat-trainer
 spec:
   {{- with .Values.persistence.media.storageClassName }}
   storageClassName: {{.}}
@@ -54,6 +57,7 @@ metadata:
   name: {{ include "medcat-trainer-helm.fullname" . }}-api-db-backup # SQLiteDB
   labels:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: medcat-trainer
 spec:
   {{- with .Values.persistence.media.storageClassName }}
   storageClassName: {{.}}

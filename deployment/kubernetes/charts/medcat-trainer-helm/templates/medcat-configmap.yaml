@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "medcat-trainer-helm.fullname" . }}-medcat-config
+  labels:
+    {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: medcat-trainer
+data:
+  # This is mounted in the path for MEDCAT_CONFIG_FILE in the backend. Default to /home/configs/base.txt
+  base.txt: |
+{{ .Values.medcatConfig | indent 4 }}

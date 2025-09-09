@@ -4,6 +4,7 @@ metadata:
   name: {{ include "medcat-trainer-helm.fullname" . }}-nginx-config 
   labels:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: nginx
 data:
   nginx.conf: |
     # Configuration File - Nginx Server Configs
@@ -157,14 +158,14 @@ data:
         }
 
         location /api/concepts/ {
-            proxy_pass http://medcat-trainer-solr:8983/solr/;
+            proxy_pass {{ include "medcat-trainer-helm.solrURL" . }}/solr/;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 
         location / {
-            proxy_pass http://medcattrainer:8000;
+            proxy_pass http://{{ include "medcat-trainer-helm.fullname" . }}-medcat-trainer:8000;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
