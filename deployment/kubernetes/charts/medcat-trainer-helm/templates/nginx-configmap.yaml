@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-config
+  name: {{ include "medcat-trainer-helm.fullname" . }}-nginx-config 
+  labels:
+    {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
 data:
   nginx.conf: |
     # Configuration File - Nginx Server Configs
