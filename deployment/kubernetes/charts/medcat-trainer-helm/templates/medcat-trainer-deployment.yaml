@@ -54,6 +54,16 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "medcat-trainer-helm.fullname" . }}-medcat-trainer-env
+          {{- if .Values.postgresql.enabled }}
+          env:
+            - name: DB_HOST
+              value: {{ .Release.Name }}-postgresql
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgresql
+                  key: postgres-password
+          {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}

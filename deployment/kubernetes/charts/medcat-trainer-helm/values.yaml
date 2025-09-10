@@ -4,6 +4,7 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
+nginxReplicaCount: 3
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -20,7 +21,6 @@ nginxImage:
 # Add any environment variables here that should be set in the medcat-trainer container
 env:
   CSRF_TRUSTED_ORIGINS: "http://localhost:8000"
-  DB_ENGINE: "sqlite3"
   DEBUG: "1"
   EMAIL_HOST: "mail.cogstack.org"
   EMAIL_PASS: "to-be-changed"
@@ -35,7 +35,27 @@ env:
   RESUBMIT_ALL_ON_STARTUP: "0"
   UNIQUE_DOC_NAMES_IN_DATASETS: "True"
 
+  # TODO: Support custom DB overrides#
+  # DB_ENGINE: "sqlite3"
+  DB_ENGINE: "postgresql"
+  DB_NAME: "postgres"
+  DB_USER: "postgres"
+  DB_PORT: "5432"
+  # DB_PASSWORD: ""
+  # DB_HOST: "" 
 
+postgresql:
+  enabled: true
+  # TODO: Support custom DB overrides
+  # auth:
+  #  - name for a custom database
+  #   database: "my_trainer_db"
+  #   username: "trainer_admin"
+  #   password: "changeme_changeme"
+  primary:
+    persistence:
+      # Size of the PVC for the postgres database
+      size: 500Mi
 persistence:
   media:
     # Size of PVC for files like model packs and other media downloaded by medcat trainer
@@ -49,8 +69,7 @@ persistence:
     # Size of the PVC for the Sqlite backups
     backupDbSize: 300Mi
   storageClassName: ""
-  # Engine can be 'sqlite3' or 'postgresql'
-  dbEngine: sqlite3
+
 
 # MedCAT config as described here: https://github.com/CogStack/cogstack-nlp/blob/main/medcat-v2/medcat/config/config.py
 medcatConfig: |
@@ -160,22 +179,30 @@ resources: {}
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 # TODO Add liveness and readiness to django app
+# https://github.com/CogStack/cogstack-nlp/pull/131/files
 # livenessProbe:
 #   httpGet:
-#     path: /
+#     path: /api/health/live/
 #     port: http
 # readinessProbe:
 #   httpGet:
-#     path: /
+#     path: /api/health/ready/
 #     port: http
+# startupProbe:
+#   httpGet:
+#     path: /api/health/startup/
+#     port: http
+#   failureThreshold: 30
+#   periodSeconds: 10
+
 nginx:
   livenessProbe:
     httpGet:
-      path: /healthz
+      path: /nginx/health/live
       port: http
   readinessProbe:
     httpGet:
-      path: /healthz
+      path: /nginx/health/live
       port: http
 
 

@@ -21,5 +21,5 @@ helm test medcat-service --logs
 # Test medcat trainer
 # kubectl port-forward svc/nginx 8000:8000
 
-helm upgrade medcat-trainer ./medcat-trainer-helm --install --recreate-pods  --wait --timeout 5m0s # Install if it doesnt already exist, else upgrade
+helm upgrade my-test ./medcat-trainer-helm --install --recreate-pods  --wait --timeout 5m0s # Install if it doesnt already exist, else upgrade
 # kubectl port-forward svc/medcat-trainer-solr 8983:8983
