@@ -20,7 +20,7 @@ nginxImage:
 
 # Add any environment variables here that should be set in the medcat-trainer container
 env:
-  CSRF_TRUSTED_ORIGINS: "http://localhost:8000"
+  CSRF_TRUSTED_ORIGINS: "http://localhost:8080"
   DEBUG: "1"
   EMAIL_HOST: "mail.cogstack.org"
   EMAIL_PASS: "to-be-changed"
@@ -56,6 +56,7 @@ postgresql:
     persistence:
       # Size of the PVC for the postgres database
       size: 500Mi
+
 persistence:
   media:
     # Size of PVC for files like model packs and other media downloaded by medcat trainer
@@ -69,7 +70,6 @@ persistence:
     # Size of the PVC for the Sqlite backups
     backupDbSize: 300Mi
   storageClassName: ""
-
 
 # MedCAT config as described here: https://github.com/CogStack/cogstack-nlp/blob/main/medcat-v2/medcat/config/config.py
 medcatConfig: |
