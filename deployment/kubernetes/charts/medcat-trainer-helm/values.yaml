@@ -4,7 +4,7 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
-nginxReplicaCount: 3
+nginxReplicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -89,11 +89,11 @@ medcatConfig: |
     cat.general.spacy_model = 'en_core_web_md'
 
 solr:
-  # replicaCount: 1
-  # collectionShards: 1
-  # collectionReplicas: 1
+  replicaCount: 1
+  collectionShards: 1
+  collectionReplicas: 1
   zookeeper:
-  #   replicaCount: 1
+    replicaCount: 1
     persistence:
       size: 1Gi
   persistence:
