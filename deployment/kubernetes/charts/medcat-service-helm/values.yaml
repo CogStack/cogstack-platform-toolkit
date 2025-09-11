@@ -26,6 +26,11 @@ env:
   # MODEL_META_URL: "https://cogstack-medcat-example-models.s3.eu-west-2.amazonaws.com/medcat-example-models/mc_status.zip"
   # APP_MODEL_CDB_PATH: "/cat/models/medmen/cdb.dat"
 
+  # Enable DeID mode with the following
+  # APP_MEDCAT_MODEL_PACK: "/cat/models/examples/example-deid-model-pack.zip"
+  # DEID_MODE: true
+  # DEID_REDACT: true
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
