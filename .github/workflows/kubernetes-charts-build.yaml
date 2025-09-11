@@ -72,7 +72,7 @@ jobs:
     - name: Package Helm Charts
       run: |
         helm package ./charts/medcat-service-helm --version $CHART_VERSION
-        helm package ./charts/medcat-trainer-helm --version $CHART_VERSION
+        helm package ./charts/medcat-trainer-helm --version $CHART_VERSION --dependency-update 
 
     - name: Helm OCI login to Docker Hub
       run: helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
