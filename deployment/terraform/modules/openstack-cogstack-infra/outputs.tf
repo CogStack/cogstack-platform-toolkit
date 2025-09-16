@@ -9,13 +9,7 @@ output "created_hosts" {
 }
 
 output "created_controller_host" {
-  value = {
-    name        = (local.controller_host.name)
-    ip_address  = local.controller_host_instance.access_ip_v4
-    unique_name = local.controller_host_instance.name
-
-  }
-
+  value       = local.controller_host_instance
   description = "Created Controller Host: A map of { hostname: { data } }"
 }
 
@@ -27,10 +21,15 @@ output "compute_keypair" {
   description = "Absolute path to a public and private SSH key pair that is granted login on created VMs"
 }
 
+output "created_security_group" {
+  value = openstack_networking_secgroup_v2.cogstack_apps_security_group
+  description = "Security group associated to the created hosts"
+}
+
 output "portainer_instance" {
   sensitive = true
   value = {
-    endpoint = "https://${local.controller_host_instance.access_ip_v4}:9443"
+    endpoint = "https://${local.controller_host_instance.ip_address}:9443"
     username = "admin"
     password = local.portainer_admin_password
   }

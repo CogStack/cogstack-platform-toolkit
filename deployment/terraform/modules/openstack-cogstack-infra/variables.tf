@@ -46,10 +46,42 @@ EOT
   }
 
   validation {
-    condition     = length([for x in var.host_instances : x if x.is_controller == true]) == 1
-    error_message = "Must have exactly one controller host"
+    condition     = length([for x in var.host_instances : x if x.is_controller == true]) <= 1
+    error_message = "Must have at most 1 controller host"
   }
 
+}
+
+variable "preexisting_controller_host" {
+  type = object({
+    name        = string,
+    ip_address  = string,
+    unique_name = optional(string)
+  })
+  default     = null
+  description = <<EOT
+Optionally provide details of an existing host to use as the controller host for Portainer
+
+name        = Human readable hostname for this host,
+ip_address  = IP Address of the existing controller host,
+unique_name = optional(string)
+EOT
+}
+
+variable "allowed_security_group_rules" {
+  type = list(object({
+     port = number
+     cidr = string
+     description = string
+  }))
+  default = [ ]
+  description = <<EOT
+Optionally provide additional security group rules to allow ingress to the created hosts
+
+port = Port number to allow ingress to
+cidr = CIDR block to allow ingress from
+description = Description for the rule
+EOT 
 }
 
 variable "ssh_key_pair" {

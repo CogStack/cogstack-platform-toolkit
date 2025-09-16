@@ -37,6 +37,41 @@ resource "openstack_compute_instance_v2" "cogstack_ops_compute" {
     ]
   }
 
+  lifecycle {
+    precondition {
+      condition     = (length([for x in var.host_instances : x if x.is_controller == true]) == 1) || var.preexisting_controller_host != null
+      error_message = <<-EOT
+Invalid variable input. 
+Must have exactly one controller host defined in host_instances if preexisting_controller_host is not provided.
+Either pass a host with is_controller = true in host_instances, or provide details of an existing host using preexisting_controller_host.
+
+Valid module input to create a controller:
+  host_instances = [
+    { name = "example-test", is_controller = true },
+  ]
+
+  
+Valid module input with details of an existing controller:
+  host_instances = [
+    { name = "example-test"  },
+  ]
+  preexisting_controller_host = {
+    ip_address = "10.1.1.1"
+    name = "existing-controller-host"
+    unique_name = "WFXGH-existing-controller-host"
+  }
+
+Invalid module input:
+{
+  host_instances = [
+    { name = "example-test"  },
+  ]
+}
+
+	     EOT
+    }
+  }
+
 }
 
 # TODO: Read content from files and put into cloud-init config
