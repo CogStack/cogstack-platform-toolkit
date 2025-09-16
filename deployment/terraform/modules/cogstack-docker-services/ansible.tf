@@ -10,6 +10,7 @@ resource "ansible_playbook" "playbook" {
   replayable = false
   lifecycle {
     replace_triggered_by = [terraform_data.hash_of_all_config_files]
+    ignore_changes       = [extra_vars]
   }
 
   extra_vars = {
