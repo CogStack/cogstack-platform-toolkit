@@ -178,22 +178,20 @@ resources: {}
   #   memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-# TODO Add liveness and readiness to django app
-# https://github.com/CogStack/cogstack-nlp/pull/131/files
-# livenessProbe:
-#   httpGet:
-#     path: /api/health/live/
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /api/health/ready/
-#     port: http
-# startupProbe:
-#   httpGet:
-#     path: /api/health/startup/
-#     port: http
-#   failureThreshold: 30
-#   periodSeconds: 10
+livenessProbe:
+  httpGet:
+    path: /api/health/live/
+    port: http
+readinessProbe:
+  httpGet:
+    path: /api/health/ready/
+    port: http
+startupProbe:
+  httpGet:
+    path: /api/health/startup/
+    port: http
+  failureThreshold: 30
+  periodSeconds: 10
 
 nginx:
   livenessProbe:

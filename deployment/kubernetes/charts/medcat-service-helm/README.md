@@ -60,3 +60,14 @@ or
 ```sh
 helm install my-medcat ./medcat-chart -f values-model-download.yaml
 ```
+
+### DeID Mode
+
+The service can perform DeID of EHRs by swithcing to the following values
+
+```
+env:
+  APP_MEDCAT_MODEL_PACK: "/cat/models/examples/example-deid-model-pack.zip"
+  DEID_MODE: "true"
+  DEID_REDACT: "true"
+```
