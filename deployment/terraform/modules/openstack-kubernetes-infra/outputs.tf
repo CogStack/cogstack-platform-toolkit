@@ -1,5 +1,5 @@
 
-output "created_hosts_2" {
+output "created_hosts" {
   value = { for k, value in openstack_compute_instance_v2.kubernetes_nodes : k => {
     ip_address  = value.access_ip_v4
     unique_name = value.name
