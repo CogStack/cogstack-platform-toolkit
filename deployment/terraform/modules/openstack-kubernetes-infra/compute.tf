@@ -146,9 +146,9 @@ resource "null_resource" "copy_kubeconfig" {
     # Use ssh-keyscan to prevent interactive prompt on unknown host
     # Use sed to replace the localhost address in the KUBECONFIG file with the actual IP adddress of the created VM. 
     command = <<EOT
-mkdir -p ${path.module}/.build/ && \
-ssh-keyscan -H ${openstack_compute_instance_v2.kubernetes_server.access_ip_v4} >> ${path.module}/.build/.known_hosts_cogstack && \
-scp -o UserKnownHostsFile=${path.module}/.build/.known_hosts_cogstack -o StrictHostKeyChecking=yes \
+mkdir -p ${path.root}/.build/ && \
+ssh-keyscan -H ${openstack_compute_instance_v2.kubernetes_server.access_ip_v4} >> ${path.root}/.build/.known_hosts_cogstack && \
+scp -o UserKnownHostsFile=${path.root}/.build/.known_hosts_cogstack -o StrictHostKeyChecking=yes \
     -i ${local.ssh_keys.private_key_file} \
     ubuntu@${openstack_compute_instance_v2.kubernetes_server.access_ip_v4}:/etc/rancher/k3s/k3s.yaml \
     ${local.kubeconfig_file} && \
