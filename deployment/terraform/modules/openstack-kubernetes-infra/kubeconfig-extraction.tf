@@ -24,5 +24,5 @@ data "local_file" "kube_config_raw_file" {
 
 output "kube_config_raw" {
   value = data.local_file.kube_config_raw_file
-  description = "Kubeconfig for this cluster"
+  description = "Kubeconfig for this clustr"
 }
