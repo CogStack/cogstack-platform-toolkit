@@ -120,7 +120,7 @@ data "cloudinit_config" "init_docker_controller" {
 }
 
 data "openstack_compute_flavor_v2" "available_compute_flavors" {
-  for_each = toset(["2cpu4ram", "8cpu16ram"])
+  for_each = toset([for vm in var.host_instances : vm.flavour])
   name     = each.value
 }
 
