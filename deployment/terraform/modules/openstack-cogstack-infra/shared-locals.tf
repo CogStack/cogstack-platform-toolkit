@@ -1,6 +1,7 @@
 
 locals {
   random_prefix = random_id.server.b64_url
+  output_file_directory = var.output_file_directory != null ? var.output_file_directory : "${path.root}/.build"
 }
 
 
@@ -17,8 +18,6 @@ locals {
     ip_address  = var.preexisting_controller_host != null ? var.preexisting_controller_host.ip_address : local.created_controller_host.access_ip_v4
     unique_name = var.preexisting_controller_host != null && var.preexisting_controller_host.unique_name != null ? var.preexisting_controller_host.unique_name : local.created_controller_host.name
   }
-
-
 }
 
 resource "random_id" "server" {

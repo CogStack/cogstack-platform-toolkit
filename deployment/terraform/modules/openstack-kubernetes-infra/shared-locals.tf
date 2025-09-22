@@ -10,7 +10,8 @@ locals {
 }
 
 locals {
-  kubeconfig_file = "${path.module}/.build/downloaded-kubeconfig.yaml"
+  output_file_directory = var.output_file_directory != null ? var.output_file_directory : "${path.root}/.build"
+  kubeconfig_file = "${local.output_file_directory}/downloaded-kubeconfig.yaml"
 }
 
 resource "random_id" "server" {
