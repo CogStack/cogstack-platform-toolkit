@@ -21,13 +21,13 @@ resource "openstack_compute_keypair_v2" "compute_keypair" {
 resource "local_file" "private_key" {
   count           = local.is_using_existing_ssh_keypair ? 0 : 1
   content         = openstack_compute_keypair_v2.compute_keypair.private_key
-  filename        = "${path.root}/.build/${openstack_compute_keypair_v2.compute_keypair.name}-rsa.pem"
+  filename        = "${local.output_file_directory}/${openstack_compute_keypair_v2.compute_keypair.name}-rsa.pem"
   file_permission = "0600"
 }
 
 resource "local_file" "public_key" {
   count           = local.is_using_existing_ssh_keypair ? 0 : 1
   content         = openstack_compute_keypair_v2.compute_keypair.public_key
-  filename        = "${path.root}/.build/${openstack_compute_keypair_v2.compute_keypair.name}-rsa.pub"
+  filename        = "${local.output_file_directory}/${openstack_compute_keypair_v2.compute_keypair.name}-rsa.pub"
   file_permission = "0600"
 }

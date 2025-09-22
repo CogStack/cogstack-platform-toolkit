@@ -6,11 +6,17 @@ locals {
 
 locals {
   controller_host          = one([for host in var.host_instances : host if host.is_controller])
-  controller_host_instance = openstack_compute_instance_v2.kubernetes_server
+  created_controller_host = openstack_compute_instance_v2.kubernetes_server
+  controller_host_instance = {
+    name        = local.controller_host.name
+    ip_address  = local.created_controller_host.access_ip_v4
+    unique_name = local.created_controller_host.name
+  }
 }
 
 locals {
-  kubeconfig_file = "${path.module}/.build/downloaded-kubeconfig.yaml"
+  output_file_directory = var.output_file_directory != null ? var.output_file_directory : "${path.root}/.build"
+  kubeconfig_file = "${local.output_file_directory}/downloaded-kubeconfig.yaml"
 }
 
 resource "random_id" "server" {
