@@ -17,10 +17,10 @@ EOT
   }
 }
 
-# data "local_file" "kube_config_raw_file" {
-#   filename = local.kubeconfig_file
-#   depends_on = [ null_resource.copy_kubeconfig ]
-# }
+data "local_file" "kube_config_raw_file" {
+  filename = local.kubeconfig_file
+  depends_on = [ null_resource.copy_kubeconfig ]
+}
 
 # output "kube_config_raw" {
 #   value = data.local_file.kube_config_raw_file
