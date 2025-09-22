@@ -1,6 +1,6 @@
 
 output "created_hosts" {
-  value = { for k, value in openstack_compute_instance_v2.kubernetes_nodes : k => {
+  value = { for k, value in merge(openstack_compute_instance_v2.kubernetes_nodes, [openstack_compute_instance_v2.kubernetes_server]) : k => {
     ip_address  = value.access_ip_v4
     unique_name = value.name
     name        = k
