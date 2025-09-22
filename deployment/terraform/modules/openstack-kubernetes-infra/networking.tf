@@ -1,7 +1,7 @@
 
 
 locals {
-  devops_controller_cidr = "${local.controller_host_instance.access_ip_v4}/32"
+  devops_controller_cidr = "${local.controller_host_instance.ip_address}/32"
 
   cogstack_apps_ingress_rules = [
     { port = 22, cidr = var.allowed_ingress_ips_cidr, description = "Expose SSH" },

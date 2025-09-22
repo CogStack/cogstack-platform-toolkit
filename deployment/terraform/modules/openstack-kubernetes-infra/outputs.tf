@@ -1,21 +1,19 @@
 
 output "created_hosts" {
-  value = { for k, value in merge(openstack_compute_instance_v2.kubernetes_nodes, [openstack_compute_instance_v2.kubernetes_server]) : k => {
+  value = merge({ for k, value in openstack_compute_instance_v2.kubernetes_nodes : k => {
     ip_address  = value.access_ip_v4
     unique_name = value.name
     name        = k
-  } }
+    } },
+    {
+  (local.controller_host.name) : local.controller_host_instance
+  })
 
   description = "Created Hosts: A map of { hostname: { data } }"
 }
 
 output "created_controller_host" {
-  value = {
-    name        = (local.controller_host.name)
-    ip_address  = local.controller_host_instance.access_ip_v4
-    unique_name = local.controller_host_instance.name
-  }
-
+  value       = local.controller_host_instance
   description = "Created Controller Host: A map of { hostname: { data } }"
 }
 
