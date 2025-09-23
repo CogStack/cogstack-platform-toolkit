@@ -57,7 +57,7 @@ variable "ssh_key_pair" {
 }
 
 variable "output_file_directory" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Optional path to write output files to. If directory doesnt exist it will be created"
 }

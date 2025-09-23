@@ -6,7 +6,7 @@ output "created_hosts" {
     name        = k
     } },
     {
-  (local.controller_host.name) : local.controller_host_instance
+      (local.controller_host.name) : local.controller_host_instance
   })
 
   description = "Created Hosts: A map of { hostname: { data } }"
