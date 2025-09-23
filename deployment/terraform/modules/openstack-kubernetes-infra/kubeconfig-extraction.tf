@@ -22,10 +22,7 @@ data "local_file" "kube_config_raw_file" {
   depends_on = [ null_resource.copy_kubeconfig ]
 }
 
-# output "kube_config_raw" {
-#   value = data.local_file.kube_config_raw_file
-#   description = "Kubeconfig for this cluster"
-# }
+
 
 # data "external" "extract_kubeconfig_file" {
 #   program = ["bash", "${path.module}/kubeconfig_extraction.sh"]
