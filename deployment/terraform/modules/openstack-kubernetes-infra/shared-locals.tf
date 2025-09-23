@@ -5,7 +5,7 @@ locals {
 
 
 locals {
-  controller_host          = one([for host in var.host_instances : host if host.is_controller])
+  controller_host         = one([for host in var.host_instances : host if host.is_controller])
   created_controller_host = openstack_compute_instance_v2.kubernetes_server
   controller_host_instance = {
     name        = local.controller_host.name
@@ -16,7 +16,7 @@ locals {
 
 locals {
   output_file_directory = var.output_file_directory != null ? var.output_file_directory : "${path.root}/.build"
-  kubeconfig_file = "${local.output_file_directory}/downloaded-kubeconfig.yaml"
+  kubeconfig_file       = "${local.output_file_directory}/downloaded-kubeconfig.yaml"
 }
 
 resource "random_id" "server" {

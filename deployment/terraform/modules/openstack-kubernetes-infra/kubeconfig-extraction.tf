@@ -21,16 +21,7 @@ data "local_file" "kube_config_raw_file" {
   filename = local.kubeconfig_file
   depends_on = [ null_resource.copy_kubeconfig ]
 }
-
-
-
-# data "external" "extract_kubeconfig_file" {
-#   program = ["bash", "${path.module}/kubeconfig_extraction.sh"]
-
-#   query = {
-#         PATH_ROOT=path.root
-#         SERVER_IP=openstack_compute_instance_v2.kubernetes_server.access_ip_v4
-#         SSH_KEY=local.ssh_keys.private_key_file
-#         # KUBECONFIG_FILE=local.kubeconfig_file
-#   }
-# }
+output "kube_config_raw" {
+  value = data.local_file.kube_config_raw_file.content
+  description = "Kubeconfig for this cluster"
+}

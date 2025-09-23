@@ -6,7 +6,7 @@ output "created_hosts" {
     name        = k
     } },
     {
-  (local.controller_host.name) : local.controller_host_instance
+      (local.controller_host.name) : local.controller_host_instance
   })
 
   description = "Created Hosts: A map of { hostname: { data } }"
@@ -28,9 +28,4 @@ output "compute_keypair" {
 output "kubeconfig_file" {
   value       = abspath(local.kubeconfig_file)
   description = "Path to the generated KUBECONFIG file used to connect to kubernetes"
-}
-
-output "kube_config_raw" {
-  value = data.local_file.kube_config_raw_file
-  description = "Kubeconfig for this cluster"
 }
