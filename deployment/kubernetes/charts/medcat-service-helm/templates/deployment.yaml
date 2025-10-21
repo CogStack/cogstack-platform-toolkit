@@ -96,7 +96,11 @@ spec:
               echo "Downloading model $MODEL_NAME from $MODEL_PACK_URL"
               mkdir -p /models
               wget -O "/models/$MODEL_NAME" "$MODEL_PACK_URL"
-              echo "Download finished"
+              if [ $? -ne 0 ]; then
+                echo "Failed to download model from $MODEL_PACK_URL" >&2
+                exit 1
+              fi
+              echo "Download finished successfully"
           env:
           - name: MODEL_PACK_URL
             value: {{ .Values.model.downloadUrl}}
