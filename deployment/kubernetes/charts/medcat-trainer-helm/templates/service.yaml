@@ -29,7 +29,7 @@ spec:
     - port: {{ .Values.service.port }}
       {{- if (and (eq .Values.service.type "NodePort") ( .Values.service.nodePort)) }}
       nodePort: {{ .Values.service.nodePort }}
-      {{- else }}
+      {{- end }}
       targetPort: http
       protocol: TCP
       name: http
