@@ -54,6 +54,11 @@ spec:
           - name: "{{ tpl $key $ }}"
             value: "{{ tpl (print $value) $ }}"
           {{- end }}
+          {{- if .Values.model.downloadUrl }}
+          # Note this overrides any previous env setting if downloading is enabled
+          - name: "APP_MEDCAT_MODEL_PACK"
+            value: "/models/{{ .Values.model.name}}"
+          {{- end}}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -70,13 +75,47 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
+          {{- if or .Values.model.downloadUrl .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            {{- if .Values.volumeMounts }}
+            {{- toYaml .Values.volumeMounts | nindent 2 }}
+            {{- end }}
+            {{- if .Values.model.downloadUrl }}
+            - name: models
+              mountPath: /models
+            {{- end }}
           {{- end }}
-      {{- with .Values.volumes }}
+      {{- if .Values.model.downloadUrl }}
+      initContainers:
+        - name: model-downloader
+          image: busybox:1.28
+          command: 
+            - sh
+            - -c
+            - |
+              echo "Downloading model $MODEL_NAME from $MODEL_PACK_URL"
+              mkdir -p /models
+              wget -O "/models/$MODEL_NAME" "$MODEL_PACK_URL"
+              echo "Download finished"
+          env:
+          - name: MODEL_PACK_URL
+            value: {{ .Values.model.downloadUrl}}
+          - name: MODEL_NAME
+            value: {{ .Values.model.name}}
+          volumeMounts:
+            - name: models
+              mountPath: /models
+      {{- end }}
+      
+      {{- if or .Values.model.downloadUrl .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
+        {{- if .Values.volumes }}
+        {{- toYaml .Values.volumes | nindent 2 }}
+        {{- end }}
+        {{- if .Values.model.downloadUrl }}
+        - name: models
+          emptyDir: {}
+        {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
