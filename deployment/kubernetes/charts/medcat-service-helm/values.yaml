@@ -31,6 +31,13 @@ env:
   # DEID_MODE: true
   # DEID_REDACT: true
 
+# Enable downloading of public models using wget on startup. Model will be downloaded to /models/<name> and used for APP_MEDCAT_MODEL_PACK
+# model:
+  # Public URL to download a model pack from
+  # downloadUrl: "http://localhost:9000/models/my-model.zip"
+  # Name of the model pack to save to. Will be stored at /models/<name>
+  # name: my-model.zip
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
