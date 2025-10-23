@@ -171,11 +171,11 @@ resources: {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 3 # Recommended to leave unset. If desired to set note service performance has been found to improve up to around 3 CPU.
+  #   memory: 2Gi
   # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 1
+  #   memory: 1Gi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
@@ -192,6 +192,7 @@ startupProbe:
     port: http
   failureThreshold: 30
   periodSeconds: 10
+  initialDelaySeconds: 5
 
 nginx:
   livenessProbe:
