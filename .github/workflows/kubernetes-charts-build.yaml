@@ -6,6 +6,7 @@ on:
     pull_request:
       paths:
       - 'deployment/kubernetes/**'
+      - '.github/workflows/kubernetes**'
     tags:
       - 'v*.*.*'  # e.g., v0.1.1
 
