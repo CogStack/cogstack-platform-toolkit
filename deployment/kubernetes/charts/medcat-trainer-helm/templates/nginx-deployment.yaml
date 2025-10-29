@@ -13,6 +13,7 @@ spec:
     matchLabels:
       {{- include "medcat-trainer-helm.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: nginx
+  strategy: {{ toYaml .Values.nginxUpdateStrategy | nindent 4 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
