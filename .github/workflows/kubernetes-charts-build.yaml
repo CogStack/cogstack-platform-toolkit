@@ -1,10 +1,17 @@
 name: Kubernetes - Lint, Test, and Publish Helm Charts
 
-on: pull_request
+on:
+  push:
+    branches: [ main ]
+    pull_request:
+      paths:
+      - 'deployment/kubernetes/**'
+    tags:
+      - 'v*.*.*'  # e.g., v0.1.1
+
 defaults:
   run:
     working-directory: ./deployment/kubernetes
-
 
 jobs:
   helm-lint-test:
