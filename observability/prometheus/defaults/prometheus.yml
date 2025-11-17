@@ -4,7 +4,7 @@ global:
   evaluation_interval: 10s # Evaluate rules every 10 seconds. The default is every 1 minute.
 scrape_config_files:
   - scrape-configs/*.yml
-  - /etc/prometheus/cogstack/site/scrape-targets/*.yml
+  - /etc/prometheus/cogstack/site/scrape-configs/*.yml
 rule_files:
   - recording-rules/*.yml
   - /etc/prometheus/cogstack/site/recording-rules/*.yml
