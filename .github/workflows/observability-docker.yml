@@ -3,12 +3,12 @@ name: ci-build
 on:
   push:
     branches: [ main ]
-    pull_request:
-      paths:
-      - 'observability/**'
-      - '.github/workflows/observability**'
     tags:
       - 'v*.*.*'  # e.g., v0.1.1
+  pull_request:
+    paths:
+    - 'observability/**'
+    - '.github/workflows/observability**'
 
 jobs:
   docker:

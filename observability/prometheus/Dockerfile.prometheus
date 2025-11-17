@@ -3,16 +3,26 @@ FROM prom/prometheus
 LABEL traefik.enable="true" \
     traefik.http.routers.prometheus-path-router.rule="PathPrefix(`/prometheus`)" 
 
-RUN mkdir -p /etc/prometheus/cogstack/site/scrape-targets/probers
-RUN mkdir -p /etc/prometheus/cogstack/site/scrape-targets/exporters
+RUN mkdir -p /etc/prometheus/cogstack/site/scrape-configs/probers
+RUN mkdir -p /etc/prometheus/cogstack/site/scrape-configs/exporters
 
 COPY ./defaults /etc/prometheus/cogstack/defaults
 
-CMD [ \
-    "--config.file=/etc/prometheus/cogstack/defaults/prometheus.yml", \
-    "--storage.tsdb.path=/prometheus", \
-    "--storage.tsdb.retention.time=30d", \
-    "--web.external-url=/prometheus", \
-    "--web.route-prefix=/prometheus", \
-    "--web.enable-remote-write-receiver" \
-    ]
+ENV STORAGE_TSDB_RETENTION_TIME=30d
+ENV STORAGE_TSDB_RETENTION_SIZE=0
+
+COPY --chmod=755 <<'EOT' /entrypoint.sh
+#!/bin/sh
+set -eux
+exec /bin/prometheus \
+    --config.file=/etc/prometheus/cogstack/defaults/prometheus.yml \
+    --storage.tsdb.path=/prometheus \
+    --storage.tsdb.retention.time="${STORAGE_TSDB_RETENTION_TIME:-30d}" \
+    --storage.tsdb.retention.size="${STORAGE_TSDB_RETENTION_SIZE:-0}" \
+    --web.external-url=/prometheus \
+    --web.route-prefix=/prometheus \
+    --web.enable-remote-write-receiver \
+    "$@"
+EOT
+
+ENTRYPOINT ["/entrypoint.sh"]

@@ -3,12 +3,12 @@ name: Kubernetes - Lint, Test, and Publish Helm Charts
 on:
   push:
     branches: [ main ]
-    pull_request:
-      paths:
-      - 'deployment/kubernetes/**'
-      - '.github/workflows/kubernetes**'
     tags:
       - 'v*.*.*'  # e.g., v0.1.1
+  pull_request:
+    paths:
+    - 'deployment/kubernetes/**'
+    - '.github/workflows/kubernetes**'
 
 defaults:
   run:
