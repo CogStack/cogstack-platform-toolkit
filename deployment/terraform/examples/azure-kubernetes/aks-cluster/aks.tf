@@ -3,8 +3,15 @@
 module "aks" {
   # Using the Azure Verified Module AKS Dev/Test module
   # This is not recommended by Azure to be used for production deployments
-  source              = "Azure/avm-ptn-aks-dev/azurerm"
-  version             = "0.2.0"
+
+  # As of 26th 11 2025, the official module has a terminal bug on https://github.com/Azure/terraform-azurerm-avm-ptn-aks-dev/issues/55
+  # This error is fixed in this PR, weitch back to the official module path when it's merged in 
+  # https://github.com/Azure/terraform-azurerm-avm-ptn-aks-dev/pull/42
+  # For now use the fork for that PR:
+  source              = "github.com/pauldotyu/terraform-azurerm-avm-ptn-aks-dev"
+
+  # source              = "Azure/avm-ptn-aks-dev/azurerm"
+  # version             = "0.2.0"
   name                = module.naming.kubernetes_cluster.name_unique
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
