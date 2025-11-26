@@ -16,6 +16,6 @@ resource "azurerm_resource_group" "this" {
 
 resource "local_file" "kubeconfig_file" {
   content         = module.aks.resource.kube_config_raw
-  filename        = "${local.kubeconfig_file}.yaml"
+  filename        = "${local.kubeconfig_file}"
   file_permission = "0600"
 }
