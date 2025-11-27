@@ -100,8 +100,8 @@ jobs:
 
     - name: Push Helm Chart to Docker Hub OCI
       run: |
-        helm push ./medcat-service-helm-${CHART_VERSION}.tgz oci://registry-1.docker.io/cogstacksystems
-        helm push ./medcat-trainer-helm-${CHART_VERSION}.tgz oci://registry-1.docker.io/cogstacksystems
+        helm push ./medcat-service-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
+        helm push ./medcat-trainer-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
 
     - name: Release
       uses: softprops/action-gh-release@v2
@@ -109,5 +109,5 @@ jobs:
       with:
         draft: true
         files: |
-          ./deployment/kubernetes/medcat-service-helm-${CHART_VERSION}.tgz 
-          ./deployment/kubernetes/medcat-trainer-helm-${CHART_VERSION}.tgz 
+          ./deployment/kubernetes/medcat-service-helm-${{ steps.version.outputs.chart_version }}.tgz 
+          ./deployment/kubernetes/medcat-trainer-helm-${{ steps.version.outputs.chart_version }}.tgz 
