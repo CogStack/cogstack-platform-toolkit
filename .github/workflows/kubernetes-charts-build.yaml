@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login != 'dependabot[bot]' && github.repository == 'CogStack/cogstack-platform-toolkit'
     steps:
-      - name: CheckoutO
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
