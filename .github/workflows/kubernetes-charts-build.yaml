@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login != 'dependabot[bot]' && github.repository == 'CogStack/cogstack-platform-toolkit'
     steps:
-      - name: Checkout
+      - name: CheckoutO
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -42,7 +42,7 @@ jobs:
         run: |
           changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch}})
           if [[ -n "$changed" ]]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "changed=true" >> "$GITHUB_UTPUT"
           fi
 
       - name: Run chart-testing (lint)
@@ -60,8 +60,10 @@ jobs:
   helm-publish:
     runs-on: ubuntu-latest
     needs: helm-lint-test
+    permissions:
+      contents: write
     env:
-      CHART_VERSION: 0.0.1
+      DEFAULT_CHART_VERSION: 0.0.1
     steps:
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
@@ -77,6 +79,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v5
 
+    - name: Determine version
+      id: version
+      run: |
+        if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+          # Strip the tag prefix chart-
+          CHART_VERSION="${GITHUB_REF_NAME#helm-charts-}"
+        else
+          CHART_VERSION="$DEFAULT_CHART_VERSION"
+        fi
+        echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
+
     - name: Package Helm Charts
       run: |
         helm package ./charts/medcat-service-helm --version $CHART_VERSION
@@ -89,3 +102,12 @@ jobs:
       run: |
         helm push ./medcat-service-helm-${CHART_VERSION}.tgz oci://registry-1.docker.io/cogstacksystems
         helm push ./medcat-trainer-helm-${CHART_VERSION}.tgz oci://registry-1.docker.io/cogstacksystems
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: github.ref_type == 'tag'
+      with:
+        draft: true
+        files: |
+          ./deployment/kubernetes/medcat-service-helm-${CHART_VERSION}.tgz 
+          ./deployment/kubernetes/medcat-trainer-helm-${CHART_VERSION}.tgz 
