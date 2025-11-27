@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     tags:
-      - 'helm-charts-v*.*.*'  # e.g., v0.1.1
+      - 'helm-charts-v*.*.*'  # e.g., helm-charts-v0.1.1
   pull_request:
     paths:
     - 'deployment/kubernetes/charts/**'
