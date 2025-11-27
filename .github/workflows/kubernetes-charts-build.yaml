@@ -83,8 +83,8 @@ jobs:
       id: version
       run: |
         if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-          # Strip the tag prefix chart-
-          CHART_VERSION="${GITHUB_REF_NAME#helm-charts-}"
+          # Strip the tag prefix helm-charts-v
+          CHART_VERSION="${GITHUB_REF_NAME#helm-charts-v}"
         else
           CHART_VERSION="$DEFAULT_CHART_VERSION"
         fi
