@@ -7,7 +7,7 @@ on:
       - 'helm-charts-v*.*.*'  # e.g., v0.1.1
   pull_request:
     paths:
-    - 'deployment/kubernetes/**'
+    - 'deployment/kubernetes/charts/**'
     - '.github/workflows/kubernetes**'
 
 defaults:
