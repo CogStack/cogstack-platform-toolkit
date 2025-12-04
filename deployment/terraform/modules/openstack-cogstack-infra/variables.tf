@@ -29,12 +29,14 @@ name = Human readable hostname for this host.
 is_controller = Must be true for exactly one host. This will run the portainer "controller". All other nodes run the portainer "agent".
 flavour = The openstack_compute_flavor_v2 for the host
 volume_size = Size in GB for the disk volume for the node
+image_uuid = (Optional) The Openstack image you want to run, to override the default in ubuntu_immage_name
 EOT
   type = list(object({
     name          = string,
     flavour       = optional(string, "2cpu4ram"),
     volume_size   = optional(number, 20),
-    is_controller = optional(bool, false)
+    is_controller = optional(bool, false),
+    image_uuid    = optional(string, null)
   }))
 
   default = [
@@ -70,11 +72,11 @@ EOT
 
 variable "allowed_security_group_rules" {
   type = list(object({
-     port = number
-     cidr = string
-     description = string
+    port        = number
+    cidr        = string
+    description = string
   }))
-  default = [ ]
+  default     = []
   description = <<EOT
 Optionally provide additional security group rules to allow ingress to the created hosts
 
@@ -103,7 +105,7 @@ variable "ssh_key_pair" {
 
 
 variable "output_file_directory" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Optional path to write output files to. If directory doesnt exist it will be created"
 }

@@ -1,5 +1,3 @@
-
-
 resource "openstack_compute_instance_v2" "kubernetes_server" {
 
   name      = "${local.random_prefix}-${local.controller_host.name}"
@@ -17,7 +15,7 @@ resource "openstack_compute_instance_v2" "kubernetes_server" {
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.ubuntu.id
+    uuid                  = local.controller_host.image_uuid == null ? data.openstack_images_image_v2.ubuntu.id : local.controller_host.image_uuid
     source_type           = "image"
     volume_size           = local.controller_host.volume_size
     boot_index            = 0
@@ -56,7 +54,8 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.ubuntu.id
+    # uuid                  = var.ubuntu_immage_name
+    uuid                  = "4491629f-94fb-41ec-9da7-fe9bc21f9f1a"
     source_type           = "image"
     volume_size           = each.value.volume_size
     boot_index            = 0
