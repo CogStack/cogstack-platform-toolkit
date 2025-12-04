@@ -54,8 +54,7 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   }
 
   block_device {
-    # uuid                  = var.ubuntu_immage_name
-    uuid                  = "4491629f-94fb-41ec-9da7-fe9bc21f9f1a"
+    uuid                  = each.value.image_uuid == null ? data.openstack_images_image_v2.ubuntu.id : each.value.image_uuid 
     source_type           = "image"
     volume_size           = each.value.volume_size
     boot_index            = 0
