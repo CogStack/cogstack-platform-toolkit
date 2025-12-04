@@ -1,6 +1,6 @@
 
 locals {
-  random_prefix = random_id.server.b64_url
+  random_prefix         = random_id.server.b64_url
   output_file_directory = var.output_file_directory != null ? var.output_file_directory : "${path.root}/.build"
 }
 

@@ -18,10 +18,10 @@ EOT
 }
 
 data "local_file" "kubeconfig_file" {
-  filename = local.kubeconfig_file
-  depends_on = [ null_resource.copy_kubeconfig ]
+  filename   = local.kubeconfig_file
+  depends_on = [null_resource.copy_kubeconfig]
 }
 output "kubeconfig_raw" {
-  value = data.local_file.kubeconfig_file.content
+  value       = data.local_file.kubeconfig_file.content
   description = "Kubeconfig for this cluster"
 }

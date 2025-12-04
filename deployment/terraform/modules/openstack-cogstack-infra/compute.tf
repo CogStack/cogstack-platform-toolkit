@@ -17,7 +17,7 @@ resource "openstack_compute_instance_v2" "cogstack_ops_compute" {
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.ubuntu.id
+    uuid                  = each.value.image_uuid == null ? data.openstack_images_image_v2.ubuntu.id : each.value.image_uuid
     source_type           = "image"
     volume_size           = each.value.volume_size
     boot_index            = 0
