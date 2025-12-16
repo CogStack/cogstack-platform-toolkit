@@ -32,7 +32,7 @@ env:
   # DEID_REDACT: true
 
   # Set SERVER_GUNICORN_MAX_REQUESTS to a high number instead of the default 1000. Trust k8s instead to restart pod when needed.
-  SERVER_GUNICORN_MAX_REQUESTS: 1000000
+  SERVER_GUNICORN_MAX_REQUESTS: 100000
 
   # Recommended env vars to set to try to limit to 1 CPU for scaling
   # OMP_NUM_THREADS: "1"
@@ -44,12 +44,39 @@ env:
   # PYTORCH_ENABLE_MPS_FALLBACK: "1"
   # SERVER_GUNICORN_EXTRA_ARGS: "--worker-connections 1 --backlog 1"
 
+  # Observability Env Vars
+  APP_ENABLE_METRICS: true
+  APP_ENABLE_TRACING: false
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://<unused>:4317"
+  OTEL_SERVICE_NAME: "medcat-service"
+  OTEL_TRACES_EXPORTER: "otlp"
+  OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+  OTEL_EXPERIMENTAL_RESOURCE_DETECTORS: "containerid,os"
+  OTEL_RESOURCE_ATTRIBUTES: "k8s.pod.uid=$(K8S_POD_UID),k8s.pod.name=$(K8S_POD_NAME),k8s.namespace.name=$(K8S_POD_NAMESPACE),k8s.node.name=$(K8S_NODE_NAME)"
+  
 # Enable downloading of public models using wget on startup. Model will be downloaded to /models/<name> and used for APP_MEDCAT_MODEL_PACK
 model: {}
   # Public URL to download a model pack from
   # downloadUrl: "http://localhost:9000/models/my-model.zip"
   # Name of the model pack to save to. Will be stored at /models/<name>
   # name: my-model.zip
+
+
+# Allow setting env values from field/configmap/secret references. Defaults to include k8s details f
+envValueFrom:
+  K8S_NODE_NAME:
+    fieldRef:
+      fieldPath: spec.nodeName
+  K8S_POD_NAME:
+    fieldRef:
+      fieldPath: metadata.name
+  K8S_POD_UID:
+    fieldRef:
+      fieldPath: metadata.uid
+  K8S_POD_NAMESPACE:
+    fieldRef:
+      fieldPath: metadata.namespace
+
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
