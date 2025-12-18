@@ -56,7 +56,11 @@ postgresql:
     persistence:
       # Size of the PVC for the postgres database
       size: 500Mi
-
+  image:
+    repository: bitnamilegacy/postgresql
+    # Pin legacy version of postgresql following bitnami change to remove free images. Match prefect version
+    tag: 17.6.0-debian-12-r4
+    
 persistence:
   media:
     # Size of PVC for files like model packs and other media downloaded by medcat trainer
@@ -104,6 +108,17 @@ solr:
   podLabels:
     app.kubernetes.io/component: solr
     app.kubernetes.io/part-of: cogstack
+  image:
+    repository: bitnamilegacy/solr
+    # Pin legacy version of postgresql following bitnami change to remove free images. Match prefect version
+    tag: 9.9.0-debian-12-r1
+
+  zookeeper:
+    image:
+      repository: bitnamilegacy/zookeeper
+      tag: 3.9.3-debian-12-r22
+
+
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
