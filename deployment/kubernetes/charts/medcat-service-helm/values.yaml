@@ -53,7 +53,10 @@ env:
   OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
   OTEL_EXPERIMENTAL_RESOURCE_DETECTORS: "containerid,os"
   OTEL_RESOURCE_ATTRIBUTES: "k8s.pod.uid=$(K8S_POD_UID),k8s.pod.name=$(K8S_POD_NAME),k8s.namespace.name=$(K8S_POD_NAMESPACE),k8s.node.name=$(K8S_NODE_NAME)"
-  
+  OTEL_METRICS_EXPORTER: "none"
+  OTEL_LOGS_EXPORTER: "none"  
+  OTEL_PYTHON_FASTAPI_EXCLUDED_URLS: "/api/health,/metrics"
+
 # Enable downloading of public models using wget on startup. Model will be downloaded to /models/<name> and used for APP_MEDCAT_MODEL_PACK
 model: {}
   # Public URL to download a model pack from
