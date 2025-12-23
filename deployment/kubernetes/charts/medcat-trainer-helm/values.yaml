@@ -254,3 +254,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Runtime class name for the pod (e.g., "nvidia" for GPU workloads)
+runtimeClassName: ""

@@ -8,6 +8,7 @@ replicaCount: 1
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: cogstacksystems/medcat-service
+  # repository: cogstacksystems/medcat-service-gpu
   # This sets the pull policy for images.
   # pullPolicy: IfNotPresent
   pullPolicy: Always
@@ -32,7 +33,7 @@ env:
   # DEID_REDACT: true
 
   # Set SERVER_GUNICORN_MAX_REQUESTS to a high number instead of the default 1000. Trust k8s instead to restart pod when needed.
-  SERVER_GUNICORN_MAX_REQUESTS: 100000
+  SERVER_GUNICORN_MAX_REQUESTS: "100000"
 
   # Recommended env vars to set to try to limit to 1 CPU for scaling
   # OMP_NUM_THREADS: "1"
@@ -43,6 +44,10 @@ env:
   # TOKENIZERS_PARALLELISM: "false"
   # PYTORCH_ENABLE_MPS_FALLBACK: "1"
   # SERVER_GUNICORN_EXTRA_ARGS: "--worker-connections 1 --backlog 1"
+
+  # Recommended env vars for GPU support
+  # APP_CUDA_DEVICE_COUNT: "1"
+  # APP_TORCH_THREADS: "-1"
 
   # Observability Env Vars
   APP_ENABLE_METRICS: true
@@ -202,6 +207,10 @@ volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+
+# Runtime class name for the pod (e.g., "nvidia" for GPU workloads)
+# More information: https://kubernetes.io/docs/concepts/containers/runtime-class/
+runtimeClassName: ""
 
 nodeSelector: {}
 
