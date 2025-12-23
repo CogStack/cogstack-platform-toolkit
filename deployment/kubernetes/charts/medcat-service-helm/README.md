@@ -71,3 +71,42 @@ env:
   DEID_MODE: "true"
   DEID_REDACT: "true"
 ```
+
+
+## GPU Support
+
+To run MedCAT Service with GPU acceleration, use the GPU-enabled image and set the pod runtime class accordingly.
+
+Note GPU support is only used for deidentification
+
+Create a values file like `values-gpu.yaml` with the following content:
+
+```yaml
+image:
+  repository: ghcr.io/cogstack/medcat-service-gpu
+
+runtimeClassName: nvidia
+
+resources:
+  limits:
+      nvidia.com/gpu: 1
+env:
+  APP_CUDA_DEVICE_COUNT: 1
+  APP_TORCH_THREADS: -1
+  DEID_MODE: true
+```
+
+> To use GPU acceleration, your Kubernetes cluster should be configured with the NVIDIA GPU Operator or the following components:
+> - [NVIDIA device plugin for Kubernetes](https://github.com/NVIDIA/k8s-device-plugin)
+> - [NVIDIA GPU Feature Discovery](https://github.com/NVIDIA/gpu-feature-discovery)
+> - The [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/)
+
+### Test GPU support
+You can verify that the MedCAT Service pod has access to the GPU by executing `nvidia-smi` inside the pod.
+
+
+```sh
+kubectl exec -it <POD_NAME> -- nvidia-smi
+```
+
+You should see the NVIDIA GPU device listing if the GPU is properly accessible.
