@@ -24,6 +24,25 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+    {{- if not .Values.ingress.http }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- with .pathType }}
+            pathType: {{ . }}
+            {{- end }}
+            backend:
+              service:
+                name: {{ include "medcat-service.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- if not .Values.ingress.hosts }}
     {{- range .Values.ingress.http }}
     - {{- if .host }}
       host: {{ .host | quote }}
@@ -41,5 +60,6 @@ spec:
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}
+    {{- end }}
     {{- end }}
 {{- end }}
