@@ -4,13 +4,12 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
-nginxReplicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: cogstacksystems/medcat-trainer
   # This sets the pull policy for images.
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 nginxImage:
@@ -38,20 +37,15 @@ env:
   # TODO: Support custom DB overrides#
   # DB_ENGINE: "sqlite3"
   DB_ENGINE: "postgresql"
-  DB_NAME: "postgres"
-  DB_USER: "postgres"
   DB_PORT: "5432"
-  # DB_PASSWORD: ""
-  # DB_HOST: "" 
 
 postgresql:
   enabled: true
   # TODO: Support custom DB overrides
-  # auth:
-  #  - name for a custom database
-  #   database: "my_trainer_db"
-  #   username: "trainer_admin"
-  #   password: "changeme_changeme"
+  auth:
+    database: "postgres"
+    username: "postgres"
+    password: "postgres"
   primary:
     persistence:
       # Size of the PVC for the postgres database
@@ -96,10 +90,7 @@ solr:
   replicaCount: 1
   collectionShards: 1
   collectionReplicas: 1
-  zookeeper:
-    replicaCount: 1
-    persistence:
-      size: 1Gi
+
   persistence:
     size: 1Gi
   auth:
@@ -117,7 +108,9 @@ solr:
     image:
       repository: bitnamilegacy/zookeeper
       tag: 3.9.3-debian-12-r22
-
+    replicaCount: 1 #
+    persistence:
+      size: 1Gi   # Default is 8Gi
 
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/

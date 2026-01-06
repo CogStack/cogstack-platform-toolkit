@@ -62,6 +62,9 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{/* =========================================================================
+   Dependencies
+=========================================================================== */}}
 
 {{- /*
 Return Solr host: either user-supplied or constructed from release name
@@ -93,3 +96,11 @@ Return full Solr URL: combines host and port
 {{- define "medcat-trainer-helm.solrURL" -}}
 http://{{ include "medcat-trainer-helm.solrHost" . }}:{{ include "medcat-trainer-helm.solrPort" . }}
 {{- end }}
+
+{{- define "postgres.service-name" -}}
+{{ include "postgresql.v1.primary.fullname" (dict "Values" .Values.postgresql "Chart" (dict "Name" "postgresql") "Release" .Release) }}
+{{- end -}}
+
+{{- define "postgres.port" -}}
+{{ include "postgresql.v1.service.port" (dict "Values" .Values.postgresql) }}
+{{- end -}}
