@@ -7,8 +7,9 @@ locals {
 
 
 locals {
-  controller_host         = one([for host in var.host_instances : host if host.is_controller])
-  created_controller_host = openstack_compute_instance_v2.kubernetes_server
+  controller_host                 = one([for host in var.host_instances : host if host.is_controller])
+  controller_host_has_floating_ip = local.controller_host.floating_ip != null
+  created_controller_host         = openstack_compute_instance_v2.kubernetes_server
   controller_host_instance = {
     name        = local.controller_host.name
     ip_address  = local.controller_host.floating_ip != null ? local.controller_host.floating_ip : openstack_compute_instance_v2.kubernetes_server.access_ip_v4

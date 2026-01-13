@@ -33,7 +33,7 @@ resource "openstack_networking_secgroup_rule_v2" "cogstack_apps_port_rules" {
 
 # Look up ports by device_id and network_id
 data "openstack_networking_port_v2" "server_port" {
-  for_each   = toset(local.controller_host.floating_ip != null ? ["server"] : [])
+  for_each   = toset(local.controller_host_has_floating_ip ? ["server"] : [])
   device_id  = openstack_compute_instance_v2.kubernetes_server.id
   network_id = openstack_compute_instance_v2.kubernetes_server.network[0].uuid
 }
@@ -46,7 +46,7 @@ data "openstack_networking_port_v2" "nodes_port" {
 
 # Associate floating IP with kubernetes server
 resource "openstack_networking_floatingip_associate_v2" "kubernetes_server_fip" {
-  for_each    = toset(local.controller_host.floating_ip != null ? ["server"] : [])
+  for_each    = toset(local.controller_host_has_floating_ip ? ["server"] : [])
   floating_ip = local.controller_host.floating_ip
   port_id     = data.openstack_networking_port_v2.server_port["server"].id
 }
