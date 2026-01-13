@@ -48,7 +48,7 @@ data "openstack_networking_port_v2" "nodes_port" {
 resource "openstack_networking_floatingip_associate_v2" "kubernetes_server_fip" {
   count = local.controller_host_has_floating_ip ? 1 : 0
   floating_ip = local.controller_host.floating_ip.address
-  port_id     = data.openstack_networking_port_v2.server_port["server"].id
+  port_id     = data.openstack_networking_port_v2.server_port[0].id
 }
 
 # Associate floating IPs with kubernetes nodes
