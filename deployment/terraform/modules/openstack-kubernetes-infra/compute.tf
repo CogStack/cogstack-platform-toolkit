@@ -29,7 +29,7 @@ resource "null_resource" "kubernetes_server_provisioner" {
 
   connection {
     user        = "ubuntu"
-    host        = openstack_compute_instance_v2.kubernetes_server.access_ip_v4
+    host        = local.controller_host_instance.ip_address
     private_key = file(local.ssh_keys.private_key_file)
   }
 

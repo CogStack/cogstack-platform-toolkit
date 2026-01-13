@@ -11,7 +11,7 @@ locals {
   created_controller_host = openstack_compute_instance_v2.kubernetes_server
   controller_host_instance = {
     name        = local.controller_host.name
-    ip_address  = local.created_controller_host.access_ip_v4
+    ip_address  = local.controller_host.floating_ip != null ? local.controller_host.floating_ip : openstack_compute_instance_v2.kubernetes_server.access_ip_v4
     unique_name = local.created_controller_host.name
   }
 }

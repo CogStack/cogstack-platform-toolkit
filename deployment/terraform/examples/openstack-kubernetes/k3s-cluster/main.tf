@@ -6,7 +6,8 @@ module "openstack_cogstack_infra" {
       name          = "cogstack-k3s-node-2"
       flavour       = "2cpu4ram"
       volume_size   = 20
-      is_controller = false
+      is_controller = false,
+      # floating_ip = "10.10.10.10"
     },
   ]
   allowed_ingress_ips_cidr    = var.allowed_ingress_ips_cidr
