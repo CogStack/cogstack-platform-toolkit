@@ -29,3 +29,8 @@ output "kubeconfig_file" {
   value       = abspath(local.kubeconfig_file)
   description = "Path to the generated KUBECONFIG file used to connect to kubernetes"
 }
+
+output "created_security_group" {
+  value       = openstack_networking_secgroup_v2.cogstack_apps_security_group
+  description = "Security group associated to the created hosts"
+}
