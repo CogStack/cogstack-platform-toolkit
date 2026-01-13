@@ -1,6 +1,6 @@
 
 locals {
-  random_prefix = var.generate_random_name_prefix ? random_id.server[0].b64_url : ""
+  random_prefix = random_id.server.b64_url
 }
 
 
@@ -20,7 +20,6 @@ locals {
 }
 
 resource "random_id" "server" {
-  count = var.generate_random_name_prefix ? 1 : 0
   keepers = {
     # Generate a new id each time we recreate the hosts
     cloud_init_config_controller = data.cloudinit_config.init_docker_controller.id
