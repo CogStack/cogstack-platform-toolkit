@@ -25,7 +25,7 @@ resource "openstack_compute_instance_v2" "kubernetes_server" {
 }
 
 resource "null_resource" "kubernetes_server_provisioner" {
-  depends_on = [openstack_compute_instance_v2.kubernetes_server]
+  depends_on = [openstack_compute_instance_v2.kubernetes_server, openstack_networking_floatingip_associate_v2.kubernetes_server_fip]
 
   connection {
     user        = "ubuntu"
@@ -41,12 +41,17 @@ resource "null_resource" "kubernetes_server_provisioner" {
 }
 
 resource "openstack_compute_instance_v2" "kubernetes_nodes" {
-  depends_on = [openstack_compute_instance_v2.kubernetes_server]
-  for_each   = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
-  name       = local.prefix != "" ? "${local.prefix}-${each.value.name}" : each.value.name
-  flavor_id  = data.openstack_compute_flavor_v2.available_compute_flavors[each.value.flavour].id
-  key_pair   = openstack_compute_keypair_v2.compute_keypair.name
-  region     = "RegionOne"
+  depends_on = [
+    openstack_compute_instance_v2.kubernetes_server,
+    openstack_networking_floatingip_associate_v2.kubernetes_nodes_fip
+  ]
+
+  for_each  = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
+  
+  name      = local.prefix != "" ? "${local.prefix}-${each.value.name}" : each.value.name
+  flavor_id = data.openstack_compute_flavor_v2.available_compute_flavors[each.value.flavour].id
+  key_pair  = openstack_compute_keypair_v2.compute_keypair.name
+  region    = "RegionOne"
 
   user_data = data.cloudinit_config.init_docker.rendered
   security_groups = ["default",
