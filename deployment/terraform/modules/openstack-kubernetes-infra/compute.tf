@@ -1,6 +1,6 @@
 resource "openstack_compute_instance_v2" "kubernetes_server" {
 
-  name      = "${local.random_prefix}-${local.controller_host.name}"
+  name      = var.generate_random_name_prefix ? "${local.random_prefix}-${local.controller_host.name}" : local.controller_host.name
   flavor_id = data.openstack_compute_flavor_v2.available_compute_flavors[local.controller_host.flavour].id
   key_pair  = openstack_compute_keypair_v2.compute_keypair.name
   region    = "RegionOne"
@@ -39,7 +39,7 @@ resource "openstack_compute_instance_v2" "kubernetes_server" {
 resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   depends_on = [openstack_compute_instance_v2.kubernetes_server]
   for_each   = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
-  name       = "${local.random_prefix}-${each.value.name}"
+  name       = var.generate_random_name_prefix ? "${local.random_prefix}-${each.value.name}" : each.value.name
   flavor_id  = data.openstack_compute_flavor_v2.available_compute_flavors[each.value.flavour].id
   key_pair   = openstack_compute_keypair_v2.compute_keypair.name
   region     = "RegionOne"
@@ -54,7 +54,7 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   }
 
   block_device {
-    uuid                  = each.value.image_uuid == null ? data.openstack_images_image_v2.ubuntu.id : each.value.image_uuid 
+    uuid                  = each.value.image_uuid == null ? data.openstack_images_image_v2.ubuntu.id : each.value.image_uuid
     source_type           = "image"
     volume_size           = each.value.volume_size
     boot_index            = 0

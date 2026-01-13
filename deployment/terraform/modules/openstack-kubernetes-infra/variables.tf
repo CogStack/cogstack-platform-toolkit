@@ -63,3 +63,9 @@ variable "output_file_directory" {
   default     = null
   description = "Optional path to write output files to. If directory doesnt exist it will be created"
 }
+
+variable "generate_random_name_prefix" {
+  type        = bool
+  default     = true
+  description = "Whether to generate a random prefix for hostnames. If false, hostnames will use only the name from host_instances"
+}
