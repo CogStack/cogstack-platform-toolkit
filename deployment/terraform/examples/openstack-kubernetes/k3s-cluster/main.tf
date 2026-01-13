@@ -9,8 +9,8 @@ module "openstack_cogstack_infra" {
       is_controller = false
     },
   ]
-  allowed_ingress_ips_cidr = var.allowed_ingress_ips_cidr
-  ubuntu_immage_name       = var.ubuntu_immage_name
-  generate_random_name_prefix = true
-  name_prefix = "dev"
+  allowed_ingress_ips_cidr    = var.allowed_ingress_ips_cidr
+  ubuntu_immage_name          = var.ubuntu_immage_name
+  # generate_random_name_prefix = false
+  # prefix                      = "dev"
 }

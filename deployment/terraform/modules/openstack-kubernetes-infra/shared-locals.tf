@@ -1,7 +1,7 @@
 
 locals {
   random_prefix = random_id.server.b64_url
-  prefix = var.name_prefix != null ? var.name_prefix : (var.generate_random_name_prefix ? local.random_prefix : "")
+  prefix        = var.prefix != null ? var.prefix : (var.generate_random_name_prefix ? local.random_prefix : "")
 }
 
 

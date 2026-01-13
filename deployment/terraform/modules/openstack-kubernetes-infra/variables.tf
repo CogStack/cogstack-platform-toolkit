@@ -70,8 +70,8 @@ variable "generate_random_name_prefix" {
   description = "Whether to generate a random prefix for hostnames. If false, hostnames will use only the name from host_instances"
 }
 
-variable "name_prefix" {
+variable "prefix" {
   type        = string
   default     = null
-  description = "Optional custom prefix for resource names. If provided and generate_random_name_prefix is false, this will be used instead of a random prefix"
+  description = "Optional custom prefix for resource names. If provided will override generate_random_name_prefix"
 }
