@@ -17,13 +17,15 @@ is_controller = Must be true for exactly one host. This will run the k3s "server
 flavour = The openstack_compute_flavor_v2 for the host
 volume_size = Size in GB for the disk volume for the node
 image_uuid = (Optional) The Openstack image you want to run, to override the default in ubuntu_immage_name
+floating_ip = (Optional) Floating IP address to associate with this host
 EOT
   type = list(object({
     name          = string,
     flavour       = optional(string, "2cpu4ram"),
     volume_size   = optional(number, 20),
     is_controller = optional(bool, false),
-    image_uuid    = optional(string, null)
+    image_uuid    = optional(string, null),
+    floating_ip   = optional(string, null)
   }))
 
   default = [
@@ -78,17 +80,13 @@ variable "prefix" {
 
 variable "network" {
   type = object({
-    name       = optional(string)
+    name       = optional(string, "external_4003")
     network_id = optional(string)
   })
   default     = { name = "external_4003" }
-  description = "Network configuration. Either provide 'name' to lookup the network by name, or 'network_id' to use a network UUID directly. Defaults to name 'external_4003'"
+  description = "Network configuration. Either provide 'name' to lookup the network by name, or 'network_id' to use a network UUID directly. Defaults to name 'external_4003' if null"
   validation {
-    condition     = var.network.name != null || var.network.network_id != null
+    condition     = var.network == null || var.network.name != null || var.network.network_id != null
     error_message = "Either network.name or network.network_id must be provided"
-  }
-  validation {
-    condition     = var.network.name == null || var.network.network_id == null
-    error_message = "Only one of network.name or network.network_id should be provided, not both"
   }
 }

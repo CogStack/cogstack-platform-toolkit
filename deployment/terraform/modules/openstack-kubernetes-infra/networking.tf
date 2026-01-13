@@ -29,3 +29,31 @@ resource "openstack_networking_secgroup_rule_v2" "cogstack_apps_port_rules" {
   security_group_id = openstack_networking_secgroup_v2.cogstack_apps_security_group.id
 }
 
+
+
+# Look up ports by fixed IP address
+data "openstack_networking_port_v2" "server_port" {
+  count      = local.controller_host.floating_ip != null ? 1 : 0
+  network_id = local.network_id
+  fixed_ip   = openstack_compute_instance_v2.kubernetes_server.network[0].fixed_ip_v4
+}
+
+data "openstack_networking_port_v2" "nodes_port" {
+  for_each   = { for vm in var.host_instances : vm.name => vm if !vm.is_controller && vm.floating_ip != null }
+  network_id = local.network_id
+  fixed_ip   = openstack_compute_instance_v2.kubernetes_nodes[each.key].network[0].fixed_ip_v4
+}
+
+# Associate floating IP with kubernetes server
+resource "openstack_networking_floatingip_associate_v2" "kubernetes_server_fip" {
+  count       = local.controller_host.floating_ip != null ? 1 : 0
+  floating_ip = local.controller_host.floating_ip
+  port_id     = data.openstack_networking_port_v2.server_port[0].id
+}
+
+# Associate floating IPs with kubernetes nodes
+resource "openstack_networking_floatingip_associate_v2" "kubernetes_nodes_fip" {
+  for_each    = { for vm in var.host_instances : vm.name => vm if !vm.is_controller && vm.floating_ip != null }
+  floating_ip = each.value.floating_ip
+  port_id     = data.openstack_networking_port_v2.nodes_port[each.key].id
+}

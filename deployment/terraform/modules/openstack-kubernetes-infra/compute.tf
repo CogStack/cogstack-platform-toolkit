@@ -85,8 +85,6 @@ resource "null_resource" "kubernetes_nodes_provisioner" {
   }
 }
 
-
-
 # TODO: Read content from files and put into cloud-init config
 # data "local_file" "install_docker_sh" {
 #   filename = "${path.module}/resources/install-docker.sh"
@@ -134,7 +132,7 @@ data "openstack_compute_flavor_v2" "available_compute_flavors" {
 
 
 data "openstack_networking_network_v2" "network" {
-  name = var.network.name
+  name = var.network != null && var.network.name != null ? var.network.name : "external_4003"
 }
 
 data "openstack_images_image_v2" "ubuntu" {
