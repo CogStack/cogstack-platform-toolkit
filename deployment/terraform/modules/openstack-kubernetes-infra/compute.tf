@@ -22,10 +22,14 @@ resource "openstack_compute_instance_v2" "kubernetes_server" {
     destination_type      = "volume"
     delete_on_termination = true
   }
+}
+
+resource "null_resource" "kubernetes_server_provisioner" {
+  depends_on = [openstack_compute_instance_v2.kubernetes_server]
 
   connection {
     user        = "ubuntu"
-    host        = self.access_ip_v4
+    host        = openstack_compute_instance_v2.kubernetes_server.access_ip_v4
     private_key = file(local.ssh_keys.private_key_file)
   }
 
@@ -61,10 +65,16 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
     destination_type      = "volume"
     delete_on_termination = true
   }
+}
+
+resource "null_resource" "kubernetes_nodes_provisioner" {
+  for_each = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
+
+  depends_on = [openstack_compute_instance_v2.kubernetes_nodes]
 
   connection {
     user        = "ubuntu"
-    host        = self.access_ip_v4
+    host        = openstack_compute_instance_v2.kubernetes_nodes[each.key].access_ip_v4
     private_key = file(local.ssh_keys.private_key_file)
   }
 
@@ -124,7 +134,7 @@ data "openstack_compute_flavor_v2" "available_compute_flavors" {
 
 
 data "openstack_networking_network_v2" "network" {
-  name     = var.network.name
+  name = var.network.name
 }
 
 data "openstack_images_image_v2" "ubuntu" {
