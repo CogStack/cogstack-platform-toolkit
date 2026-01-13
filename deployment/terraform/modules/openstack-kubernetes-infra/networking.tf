@@ -33,27 +33,27 @@ resource "openstack_networking_secgroup_rule_v2" "cogstack_apps_port_rules" {
 
 # Look up ports by device_id and network_id
 data "openstack_networking_port_v2" "server_port" {
-  for_each   = toset(local.controller_host_has_floating_ip ? ["server"] : [])
+  count = local.controller_host_has_floating_ip ? 1 : 0
   device_id  = openstack_compute_instance_v2.kubernetes_server.id
   network_id = openstack_compute_instance_v2.kubernetes_server.network[0].uuid
 }
 
 data "openstack_networking_port_v2" "nodes_port" {
-  for_each   = { for vm in var.host_instances : vm.name => vm if !vm.is_controller && vm.floating_ip != null }
+  for_each   = { for vm in var.host_instances : vm.name => vm if !vm.is_controller && vm.floating_ip != null && vm.floating_ip.use_floating_ip }
   device_id  = openstack_compute_instance_v2.kubernetes_nodes[each.key].id
   network_id = openstack_compute_instance_v2.kubernetes_nodes[each.key].network[0].uuid
 }
 
 # Associate floating IP with kubernetes server
 resource "openstack_networking_floatingip_associate_v2" "kubernetes_server_fip" {
-  for_each    = toset(local.controller_host_has_floating_ip ? ["server"] : [])
-  floating_ip = local.controller_host.floating_ip
+  count = local.controller_host_has_floating_ip ? 1 : 0
+  floating_ip = local.controller_host.floating_ip.address
   port_id     = data.openstack_networking_port_v2.server_port["server"].id
 }
 
 # Associate floating IPs with kubernetes nodes
 resource "openstack_networking_floatingip_associate_v2" "kubernetes_nodes_fip" {
-  for_each    = { for vm in var.host_instances : vm.name => vm if !vm.is_controller && vm.floating_ip != null }
-  floating_ip = each.value.floating_ip
+  for_each    = { for vm in var.host_instances : vm.name => vm if !vm.is_controller && vm.floating_ip != null && vm.floating_ip.use_floating_ip}
+  floating_ip = each.value.floating_ip.address
   port_id     = data.openstack_networking_port_v2.nodes_port[each.key].id
 }

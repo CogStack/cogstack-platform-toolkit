@@ -17,7 +17,7 @@ is_controller = Must be true for exactly one host. This will run the k3s "server
 flavour = The openstack_compute_flavor_v2 for the host
 volume_size = Size in GB for the disk volume for the node
 image_uuid = (Optional) The Openstack image you want to run, to override the default in ubuntu_immage_name
-floating_ip = (Optional) Floating IP address to associate with this host
+floating_ip = (Optional) Floating IP configuration. Set use_floating_ip to true and provide address to associate a floating IP with this host
 EOT
   type = list(object({
     name          = string,
@@ -25,7 +25,10 @@ EOT
     volume_size   = optional(number, 20),
     is_controller = optional(bool, false),
     image_uuid    = optional(string, null),
-    floating_ip   = optional(string, null)
+    floating_ip = optional(object({
+      use_floating_ip = optional(bool, false) # Using a boolean to make it a plan time value.
+      address         = optional(string)
+    }), null)
   }))
 
   default = [

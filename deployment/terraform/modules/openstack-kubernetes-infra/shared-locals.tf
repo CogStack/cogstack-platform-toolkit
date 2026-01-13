@@ -8,11 +8,11 @@ locals {
 
 locals {
   controller_host                 = one([for host in var.host_instances : host if host.is_controller])
-  controller_host_has_floating_ip = local.controller_host.floating_ip != null
+  controller_host_has_floating_ip = local.controller_host.floating_ip != null && local.controller_host.floating_ip.use_floating_ip
   created_controller_host         = openstack_compute_instance_v2.kubernetes_server
   controller_host_instance = {
     name        = local.controller_host.name
-    ip_address  = local.controller_host.floating_ip != null ? local.controller_host.floating_ip : openstack_compute_instance_v2.kubernetes_server.access_ip_v4
+    ip_address  = local.controller_host_has_floating_ip ? local.controller_host.floating_ip.address : openstack_compute_instance_v2.kubernetes_server.access_ip_v4
     unique_name = local.created_controller_host.name
   }
 }
