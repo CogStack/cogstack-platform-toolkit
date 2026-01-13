@@ -124,8 +124,8 @@ data "openstack_compute_flavor_v2" "available_compute_flavors" {
 
 
 data "openstack_networking_network_v2" "network" {
-  count = var.network.network_id != null ? 0 : 1
-  name  = var.network.name
+  for_each = toset(var.network.network_id != null ? [] : ["lookup"])
+  name     = var.network.name
 }
 
 data "openstack_images_image_v2" "ubuntu" {

@@ -13,7 +13,7 @@ module "openstack_cogstack_infra" {
   ubuntu_immage_name          = var.ubuntu_immage_name
   # generate_random_name_prefix = false
   # prefix                      = "dev"
-  # network = {
-  #   network_id = "some-id"
-  # }
+  network = {
+    network_id = "some-id"
+  }
 }
