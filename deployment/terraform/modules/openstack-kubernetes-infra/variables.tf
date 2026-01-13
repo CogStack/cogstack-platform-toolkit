@@ -75,3 +75,20 @@ variable "prefix" {
   default     = null
   description = "Optional custom prefix for resource names. If provided will override generate_random_name_prefix"
 }
+
+variable "network" {
+  type = object({
+    name       = optional(string)
+    network_id = optional(string)
+  })
+  default     = { name = "external_4003" }
+  description = "Network configuration. Either provide 'name' to lookup the network by name, or 'network_id' to use a network UUID directly. Defaults to name 'external_4003'"
+  validation {
+    condition     = var.network.name != null || var.network.network_id != null
+    error_message = "Either network.name or network.network_id must be provided"
+  }
+  validation {
+    condition     = var.network.name == null || var.network.network_id == null
+    error_message = "Only one of network.name or network.network_id should be provided, not both"
+  }
+}

@@ -11,7 +11,7 @@ resource "openstack_compute_instance_v2" "kubernetes_server" {
   ]
 
   network {
-    uuid = data.openstack_networking_network_v2.external_4003.id
+    uuid = local.network_id
   }
 
   block_device {
@@ -50,7 +50,7 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   ]
 
   network {
-    uuid = data.openstack_networking_network_v2.external_4003.id
+    uuid = local.network_id
   }
 
   block_device {
@@ -123,8 +123,9 @@ data "openstack_compute_flavor_v2" "available_compute_flavors" {
 }
 
 
-data "openstack_networking_network_v2" "external_4003" {
-  name = "external_4003"
+data "openstack_networking_network_v2" "network" {
+  count = var.network.network_id != null ? 0 : 1
+  name  = var.network.name
 }
 
 data "openstack_images_image_v2" "ubuntu" {

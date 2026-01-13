@@ -18,6 +18,7 @@ locals {
 locals {
   output_file_directory = var.output_file_directory != null ? var.output_file_directory : "${path.root}/.build"
   kubeconfig_file       = "${local.output_file_directory}/downloaded-kubeconfig.yaml"
+  network_id            = var.network.network_id != null ? var.network.network_id : data.openstack_networking_network_v2.network[0].id
 }
 
 resource "random_id" "server" {
