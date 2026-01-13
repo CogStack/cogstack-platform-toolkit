@@ -69,3 +69,9 @@ variable "generate_random_name_prefix" {
   default     = true
   description = "Whether to generate a random prefix for hostnames. If false, hostnames will use only the name from host_instances"
 }
+
+variable "name_prefix" {
+  type        = string
+  default     = null
+  description = "Optional custom prefix for resource names. If provided and generate_random_name_prefix is false, this will be used instead of a random prefix"
+}

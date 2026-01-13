@@ -13,7 +13,7 @@ locals {
 }
 
 resource "openstack_networking_secgroup_v2" "cogstack_apps_security_group" {
-  name        = "${local.random_prefix}-cogstack-services"
+  name        = local.prefix != "" ? "${local.prefix}-cogstack-services" : "cogstack-services"
   description = "Cogstack Apps and Services Group"
 }
 
