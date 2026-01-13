@@ -124,7 +124,6 @@ data "openstack_compute_flavor_v2" "available_compute_flavors" {
 
 
 data "openstack_networking_network_v2" "network" {
-  for_each = toset(var.network.network_id != null ? [] : ["lookup"])
   name     = var.network.name
 }
 
