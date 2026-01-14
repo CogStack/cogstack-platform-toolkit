@@ -71,8 +71,15 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   }
 }
 
+locals {
+  is_default_network = var.network != null && var.network == { name = "external_4003" }
+  nodes_with_exernal_ip = { for node in local.created_nodes : node.name => node if local.is_default_network || node.use_floating_ip }
+
+}
 resource "null_resource" "kubernetes_nodes_provisioner" {
-  for_each = local.created_nodes
+  # Provisioner is only used to check for node readiness. Skip for any nodes that are not in the external network,
+  # TODO: Filter this provisioner to only run on nodes that have a floating IP if the network is not default
+  for_each = local.nodes_with_exernal_ip
 
   depends_on = [openstack_compute_instance_v2.kubernetes_nodes, openstack_networking_floatingip_associate_v2.kubernetes_nodes_fip]
 

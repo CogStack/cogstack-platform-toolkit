@@ -14,6 +14,8 @@ locals {
     name        = local.controller_host.name
     ip_address  = local.controller_host_has_floating_ip ? local.controller_host.floating_ip.address : openstack_compute_instance_v2.kubernetes_server.access_ip_v4
     unique_name = local.created_controller_host.name
+    use_floating_ip = local.controller_host_has_floating_ip
+    internal_ip_address = openstack_compute_instance_v2.kubernetes_server.access_ip_v4
   }
 
   created_nodes = { 
@@ -22,6 +24,8 @@ locals {
       ip_address  = node.floating_ip != null && node.floating_ip.use_floating_ip ? node.floating_ip.address : openstack_compute_instance_v2.kubernetes_nodes[node.name].access_ip_v4
       unique_name = openstack_compute_instance_v2.kubernetes_nodes[node.name].name
       name        = node.name
+      use_floating_ip = node.floating_ip != null && node.floating_ip.use_floating_ip
+      internal_ip_address = openstack_compute_instance_v2.kubernetes_nodes[node.name].access_ip_v4
     } 
     if !node.is_controller 
   }
