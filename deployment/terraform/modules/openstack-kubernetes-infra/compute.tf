@@ -72,7 +72,7 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
 }
 
 locals {
-  is_default_network = var.network != null && var.network == { name = "external_4003" }
+  is_default_network    = var.network != null && var.network == { name = "external_4003" }
   nodes_with_exernal_ip = { for node in local.created_nodes : node.name => node if local.is_default_network || node.use_floating_ip }
 
 }
@@ -130,7 +130,8 @@ data "cloudinit_config" "init_docker_controller" {
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/cloud-init-k3s-server.yaml",
       {
-        TF_K3S_TOKEN = random_password.k3s_token.result
+        TF_K3S_TOKEN   = random_password.k3s_token.result
+        TF_K3S_TLS_SAN = local.controller_host_has_floating_ip ? local.controller_host.floating_ip.address : ""
       }
     )
   }

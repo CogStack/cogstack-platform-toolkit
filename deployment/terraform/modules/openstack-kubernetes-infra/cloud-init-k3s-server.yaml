@@ -37,7 +37,12 @@ runcmd:
 
   #  Run K3s
   - echo "Installing K3S"
-  - sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" K3S_TOKEN="${TF_K3S_TOKEN}" sh -
+  - |
+    if [ -n "${TF_K3S_TLS_SAN}" ]; then
+      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --tls-san ${TF_K3S_TLS_SAN}" K3S_TOKEN="${TF_K3S_TOKEN}" sh -
+    else
+      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" K3S_TOKEN="${TF_K3S_TOKEN}" sh -
+    fi
   - echo "Completed Installing K3S"
   - sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 
