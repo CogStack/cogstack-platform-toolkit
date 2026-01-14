@@ -1,10 +1,6 @@
 
 output "created_hosts" {
-  value = merge({ for k, value in openstack_compute_instance_v2.kubernetes_nodes : k => {
-    ip_address  = value.access_ip_v4
-    unique_name = value.name
-    name        = k
-    } },
+  value = merge(local.created_nodes,
     {
       (local.controller_host.name) : local.controller_host_instance
   })

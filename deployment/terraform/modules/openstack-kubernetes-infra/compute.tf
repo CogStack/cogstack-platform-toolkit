@@ -42,12 +42,11 @@ resource "null_resource" "kubernetes_server_provisioner" {
 
 resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   depends_on = [
-    openstack_compute_instance_v2.kubernetes_server,
-    openstack_networking_floatingip_associate_v2.kubernetes_nodes_fip
+    openstack_compute_instance_v2.kubernetes_server
   ]
 
-  for_each  = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
-  
+  for_each = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
+
   name      = local.prefix != "" ? "${local.prefix}-${each.value.name}" : each.value.name
   flavor_id = data.openstack_compute_flavor_v2.available_compute_flavors[each.value.flavour].id
   key_pair  = openstack_compute_keypair_v2.compute_keypair.name
@@ -73,13 +72,13 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
 }
 
 resource "null_resource" "kubernetes_nodes_provisioner" {
-  for_each = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
+  for_each = local.created_nodes
 
-  depends_on = [openstack_compute_instance_v2.kubernetes_nodes]
+  depends_on = [openstack_compute_instance_v2.kubernetes_nodes, openstack_networking_floatingip_associate_v2.kubernetes_nodes_fip]
 
   connection {
     user        = "ubuntu"
-    host        = openstack_compute_instance_v2.kubernetes_nodes[each.key].access_ip_v4
+    host        = each.value.ip_address
     private_key = file(local.ssh_keys.private_key_file)
   }
 
