@@ -116,7 +116,7 @@ data "cloudinit_config" "init_docker" {
     content = templatefile("${path.module}/cloud-init-k3s-agent.yaml",
       {
         TF_K3S_TOKEN             = random_password.k3s_token.result
-        TF_K3S_SERVER_IP_ADDRESS = local.controller_host_instance.ip_address
+        TF_K3S_SERVER_IP_ADDRESS = openstack_compute_instance_v2.kubernetes_server.access_ip_v4
         TF_K3S_NODE_EXTERNAL_IP  = each.value.floating_ip != null && each.value.floating_ip.use_floating_ip ? each.value.floating_ip.address : ""
       }
     )
