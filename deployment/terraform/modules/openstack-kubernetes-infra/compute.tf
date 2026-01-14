@@ -165,7 +165,3 @@ data "openstack_images_image_v2" "ubuntu" {
   most_recent = true
 }
 
-data "openstack_networking_secgroup_v2" "er_https_from_lbs" {
-  name = "er_https_from_lbs"
-}
-
