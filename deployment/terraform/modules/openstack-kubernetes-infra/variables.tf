@@ -93,3 +93,12 @@ variable "network" {
     error_message = "Either network.name or network.network_id must be provided"
   }
 }
+
+check "controller_floating_ip_required_for_non_default_network" {
+  assert {
+    condition = var.network == null || 
+                (var.network.name == "external_4003" && var.network.network_id == null) ||
+                (length([for host in var.host_instances : host if host.is_controller == true && host.floating_ip != null && host.floating_ip.use_floating_ip == true]) == 1)
+    error_message = "When using a non-default network (network.name != 'external_4003' or network.network_id is set), the controller host must have a floating IP configured with floating_ip.use_floating_ip = true"
+  }
+}

@@ -52,7 +52,7 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
   key_pair  = openstack_compute_keypair_v2.compute_keypair.name
   region    = "RegionOne"
 
-  user_data = data.cloudinit_config.init_docker.rendered
+  user_data = data.cloudinit_config.init_docker[each.key].rendered
   security_groups = ["default",
     openstack_networking_secgroup_v2.cogstack_apps_security_group.name
   ]
@@ -107,6 +107,8 @@ resource "null_resource" "kubernetes_nodes_provisioner" {
 
 
 data "cloudinit_config" "init_docker" {
+  for_each = { for vm in var.host_instances : vm.name => vm if !vm.is_controller }
+
   depends_on = [openstack_compute_instance_v2.kubernetes_server]
   part {
     filename     = "cloud-init-k3s-agent.yaml"
@@ -114,7 +116,8 @@ data "cloudinit_config" "init_docker" {
     content = templatefile("${path.module}/cloud-init-k3s-agent.yaml",
       {
         TF_K3S_TOKEN             = random_password.k3s_token.result
-        TF_K3S_SERVER_IP_ADDRESS = openstack_compute_instance_v2.kubernetes_server.access_ip_v4
+        TF_K3S_SERVER_IP_ADDRESS = local.controller_host_instance.ip_address
+        TF_K3S_NODE_EXTERNAL_IP  = each.value.floating_ip != null && each.value.floating_ip.use_floating_ip ? each.value.floating_ip.address : ""
       }
     )
   }
@@ -130,8 +133,9 @@ data "cloudinit_config" "init_docker_controller" {
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/cloud-init-k3s-server.yaml",
       {
-        TF_K3S_TOKEN   = random_password.k3s_token.result
-        TF_K3S_TLS_SAN = local.controller_host_has_floating_ip ? local.controller_host.floating_ip.address : ""
+        TF_K3S_TOKEN            = random_password.k3s_token.result
+        TF_K3S_TLS_SAN          = local.controller_host_has_floating_ip ? local.controller_host.floating_ip.address : ""
+        TF_K3S_NODE_EXTERNAL_IP = local.controller_host_has_floating_ip ? local.controller_host.floating_ip.address : ""
       }
     )
   }
