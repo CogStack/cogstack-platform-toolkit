@@ -6,6 +6,7 @@ resource "openstack_compute_instance_v2" "kubernetes_server" {
   region    = "RegionOne"
 
   user_data = data.cloudinit_config.init_docker_controller.rendered
+
   security_groups = ["default",
     openstack_networking_secgroup_v2.cogstack_apps_security_group.name
   ]
@@ -21,6 +22,10 @@ resource "openstack_compute_instance_v2" "kubernetes_server" {
     boot_index            = 0
     destination_type      = "volume"
     delete_on_termination = true
+  }
+
+  lifecycle {
+    ignore_changes = [user_data]
   }
 }
 
@@ -68,6 +73,10 @@ resource "openstack_compute_instance_v2" "kubernetes_nodes" {
     boot_index            = 0
     destination_type      = "volume"
     delete_on_termination = true
+  }
+
+  lifecycle {
+    ignore_changes = [user_data]
   }
 }
 
