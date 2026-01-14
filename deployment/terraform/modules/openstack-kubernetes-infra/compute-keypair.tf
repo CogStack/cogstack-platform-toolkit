@@ -14,7 +14,7 @@ locals {
 }
 
 resource "openstack_compute_keypair_v2" "compute_keypair" {
-  name       = "${local.random_prefix}-cogstack_keypair"
+  name       = local.prefix != "" ? "${local.prefix}-cogstack_keypair" : "cogstack_keypair"
   public_key = local.is_using_existing_ssh_keypair ? file(var.ssh_key_pair.public_key_file) : null
 }
 

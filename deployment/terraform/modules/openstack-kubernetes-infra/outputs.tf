@@ -1,10 +1,6 @@
 
 output "created_hosts" {
-  value = merge({ for k, value in openstack_compute_instance_v2.kubernetes_nodes : k => {
-    ip_address  = value.access_ip_v4
-    unique_name = value.name
-    name        = k
-    } },
+  value = merge(local.created_nodes,
     {
       (local.controller_host.name) : local.controller_host_instance
   })
@@ -28,4 +24,9 @@ output "compute_keypair" {
 output "kubeconfig_file" {
   value       = abspath(local.kubeconfig_file)
   description = "Path to the generated KUBECONFIG file used to connect to kubernetes"
+}
+
+output "created_security_group" {
+  value       = openstack_networking_secgroup_v2.cogstack_apps_security_group
+  description = "Security group associated to the created hosts"
 }
