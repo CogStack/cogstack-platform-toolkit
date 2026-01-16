@@ -1,7 +1,7 @@
 
 
 
-# Elasticsearch
+# Elasticsearch / OpenSearch
 
 ## Introduction
 

@@ -64,52 +64,6 @@ Key resources:
 Please note that there is available public MedCAT model trained on MedMentions corpus that can be used to play with.
 :::
 
-## GATE NLP applications
-
-### Overview of GATE NLP suite
-
-[GATE NLP suite](https://gate.ac.uk/) is a well established and rich set of open-source technologies implementing full-lifecycle solution for text processing. The GATE ecosystem is very broad and outside of the scope of this documentation – here we will only focus on two applications:
-
-- [GATE Developer](https://gate.ac.uk/family/developer.html),
-- [GATE Embedded](https://gate.ac.uk/family/embedded.html).
-
-GATE Developer is a development environment that provides a large set of graphical interactive tools for the creation, measurement and maintenance of software components for natural language processing. It allows to design, create and run NLP applications using an intuitive user interface. These applications can be later exported as a custom *gapp* or *xgapp* application with the used resources.
-
-GATE Embedded, on the other hand, is an object-oriented framework (or class library) implemented in Java. It is used in all GATE-based systems, and forms the core (non-visual) elements of GATE Developer. In principle, it implements the runtime for executing GATE applications. It allows to run the *gapp* and *xgapp* applications that have been previously created in GATE Developer.
-
-
-:::{IMPORTANT}
-When deploying GATE applications within CogStack one may be interested in defining and tailoring custom GATE applications directly by using GATE Developer. Such prepared application can be in the next step provided into CogStack **GATE NLP Runner Service** that uses GATE Embedded to execute GATE applications. This way, provided NLP application can be deployed as a service and used in the data pipeline.
-:::
-
-Although there have been developed and published many applications in GATE NLP suite, in this page we only briefly cover Bio-YODIE.
-
-### Bio-YODIE
-
-Bio-YODIE is a named entity linking system derived from GATE YODIE system. It links mentions in biomedical text to their referents in the UMLS. It defines a broad set of types such as `Disease` , `Drug`, `Observation` and many more all of the types belonging to `Bio` group – for detailed information please refer to [the official documentation](https://gate.ac.uk/applications/bio-yodie.html).
-
-Bio-YODIE can be run either within GATE Developer application or as a service within CogStack (based on GATE Embedded and running as a Service). Here we primarily focus on the latter and refer the reader to the official Bio-YODIE website.
-
-**Key resources:**
-
-- The official website: <https://gate.ac.uk/applications/bio-yodie.html>
-- GitHub repository with application code: <https://github.com/GateNLP/Bio-YODIE>
-- GitHub repository with code to prepare UMLS resources for Bio-YODIE: <https://github.com/GateNLP/bio-yodie-resource-prep>
-
-:::{WARNING}
-Please note that Bio-YODIE requires resources to be prepared using UMLS. These are limited by individual license and cannot be openly shared.
-:::
-
-### GATE NLP Runner service
-
-CogStack implements a GATE NLP Runner service that serves the GATE NLP applications as a service exposing RESTful API. It is using GATE Embedded to execute the GATE applications that are provided either in *gapp* or *xgapp* format. The API specification is provided in the sections below.
-
-For more information please refer to the official GitHub with code and documentation: <https://github.com/CogStack/gate-nlp-service>
-
-## NLP REST API
-
-CogStack defines a simple, uniform, RESTful API for free-text documents processing. It’s primary focus has been on providing an application independent and uniform interface for extracting entities from the free-text. The data exchange should be stateless and synchronous. The use-case is: given a document (or a corpus of documents) extract the recognised named entities with associated meta-data. This way, any NLP application can be used or any NLP model can be served in the data processing pipeline as long as it stays compatible with the interface.
-
 ### REST API definition
 
 The API defines 3 endpoints, that consume and return data in JSON format:
@@ -117,8 +71,6 @@ The API defines 3 endpoints, that consume and return data in JSON format:
 - *GET* `/api/info` - displays general information about the the NLP application,
 - *POST* `/api/process` - processes the provided single document and returns back the annotations,
 - *POST* `/api/process_bulk` - processes the provided list of documents and returns back the annotations.
-
-The full definition is available as [OpenAPI or Swagger](https://github.com/CogStack/gate-nlp-service/tree/devel/api-specs) specification.
 
 #### GET `/api/info`
 
@@ -166,7 +118,7 @@ Here, the `content` object holds an array of single document content to be proce
 ### Example use
 
 :::{tip}
-Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) to see how to deploy example NLP services, i.e. MedCAT with a public MedMentions model and example GATE NLP Drug application.
+Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) to see how to deploy example NLP services, i.e. MedCAT with a public MedMentions model.
 :::
 
 #### MedCAT
@@ -203,119 +155,6 @@ and the received result:
     ],
     "success": true,
     "timestamp": "2019-12-03T16:09:58.196+00:00"
-  }
-}
-```
-
-### Bio-YODIE
-
-Bio-YODIE is being run as a service using CogStack GATE NLP Runner Service as described above. In this example Bio-YODIE application will only output annotations of `Disease` type from `Bio` group (defined in the service configuration file). Assuming that the service is running on the `localhost` with the API exposed on port `8095`, so one can run:
-
-```bash
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"content":{"text": "lung cancer diagnosis"}}' \
-  http://localhost:8095/api/process
-```
-
-and the received result:
-
-```json
-{
-  "result": {
-    "text": "lung cancer diagnosis",
-    "annotations": [
-      {
-        "end_idx": 11,
-        "set": "Bio",
-        "Negation": "Affirmed",
-        "Experiencer": "Patient",
-        "PREF": "Lung Cancer",
-        "end_node_id": "17",
-        "TUI": "T191",
-        "language": "",
-        "start_node_id": "16",
-        "type": "Disease",
-        "LABELVOCABS": "CHV,MEDLINEPLUS,MSH",
-        "CUIVOCABS": "MTH,CHV,MSH,SNOMEDCT_US,NCI,LCH_NW,OMIM,MEDLINEPLUS,COSTAR,NCI_CTRP-SDC",
-        "inst_full": "http://linkedlifedata.com/resource/umls/id/C0242379",
-        "inst": "C0242379",
-        "string_orig": "lung cancer",
-        "STY": "Neoplastic Process",
-        "start_idx": 0,
-        "id": 18,
-        "text": "lung cancer",
-        "Temporality": "Recent",
-        "tui_full": "http://linkedlifedata.com/resource/semanticnetwork/id/T191"
-      }
-    ],
-    "metadata": {
-      "document_features": {
-        "keyOverlapsOnly": false,
-        "gate.SourceURL": "created from String",
-        "docType": "generic",
-        "deleteNonNNPLookups": "true",
-        "lang": "en"
-      }
-    },
-    "success": true,
-    "timestamp": "2019-12-03T16:10:13.281+00:00"
-  }
-}
-```
-
-### Extra: a simple GATE-based drug names extraction application
-
-As an extra example, a simple application for extracting drug names from the free-text was developed in GATE Developer using ANNIE Gazetteer. It uses as an input the data downloaded from [Drugs@FDA database](https://www.accessdata.fda.gov/scripts/cder/daf/) and further refined giving a curated list of drugs and active ingredients. The application functionality is exposed using CogStack GATE NLP Runner Service.
-
-Similarly as in above, assuming that the application is running on the `localhost` with the API exposed on port `8095`, one can run:
-
-```bash
-curl -XPOST http://localhost:8095/api/process \
-  -H 'Content-Type: application/json' \
-  -d '{"content":{"text":"The patient was prescribed with Aspirin."}}'
-
-```
-
-and the received result:
-
-```json
-{
-  "result": {
-    "text": "The patient was prescribed with Aspirin.",
-    "annotations": [
-      {
-        "end_idx": 39,
-        "majorType": "Drug",
-        "set": "",
-        "name": "ASPIRIN",
-        "start_idx": 32,
-        "language": "",
-        "id": 12,
-        "minorType": "ActiveComponent",
-        "text": "Aspirin",
-        "type": "Drug"
-      },
-      {
-        "end_idx": 39,
-        "majorType": "Drug",
-        "set": "",
-        "name": "ASPIRIN",
-        "start_idx": 32,
-        "language": "",
-        "id": 13,
-        "minorType": "Medication",
-        "text": "Aspirin",
-        "type": "Drug"
-      }
-    ],
-    "metadata": {
-      "document_features": {
-        "gate.SourceURL": "created from String"
-      }
-    },
-    "success": true,
-    "timestamp": "2019-12-04T09:51:32.246Z"
   }
 }
 ```
