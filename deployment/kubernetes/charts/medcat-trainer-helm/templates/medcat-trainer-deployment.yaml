@@ -45,8 +45,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 8000
+            - name: api
+              containerPort: {{ .Values.service.apiPort }}
               protocol: TCP
           args:
             - /usr/bin/supervisord
@@ -93,6 +93,43 @@ spec:
           {{- with .Values.volumeMounts }}
           {{- toYaml . | nindent 12 }}
           {{- end }}
+        - name: nginx
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.nginxImage.repository }}:{{ .Values.nginxImage.tag }}"
+          imagePullPolicy: {{ .Values.nginxImage.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          {{- with .Values.nginx.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.nginx.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf 
+            - name: nginx-config
+              mountPath: /etc/nginx/sites-enabled/medcattrainer
+              subPath: sitesenabled.medcattrainer 
+            - mountPath: /home/api/media
+              name: api-media
+            - mountPath: /home/api/static
+              name: api-static
+          {{- with .Values.volumeMounts }}
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
       volumes:
         - name: medcat-trainer-config
           configMap:
@@ -111,6 +148,9 @@ spec:
           persistentVolumeClaim:
             claimName: {{ include "medcat-trainer-helm.fullname" . }}-api-db-backup
         {{- end }}
+        - name: nginx-config
+          configMap:
+            name: {{ include "medcat-trainer-helm.fullname" . }}-nginx-config
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

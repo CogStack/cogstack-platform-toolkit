@@ -162,8 +162,10 @@ service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 8000
-
+  port: 8001
+  apiPort: 8000 # Note medcat-trainer API is currently hardcoded on 8000 in the run.sh script
+  # nodePort: 30001
+ 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false
@@ -188,27 +190,28 @@ resources: {}
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #   cpu: 3 # Recommended to leave unset. If desired to set note service performance has been found to improve up to around 3 CPU.
-  #   memory: 2Gi
+  #   memory: 4Gi
   # requests:
-  #   cpu: 1
-  #   memory: 1Gi
+  #   cpu: 2  # For reference loading the examples on startup measured to use 2CPU and 2Gi memory
+  #   memory: 2Gi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
-    path: /api/health/live/
-    port: http
+    path: /api/health/live/?format=json
+    port: api
+  failureThreshold: 30
 readinessProbe:
   httpGet:
-    path: /api/health/ready/
-    port: http
+    path: /api/health/ready/?format=json
+    port: api
 startupProbe:
   httpGet:
-    path: /api/health/startup/
-    port: http
+    path: /api/health/startup/?format=json
+    port: api
   failureThreshold: 30
   periodSeconds: 10
-  initialDelaySeconds: 5
+  initialDelaySeconds: 15
 
 nginx:
   livenessProbe:

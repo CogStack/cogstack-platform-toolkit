@@ -13,7 +13,7 @@ data:
   DB_DIR: "/home/api/db"
   DB_PATH: "/home/api/db/db.sqlite3"
   MCT_VERSION: {{ .Values.image.tag | default .Chart.AppVersion }}
-  API_URL: http://{{ include "medcat-trainer-helm.fullname" . }}-nginx:{{ .Values.service.port }}/api/
+  API_URL: http://localhost:{{ .Values.service.apiPort }}/api/
 {{- range $key, $value := .Values.env }}
   {{ $key }}: {{ $value | quote }}
 {{- end }}

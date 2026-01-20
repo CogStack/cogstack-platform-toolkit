@@ -35,7 +35,7 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ include "medcat-trainer-helm.fullname" $ }}-nginx
+                name: {{ include "medcat-trainer-helm.fullname" $ }}-medcat-trainer
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}

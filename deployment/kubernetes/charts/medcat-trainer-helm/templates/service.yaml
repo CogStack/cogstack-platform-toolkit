@@ -6,24 +6,6 @@ metadata:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
     app.kubernetes.io/component: medcat-trainer
 spec:
-  type: ClusterIP
-  ports:
-    - port: 8000
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "medcat-trainer-helm.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: medcat-trainer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "medcat-trainer-helm.fullname" . }}-nginx
-  labels:
-    {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
-    app.kubernetes.io/component: nginx
-spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
@@ -33,6 +15,10 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ .Values.service.apiPort }}
+      targetPort: api
+      protocol: TCP
+      name: api
   selector:
     {{- include "medcat-trainer-helm.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: nginx
