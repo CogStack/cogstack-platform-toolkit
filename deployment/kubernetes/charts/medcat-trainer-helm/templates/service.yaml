@@ -21,5 +21,4 @@ spec:
       name: api
   selector:
     {{- include "medcat-trainer-helm.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: nginx
 ---

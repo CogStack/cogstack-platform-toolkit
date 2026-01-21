@@ -33,6 +33,7 @@ env:
   OPENBLAS_NUM_THREADS: "1"
   RESUBMIT_ALL_ON_STARTUP: "0"
   UNIQUE_DOC_NAMES_IN_DATASETS: "True"
+  VITE_USE_OIDC: "0"
 
   # TODO: Support custom DB overrides#
   # DB_ENGINE: "sqlite3"

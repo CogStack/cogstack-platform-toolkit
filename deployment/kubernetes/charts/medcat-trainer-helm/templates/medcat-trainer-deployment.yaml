@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       {{- include "medcat-trainer-helm.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: medcat-trainer
   strategy: {{ toYaml .Values.updateStrategy | nindent 4 }}
   template:
     metadata:
@@ -22,7 +21,6 @@ spec:
       {{- end }}
       labels:
         {{- include "medcat-trainer-helm.labels" . | nindent 8 }}
-        app.kubernetes.io/component: medcat-trainer
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
