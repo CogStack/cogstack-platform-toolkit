@@ -4,7 +4,6 @@ metadata:
   name: {{ include "medcat-trainer-helm.fullname" . }}-medcat-trainer
   labels:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
-    app.kubernetes.io/component: medcat-trainer
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
