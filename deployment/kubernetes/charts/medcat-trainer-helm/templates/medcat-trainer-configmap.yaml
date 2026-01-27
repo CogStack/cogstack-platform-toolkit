@@ -17,7 +17,7 @@ data:
     pidfile=/var/run/supervisord.pid
 
     [program:medcattrainer]
-    command=sh -c "exec /home/scripts/run.sh 2>&1 | sed 's/^/[medcattrainer] /'"
+    command=sh -c "exec /home/scripts/run.sh 2>&1 | sed -u 's/^/[medcattrainer] /'"
     stdout_logfile=/dev/stdout
     stdout_logfile_maxbytes=0
     stderr_logfile=/dev/stderr
@@ -25,7 +25,7 @@ data:
     autorestart=true
 
     [program:bg-process]
-    command=sh -c "exec /home/scripts/run-bg-process.sh 2>&1 | sed 's/^/[bg-process] /'"
+    command=sh -c "exec /home/scripts/run-bg-process.sh 2>&1 | sed -u 's/^/[bg-process] /'"
     stdout_logfile=/dev/stdout
     stdout_logfile_maxbytes=0
     stderr_logfile=/dev/stderr
@@ -33,7 +33,7 @@ data:
     autorestart=true
 
     [program:db-backup]
-    command=sh -c "exec cron -f -l 2 2>&1 | sed 's/^/[db-backup] /'"
+    command=sh -c "exec cron -f -l 2 2>&1 | sed -u 's/^/[db-backup] /'"
     stdout_logfile=/dev/stdout
     stdout_logfile_maxbytes=0
     stderr_logfile=/dev/stderr
