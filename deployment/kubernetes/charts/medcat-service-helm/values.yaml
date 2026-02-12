@@ -10,12 +10,13 @@ image:
   repository: cogstacksystems/medcat-service
   # repository: cogstacksystems/medcat-service-gpu
   # This sets the pull policy for images.
-  # pullPolicy: IfNotPresent
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "latest"
 
 env:
+  APP_ENABLE_DEMO_UI: "true"
+
   # This defines the Model Pack used by the medcat service
   APP_MEDCAT_MODEL_PACK: "/cat/models/examples/example-medcat-v2-model-pack.zip"
 
