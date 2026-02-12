@@ -51,7 +51,7 @@ env:
   # APP_TORCH_THREADS: "-1"
 
   # Observability Env Vars
-  APP_ENABLE_METRICS: true
+  APP_ENABLE_METRICS: false
   APP_ENABLE_TRACING: false
   OTEL_EXPORTER_OTLP_ENDPOINT: "http://<unused>:4317"
   OTEL_SERVICE_NAME: "medcat-service"
