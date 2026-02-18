@@ -7,7 +7,19 @@ This page covers the data pipelines used in CogStack ecosystem.
 ## CogStack-NiFi
 
 ### Overview
-CogStack-NiFi is the re-architected version of CogStack-Pipeline that replaces the fixed Spring Batch-based pipeline engine with [Apache NiFi](https://nifi.apache.org/). It focuses on fully configurable and scalable data flows with the data processing engine that is easy to use, deploy and tailor to any site-specific data flow requirements. Apache NiFi also comes in with build-in monitoring, data provenance and security features that puts the operations in better control and reliability. <br/> **CogStack-NiFi useful links:** <br/><ul><li><p>GitHub: <a class="external-link" data-card-appearance="inline" href="https://github.com/CogStack/CogStack-NiFi" rel="nofollow">https://github.com/CogStack/CogStack-NiFi</a> </p></li><li><p>Documentation with deployment examples: <a class="external-link" data-card-appearance="inline" href="https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy" rel="nofollow">https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy</a> </p></li><li><p>Documentation on available services: <a class="external-link" data-card-appearance="inline" href="https://github.com/CogStack/CogStack-NiFi/tree/devel/services" rel="nofollow">https://github.com/CogStack/CogStack-NiFi/tree/devel/services</a> </p></li><li><p>DockerHub: <a class="external-link" href="https://cloud.docker.com/repository/docker/cogstacksystems/cogstack-nifi" rel="nofollow">https://cloud.docker.com/repository/docker/cogstacksystems/cogstack-nifi</a></p></li></ul>  <br/> **Apache NiFi resources:** <br/><ul><li><p>The official website: <a class="external-link" href="https://nifi.apache.org/" rel="nofollow">https://nifi.apache.org/</a></p></li><li><p>The official documentation: <a class="external-link" href="https://nifi.apache.org/docs.html" rel="nofollow">https://nifi.apache.org/docs.html
+CogStack-NiFi is the re-architected version of CogStack-Pipeline that replaces the fixed Spring Batch-based pipeline engine with [Apache NiFi](https://nifi.apache.org/). It focuses on fully configurable and scalable data flows with the data processing engine that is easy to use, deploy and tailor to any site-specific data flow requirements. Apache NiFi also comes in with build-in monitoring, data provenance and security features that puts the operations in better control and reliability.
+
+**CogStack-NiFi useful links:**
+
+- GitHub: [https://github.com/CogStack/CogStack-NiFi](https://github.com/CogStack/CogStack-NiFi)
+- Documentation with deployment examples: [https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy)
+- Documentation on available services: [https://github.com/CogStack/CogStack-NiFi/tree/devel/services](https://github.com/CogStack/CogStack-NiFi/tree/devel/services)
+- DockerHub: [https://cloud.docker.com/repository/docker/cogstacksystems/cogstack-nifi](https://cloud.docker.com/repository/docker/cogstacksystems/cogstack-nifi)
+
+**Apache NiFi resources:**
+
+- The official website: [https://nifi.apache.org/](https://nifi.apache.org/)
+- The official documentation: [https://nifi.apache.org/docs.html](https://nifi.apache.org/docs.html)
 
 ![](./attachments/b5fc6b57-faf2-4747-9e77-eb9adf51d8b3.jpg)
 
