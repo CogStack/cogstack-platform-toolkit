@@ -7,7 +7,7 @@ on:
     branches:
       - '**'
     tags:
-      - 'v*.*.*'
+      - 'docs-v*.*.*'
   release:
     types: [published]
 jobs:
@@ -17,11 +17,15 @@ jobs:
       working-directory: ./docs
     steps:
       - uses: actions/checkout@v3
-      - name: Check documentation build
+      - name: Install uv for Python 3.13
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: 3.13
+          enable-cache: true
+          cache-dependency-glob: "docs/uv.lock"
+      - name: Install the project
         run: |
-          cd docs
-          pip3 install -r requirements.txt
-          make clean
-          # Fail buiild on any docs warning
-          # make html O=-W # Removed whilst migrating existing docs
-          make html
+          uv sync --all-extras
+      - name: Build documentation
+        run: |
+          uv run mkdocs build
