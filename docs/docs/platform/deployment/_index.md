@@ -1,13 +1,14 @@
 # Deployment
 
 ## Introduction
-:::{warning}
-We are actively working on improving the deployment of CogStack
 
-The following section shows how to run MedCAT Service in a variety of environments and configs.
+!!! warning
 
-To setup a full deployment of CogStack including the data pipelines and infrastructure, contact us
-:::
+    We are actively working on improving the deployment of CogStack
+
+    The following section shows how to run MedCAT Service in a variety of environments and configs.
+
+    To setup a full deployment of CogStack including the data pipelines and infrastructure, contact us
 
 ## Overview
 CogStack is a self-hosted platform made up of microservices and tools

@@ -28,9 +28,9 @@ Depending on the use-case, the processed EHR data is usually stored in indices a
 - [the official website](https://opendistro.github.io/for-elasticsearch/)
 - the official [OpenDistro for Elasticsearch documentation](https://opendistro.github.io/for-elasticsearch-docs/)
 
-:::{TIP}
-For example use and deployment of CogStack with Elasticsearch please see the tutorial: [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy)
-:::
+!!! tip
+
+    For example use and deployment of CogStack with Elasticsearch please see the tutorial: [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy)
 
 ## Kibana
 

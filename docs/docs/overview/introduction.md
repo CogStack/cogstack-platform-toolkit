@@ -10,9 +10,9 @@ CogStack uses databases and files as primary sources of EHR data, with support f
 
 CogStack is a commercial open-source product, with the code available on GitHub: [https://github.com/CogStack/](https://github.com/CogStack/) . For enterprise deployments, full platform setup, and advanced features, please [contact us](https://docs.cogstack.org/en/latest/).
 
-:::{tip}
-CogStack is designed as a microservices-based ecosystem. The recommended deployment method is on **Kubernetes using Helm charts**, which provides cloud-native support, scalability, and reliability. Ready-to-use CogStack images are available from the official Docker Hub under the [cogstacksystems](https://hub.docker.com/u/cogstacksystems/) organisation. Docker Compose is still supported for development and smaller deployments, but Kubernetes is recommended for production environments.
-:::
+!!! tip
+
+    CogStack is designed as a microservices-based ecosystem. The recommended deployment method is on **Kubernetes using Helm charts**, which provides cloud-native support, scalability, and reliability. Ready-to-use CogStack images are available from the official Docker Hub under the [cogstacksystems](https://hub.docker.com/u/cogstacksystems/) organisation. Docker Compose is still supported for development and smaller deployments, but Kubernetes is recommended for production environments.
 
 ## Why does this project exist?
 

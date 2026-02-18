@@ -7,13 +7,13 @@
 
 CogStack ecosystem provides a standard set of natural language processing applications that are used either as standalone applications or implemented as RESTful services with uniform API, each running in a Docker container. These NLP applications when used inside the data processing pipeline cover one of the key steps of information extraction. These NLP applications may include extracting medical concepts from free-text notes using a specific terminology, such as [SNOMED CT](https://en.wikipedia.org/wiki/SNOMED_CT) or using all the terminologies as available in [UMLS](https://www.nlm.nih.gov/research/umls/index.html). Often, more specialised applications will be built on top of the standard set of NLP applications provided in CogStack, utilising both structured and unstructured information tailored to a defined use-case. These custom applications can be further integrated into CogStack and used as a part of standard set of NLP applications.
 
-:::{tip}
-Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) to see how to integrate NLP services in example data pipelines.
-:::
+!!! tip
 
-:::{tip}
-Apart from being integrated directly in the data processing pipeline, many NLP applications are often used as standalone applications and have a rich set of tools build around them – please see below for more details.
-:::
+    Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) to see how to integrate NLP services in example data pipelines.
+
+!!! tip
+
+    Apart from being integrated directly in the data processing pipeline, many NLP applications are often used as standalone applications and have a rich set of tools build around them – please see below for more details.
 
 ## MedCAT - Medical Concept Annotation Tool
 
@@ -25,13 +25,13 @@ One of the key tools is MedCAT – a Medical Concept Annotation Tool that is use
 |:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------|
 | MedCAT is based on a light-weight neural network that calculates vector embeddings and that is used for disambiguation and concept detection. MedCAT also uses Deep Learning Language Model that is used for detection of negation, experiencer or any other type of classification. <br/> MedCAT can utilise a concepts dictionary with a vocabulary provided by the end-user that will be used to perform annotate the concepts in the clinical notes. The provided concepts dictionary can be e.g., SNOMED CT terminology or full/ subset of UMLS resource. Apart from providing the vocabulary and concepts dictionary, the underlying MedCAT model can be further trained and fine-tuned for performing context-aware concept disambiguation with additional meta-annotations tasks. MedCAT be run also directly with pre-trained models. <br/> **MedCAT** can be used either as a standalone Python module, as a part of a model trainer application **MedCAT Trainer** or be deployed as a RESTful **MedCAT Service** inside a data processing pipeline. Below are briefly covered possible ways of working with MedCAT. <br/> | ![](./attachments/df995677-ab49-4f74-ab65-a160882b23a6.jpg) |
 
-:::{WARNING}
-Please note that we only provide few basic models for MedCAT that have been prepared using open datasets. Some of the used models are restricted by the external licensing of the resource that was used to build it, such as SNOMED CT or UMLS. In such cases, the user needs to apply for an appropriate license – please see: [UMLS licensing](https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/license_agreement.html) and [SNOMED CT licensing](http://www.snomed.org/snomed-ct/get-snomed).
-:::
+!!! warning
 
-:::{IMPORTANT}
-When deploying MedCAT into data processing pipelines one may be interested in training and tailoring the MedCAT models as a part of model preparation. This can be done directly by using MedCAT Trainer or MedCAT library working with a corpus of input documents. Such trained model can be in the next step provided into MedCAT Service that will be deployed as a service and used in the data pipeline.
-:::
+    Please note that we only provide few basic models for MedCAT that have been prepared using open datasets. Some of the used models are restricted by the external licensing of the resource that was used to build it, such as SNOMED CT or UMLS. In such cases, the user needs to apply for an appropriate license – please see: [UMLS licensing](https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/license_agreement.html) and [SNOMED CT licensing](http://www.snomed.org/snomed-ct/get-snomed).
+
+!!! important
+
+    When deploying MedCAT into data processing pipelines one may be interested in training and tailoring the MedCAT models as a part of model preparation. This can be done directly by using MedCAT Trainer or MedCAT library working with a corpus of input documents. Such trained model can be in the next step provided into MedCAT Service that will be deployed as a service and used in the data pipeline.
 
 ### MedCAT Python module
 
@@ -42,9 +42,9 @@ Key resources:
 - Tutorial on MedCAT: [MedCAT – Analysing Electronic Health Records](https://towardsdatascience.com/medcat-introduction-analyzing-electronic-health-records-e1c420afa13a) (in a series of articles)
 - PIP repository: <https://pypi.org/project/medcat/>
 
-:::{tip}
-The MedCAT Python library is the functional core of MedCAT project. The library is used by MedCAT Trainer when training and updating the models. It is also used within the MedCAT Service that exposes the medical concepts extraction functionality.
-:::
+!!! tip
+
+    The MedCAT Python library is the functional core of MedCAT project. The library is used by MedCAT Trainer when training and updating the models. It is also used within the MedCAT Service that exposes the medical concepts extraction functionality.
 
 ## MedCAT Trainer
 
@@ -60,9 +60,9 @@ Key resources:
 
 - GitHub repository with code, documentation and use examples: <https://github.com/CogStack/MedCATservice>
 
-:::{tip}
-Please note that there is available public MedCAT model trained on MedMentions corpus that can be used to play with.
-:::
+!!! tip
+
+    Please note that there is available public MedCAT model trained on MedMentions corpus that can be used to play with.
 
 ### REST API definition
 
@@ -117,9 +117,9 @@ Here, the `content` object holds an array of single document content to be proce
 
 ### Example use
 
-:::{tip}
-Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) to see how to deploy example NLP services, i.e. MedCAT with a public MedMentions model.
-:::
+!!! tip
+
+    Please see [CogStack using Apache NiFi Deployment Examples](https://github.com/CogStack/CogStack-NiFi/tree/devel/deploy) to see how to deploy example NLP services, i.e. MedCAT with a public MedMentions model.
 
 #### MedCAT
 

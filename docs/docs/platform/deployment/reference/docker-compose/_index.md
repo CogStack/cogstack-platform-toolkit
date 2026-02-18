@@ -5,11 +5,12 @@ CogStack services are all provided as Docker images with configuration files, so
 We use Docker Compose internally during development to run services individually or together without the overhead of full orchestration.
 
 ## Note
-:::{tip}
-We are actively working on moving away from docker compose and VMs as the primary way of doing production deployments. Instead we plan to focus more on deployment with Kubernetes and Helm.
 
-Many of the existing project instructions in github for CogStack will still show how to use docker compose to bring up standalone instances.
-:::
+!!! tip
+
+    We are actively working on moving away from docker compose and VMs as the primary way of doing production deployments. Instead we plan to focus more on deployment with Kubernetes and Helm.
+
+    Many of the existing project instructions in github for CogStack will still show how to use docker compose to bring up standalone instances.
 
 ## How to run
 
