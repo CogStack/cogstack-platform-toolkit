@@ -1,0 +1,103 @@
+site_name: Cogstack Documentation
+site_url: http://localhost:8080/docs/
+
+theme:
+  name: material
+  favicon: assets/cogstack-logo.png
+  logo: assets/cogstack-logo.png
+  icon:
+    logo: assets/cogstack-logo.png
+  palette:
+    primary: white
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.footer
+    - header.autohide
+    - content.tooltips
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - attr_list
+
+repo_url: https://github.com/CogStack
+repo_name: github.com/CogStack
+
+docs_dir: docs
+
+nav:
+  - Home:
+      - Home: index.md
+      - Getting started: overview/getting-started.md
+  - CogStack AI:
+      - CogStack AI: cogstack-ai/index.md
+      - Natural Language Processing: overview/Natural Language Processing.md
+      - MedCAT: https://docs.cogstack.org/projects/nlp
+      - MedCAT Trainer: https://docs.cogstack.org/projects/medcat-trainer/
+  - Data Engineering:
+      - Data Engineering: data-engineering/index.md
+      - Data pipelines: overview/Data pipelines.md
+      - Elasticsearch: overview/Elasticsearch.md
+      - NiFi: https://docs.cogstack.org/projects/nifi/
+  - Platform:
+      - Platform: platform/index.md
+      - Deployment:
+          - Deployment: platform/deployment/_index.md
+          - Getting Started:
+              - Getting Started: platform/deployment/get-started/_index.md
+              - Quickstart: platform/deployment/get-started/quickstart.md
+          - Helm:
+              - Helm: platform/deployment/helm/_index.md
+              - Tutorial: platform/deployment/helm/tutorial.md
+              - CogStack Helm Module: platform/deployment/helm/cogstack-helm-module.md
+              - Troubleshooting: platform/deployment/helm/troubleshooting.md
+              - Charts:
+                  - Charts Overview: platform/deployment/helm/charts/_index.md
+                  - MedCAT Service Helm: platform/deployment/helm/charts/medcat-service-helm.md
+                  - MedCAT Trainer Helm: platform/deployment/helm/charts/medcat-trainer-helm.md
+          - Examples:
+              - Examples: platform/deployment/examples/_index.md
+              - AWS Kubernetes EKS: platform/deployment/examples/aws-kubernetes-eks.md
+              - Azure Kubernetes AKS: platform/deployment/examples/azure-kubernetes-aks.md
+              - OpenStack Kubernetes K3s: platform/deployment/examples/openstack-kubernetes-k3s.md
+              - OpenStack Docker: platform/deployment/examples/openstack-docker.md
+          - Docker Compose: platform/deployment/reference/docker-compose/_index.md
+      - Observability:
+          - Observability: platform/observability/_index.md
+          - Getting Started:
+              - Quickstart: platform/observability/get-started/quickstart.md
+              - User Guide Tutorial: platform/observability/get-started/userguide-tutorial.md
+          - Setup:
+              - Production Setup: platform/observability/setup/production-setup.md
+              - Probing: platform/observability/setup/probing.md
+              - Telemetry: platform/observability/setup/telemetry.md
+              - Alerting: platform/observability/setup/alerting.md
+          - Customization:
+              - Customization Overview: platform/observability/customization/_index.md
+              - Custom Dashboards: platform/observability/customization/custom-dashboards.md
+              - Alerts Customization: platform/observability/customization/alerts-customization.md
+              - Custom Prometheus Configs: platform/observability/customization/custom-prometheus-configs.md
+              - Blackbox Exporter Config: platform/observability/customization/blackbox-exporter-config.md
+          - Reference:
+              - Project Details: platform/observability/reference/project-details.md
+              - Concept Materials: platform/observability/reference/concept-materials.md
+              - Quickstart Manual: platform/observability/reference/quickstart-manual.md
+              - Understanding Metrics: platform/observability/reference/understanding-metrics.md
+
+plugins:
+  - search
+  - termynal
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
