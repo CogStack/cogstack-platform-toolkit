@@ -26,7 +26,7 @@ env:
   EMAIL_PORT: "465"
   EMAIL_USER: "example@cogstack.org"
   ENV: "non-prod"
-  LOAD_EXAMPLES: "1"
+  LOAD_EXAMPLES: "0"
   LOAD_NUM_DOC_PAGES: "10"
   MAX_DATASET_SIZE: "10000"
   MAX_MEDCAT_MODELS: "2"
