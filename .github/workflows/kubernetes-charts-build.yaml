@@ -20,34 +20,36 @@ jobs:
     if: github.event.pull_request.user.login != 'dependabot[bot]' && github.repository == 'CogStack/cogstack-platform-toolkit'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5.0.0
         with:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: azure/setup-helm@v4.3.0
-        with:
-          version: v3.18.3
+        uses: azure/setup-helm@v4.3.1
 
-      - uses: actions/setup-python@v5.3.0
+      - uses: actions/setup-python@v6.0.0
         with:
           python-version: '3.x'
           check-latest: true
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.7.0
+        uses: helm/chart-testing-action@v2.8.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
+        working-directory: .
         run: |
-          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch}})
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }} --chart-dirs deployment/kubernetes/charts)
           if [[ -n "$changed" ]]; then
-            echo "changed=true" >> "$GITHUB_UTPUT"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+        working-directory: .
+        env:
+          CT_CHECK_VERSION_INCREMENT: "false"
+        run: ct lint --target-branch ${{ github.event.repository.default_branch }} --chart-dirs deployment/kubernetes/charts
 
       - name: Create kind cluster
         if: steps.list-changed.outputs.changed == 'true'
@@ -55,7 +57,8 @@ jobs:
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct install --target-branch ${{ github.event.repository.default_branch }}
+        working-directory: .
+        run: ct install --target-branch ${{ github.event.repository.default_branch }} --chart-dirs deployment/kubernetes/charts
 
   helm-publish:
     runs-on: ubuntu-latest
