@@ -10,6 +10,9 @@ spec:
   containers:
     - name: wget
       image: busybox
-      command: ['wget']
-      args: ['{{ include "medcat-trainer-helm.fullname" . }}:{{ .Values.service.port }}/nginx/health/live', '-U helm-test {{ .Chart.Name }}-v{{ .Chart.Version }}']
+      command: ['wget', '-q', '--spider']
+      args:
+        - 'http://{{ include "medcat-trainer-helm.fullname" . }}-medcat-trainer:{{ .Values.service.port }}/nginx/health/live'
+        - '-U'
+        - 'helm-test {{ .Chart.Name }}-v{{ .Chart.Version }}'
   restartPolicy: Never
