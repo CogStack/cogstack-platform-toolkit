@@ -5,9 +5,12 @@ name: documentation-build
 on:
   push:
     branches:
-      - '**'
+      - "**"
     tags:
-      - 'docs-v*.*.*'
+      - "docs-v*.*.*"
+    paths:
+      - "docs/**"
+      - ".github/workflows/doc-build**"
   release:
     types: [published]
 

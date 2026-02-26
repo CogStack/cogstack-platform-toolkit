@@ -2,13 +2,16 @@ name: ci-build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     tags:
-      - 'v*.*.*'  # e.g., v0.1.1
+      - "v*.*.*" # e.g., v0.1.1
+    paths:
+      - "observability/**"
+      - ".github/workflows/observability**"
   pull_request:
     paths:
-    - 'observability/**'
-    - '.github/workflows/observability**'
+      - "observability/**"
+      - ".github/workflows/observability**"
 
 jobs:
   docker:
@@ -16,7 +19,7 @@ jobs:
     if: github.event.pull_request.user.login != 'dependabot[bot]' && github.repository == 'CogStack/cogstack-platform-toolkit'
     strategy:
       matrix: # This should be replaced with Docker Bake instead
-         include:
+        include:
           - name: prometheus
             context: observability/prometheus
             dockerfile: observability/prometheus/Dockerfile.prometheus
@@ -26,7 +29,7 @@ jobs:
             dockerfile: observability/prometheus/Dockerfile.blackbox
             image: cogstacksystems/cogstack-observability-blackbox-exporter
           - name: grafana
-            context:  observability/grafana
+            context: observability/grafana
             dockerfile: observability/grafana/Dockerfile
             image: cogstacksystems/cogstack-observability-grafana
           - name: traefik
@@ -79,31 +82,31 @@ jobs:
   test-observability-quickstart-scripts:
     runs-on: ubuntu-latest
     name: Test observability Quickstart scripts
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        cache: pip
-        
-    - name: Install Python dependencies
-      run: pip install -r observability/test/requirements.txt
-      
-    - name: Run Simple quickstart test
-      run: |
-        echo "🧪 Running Simple quickstart test..."
-        bash observability/test/test-quickstart.sh
-        
-    - name: Report test result
-      if: always()
-      run: |
-        if [ $? -eq 0 ]; then
-          echo "✅ quickstart test PASSED"
-        else
-          echo "❌ quickstart test FAILED"
-          exit 1
-        fi
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: pip install -r observability/test/requirements.txt
+
+      - name: Run Simple quickstart test
+        run: |
+          echo "🧪 Running Simple quickstart test..."
+          bash observability/test/test-quickstart.sh
+
+      - name: Report test result
+        if: always()
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "✅ quickstart test PASSED"
+          else
+            echo "❌ quickstart test FAILED"
+            exit 1
+          fi
