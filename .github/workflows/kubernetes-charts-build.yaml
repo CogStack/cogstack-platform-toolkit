@@ -2,13 +2,16 @@ name: Kubernetes - Lint, Test, and Publish Helm Charts
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     tags:
-      - 'helm-charts-v*.*.*'  # e.g., helm-charts-v0.1.1
+      - "helm-charts-v*.*.*" # e.g., helm-charts-v0.1.1
+    paths:
+      - "deployment/kubernetes/charts/**"
+      - ".github/workflows/kubernetes-charts-build**"
   pull_request:
     paths:
-    - 'deployment/kubernetes/charts/**'
-    - '.github/workflows/kubernetes**'
+      - "deployment/kubernetes/charts/**"
+      - ".github/workflows/kubernetes**"
 
 defaults:
   run:
@@ -29,7 +32,7 @@ jobs:
 
       - uses: actions/setup-python@v6.0.0
         with:
-          python-version: '3.x'
+          python-version: "3.x"
           check-latest: true
 
       - name: Set up chart-testing
@@ -68,51 +71,51 @@ jobs:
     env:
       DEFAULT_CHART_VERSION: 0.0.1
     steps:
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Set up Helm
-      uses: azure/setup-helm@v4.2.0
-      with:
-        version: v3.17.0
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: v3.17.0
 
-    - name: Checkout
-      uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
 
-    - name: Determine version
-      id: version
-      run: |
-        if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-          # Strip the tag prefix helm-charts-v
-          CHART_VERSION="${GITHUB_REF_NAME#helm-charts-v}"
-        else
-          CHART_VERSION="$DEFAULT_CHART_VERSION"
-        fi
-        echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
+      - name: Determine version
+        id: version
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            # Strip the tag prefix helm-charts-v
+            CHART_VERSION="${GITHUB_REF_NAME#helm-charts-v}"
+          else
+            CHART_VERSION="$DEFAULT_CHART_VERSION"
+          fi
+          echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
 
-    - name: Package Helm Charts
-      # TODO: List the dir instead of hardcoding each one
-      run: |
-        helm package ./charts/medcat-service-helm --version  ${{ steps.version.outputs.chart_version }}
-        helm package ./charts/medcat-trainer-helm --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
-        helm package ./charts/cogstack-helm-ce --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
+      - name: Package Helm Charts
+        # TODO: List the dir instead of hardcoding each one
+        run: |
+          helm package ./charts/medcat-service-helm --version  ${{ steps.version.outputs.chart_version }}
+          helm package ./charts/medcat-trainer-helm --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
+          helm package ./charts/cogstack-helm-ce --version  ${{ steps.version.outputs.chart_version }} --dependency-update
 
-    - name: Helm OCI login to Docker Hub
-      run: helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Helm OCI login to Docker Hub
+        run: helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Push Helm Chart to Docker Hub OCI
-      run: |
-        helm push ./medcat-service-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
-        helm push ./medcat-trainer-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
-        helm push ./cogstack-helm-ce-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
+      - name: Push Helm Chart to Docker Hub OCI
+        run: |
+          helm push ./medcat-service-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
+          helm push ./medcat-trainer-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
+          helm push ./cogstack-helm-ce-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
 
-    - name: Release
-      uses: softprops/action-gh-release@v2
-      if: github.ref_type == 'tag'
-      with:
-        draft: true
-        files: |
-          ./deployment/kubernetes/*.tgz
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          draft: true
+          files: |
+            ./deployment/kubernetes/*.tgz
