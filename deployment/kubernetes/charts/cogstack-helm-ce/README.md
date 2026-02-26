@@ -15,23 +15,12 @@ This chart is an umbrella chart that deploys:
 ## Prerequisites
 
 - Kubernetes cluster
-- Helm 3
+- Helm 3+
 
 ## Installation
 
-From the chart directory (or repo root), update dependencies and install:
-
-```bash
-cd deployment/kubernetes/charts/cogstack-helm-ce
-helm dependency update
-helm install cogstack-ce . --namespace cogstack --create-namespace
-```
-
-Or from the repo root:
-
-```bash
-helm dependency update deployment/kubernetes/charts/cogstack-helm-ce
-helm install cogstack-ce deployment/kubernetes/charts/cogstack-helm-ce --namespace cogstack --create-namespace
+```sh
+helm install cogstack oci://registry-1.docker.io/cogstacksystems/cogstack-helm-ce
 ```
 
 ## Configuration
@@ -67,7 +56,7 @@ anoncat-service:
 Install with overrides:
 
 ```bash
-helm install cogstack-ce . -f my-values.yaml --namespace cogstack --create-namespace
+helm install cogstack . -f my-values.yaml --namespace cogstack --create-namespace
 ```
 
 ## Dependencies

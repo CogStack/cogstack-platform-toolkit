@@ -1,0 +1,21 @@
+# CogStack Community Edition is installed
+
+# 1. AnonCAT Service port forward
+export ANONCAT_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name=anoncat-service,app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $ANONCAT_POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+kubectl --namespace {{ .Release.Namespace }} port-forward $ANONCAT_POD_NAME 5001:$CONTAINER_PORT --pod-running-timeout=5m0s & 
+
+# 2.Medcat service port forward
+export MEDCAT_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name=anoncat-service,app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $MEDCAT_POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+kubectl --namespace {{ .Release.Namespace }} port-forward $MEDCAT_POD_NAME 5000:$CONTAINER_PORT --pod-running-timeout=5m0s &
+
+# 3. MedCAT Trainer Port forward
+export TRAINER_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name=medcat-trainer,app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $TRAINER_POD_NAME -o jsonpath="{.spec.containers[?(@.name==\"nginx\")].ports[0].containerPort}")
+export CONTAINER_PORT_API=$(kubectl get pod --namespace {{ .Release.Namespace }} $TRAINER_POD_NAME -o jsonpath="{.spec.containers[?(@.name==\"medcat-trainer\")].ports[0].containerPort}")
+kubectl --namespace {{ .Release.Namespace }} port-forward $TRAINER_POD_NAME 8000:$CONTAINER_PORT 8001:$CONTAINER_PORT_API &
+
+echo "Visit http://127.0.0.1:5000 to use MedCAT Service"
+echo "Visit http://127.0.0.1:5001 to use AnonCAT"
+echo "Visit http://127.0.0.1:8000 to use MedCAT Trainer"
