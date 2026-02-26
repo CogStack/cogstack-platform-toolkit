@@ -14,6 +14,17 @@ spec:
       securityContext:
         runAsUser: 0
       command: ["/bin/sh", "-c"]
+      env:
+        # Only assert the payload if we are using the default model packs. This is to avoid testing a model that doesnt have the concepts set.
+        - name: SHOULD_ASSERT_PAYLOAD
+          value: {{- if and (not .Values.model.downloadUrl)
+              (or
+                (eq .Values.env.APP_MEDCAT_MODEL_PACK "/cat/models/examples/example-medcat-v2-model-pack.zip")
+                (eq .Values.env.APP_MEDCAT_MODEL_PACK "/cat/models/examples/example-deid-model-pack.zip")
+              )
+            }} "true"{{- else }} "false"{{- end }}
+        - name: EXPECTED_ANNOTATION
+          value: "{{- if .Values.env.DEID_MODE -}}PATIENT{{- else -}}Kidney Failure{{- end -}}"
       args:
         - |
           set -e
@@ -23,24 +34,35 @@ spec:
           api="{{ include "medcat-service.fullname" . }}:{{ .Values.service.port }}/api/process"
           input_text="The patient was diagnosed with Kidney Failure"
           input_payload="{\"content\":{\"text\":\"${input_text}\"}}"
-          expected_annotation="Kidney Failure"
 
           echo "Calling POST $api with payload '$input_payload'"
-          actual=$(curl -s -X POST "$api" \
+          http_code=$(curl -s -w "%{http_code}" -o /tmp/response_body -X POST "$api" \
             -H 'Content-Type: application/json' \
             --user-agent 'helm-test {{ .Chart.Name }}-v{{ .Chart.Version }}' \
             -d "$input_payload")
+          actual=$(cat /tmp/response_body)
+
+          if [ "$http_code" != "200" ]; then
+            echo "Expected HTTP 200 OK, got $http_code"
+            echo "Response body: $actual"
+            exit 1
+          fi
+          echo "Response status: $http_code OK"
 
           echo "Received result '$actual'"
 
           actual_annotation=$(echo "$actual" | jq -r '.result.annotations[0]["0"].pretty_name')
-          echo "Expected Annotation is '${expected_annotation}'. Actual Annotation is '${actual_annotation}'"
-          
-          if [ "$actual_annotation" = "$expected_annotation" ]; then
-            echo "Service working and extracting annotations"
-          else
-            echo "Expected: $expected_annotation, Got: $actual_annotation"
-            echo -e "Actual response was:\n${actual}"
-            exit 1
+
+          if [ "$SHOULD_ASSERT_PAYLOAD" = "true" ]; then
+            echo "Expected Annotation is '${EXPECTED_ANNOTATION}'"
+
+            if [ "$actual_annotation" = "$EXPECTED_ANNOTATION" ]; then
+              echo "Service working and extracting annotations"
+            else
+              echo "Expected: $EXPECTED_ANNOTATION, Got: $actual_annotation"
+              echo -e "Actual response was:\n${actual}"
+              exit 1
+            fi
           fi
+          echo "Passed acceptance test for medcat service"
   restartPolicy: Never

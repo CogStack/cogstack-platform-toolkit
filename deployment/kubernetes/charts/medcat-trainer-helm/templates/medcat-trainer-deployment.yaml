@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "medcat-trainer-helm.fullname" . }}-medcat-trainer
+  name: {{ include "medcat-trainer-helm.fullname" . }}
   labels:
     {{- include "medcat-trainer-helm.labels" . | nindent 4 }}
 spec:
@@ -55,7 +55,7 @@ spec:
             - /etc/supervisord.conf
           envFrom:
             - configMapRef:
-                name: {{ include "medcat-trainer-helm.fullname" . }}-medcat-trainer-env
+                name: {{ include "medcat-trainer-helm.fullname" . }}-env
             - secretRef:
                 name: {{ include "medcat-trainer-helm.fullname" . }}-secret
           {{- with .Values.livenessProbe }}
@@ -134,7 +134,7 @@ spec:
       volumes:
         - name: medcat-trainer-config
           configMap:
-            name: {{ include "medcat-trainer-helm.fullname" . }}-medcat-trainer-config
+            name: {{ include "medcat-trainer-helm.fullname" . }}-config
         - name: api-media
           persistentVolumeClaim:
             claimName: {{ include "medcat-trainer-helm.fullname" . }}-api-media

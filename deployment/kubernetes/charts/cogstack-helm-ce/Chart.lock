@@ -8,5 +8,5 @@ dependencies:
 - name: medcat-trainer-helm
   repository: file://../medcat-trainer-helm
   version: 0.0.1
-digest: sha256:ed3f7c95117421145affc912bbec79151b7dd55062c7358b837074f0e0bf4641
-generated: "2026-02-26T12:55:11.318221565Z"
+digest: sha256:08371a768a9f330606777903fab163ca84918222bbe3f516fab2772f5563d390
+generated: "2026-02-26T15:00:09.073243923Z"

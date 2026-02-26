@@ -27,6 +27,8 @@ maintainers:
   - name: alhendrickson
     email: alistair@cogstack.org
 
+icon: "https://avatars.githubusercontent.com/u/28688163"
+
 # Chart.yaml
 dependencies:
   - name: solr
