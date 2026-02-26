@@ -27,6 +27,8 @@ maintainers:
   - name: alhendrickson
     email: alistair@cogstack.org
 
+icon: "https://avatars.githubusercontent.com/u/28688163"
+
 dependencies:
   - name: medcat-service-helm
     alias: medcat-service
