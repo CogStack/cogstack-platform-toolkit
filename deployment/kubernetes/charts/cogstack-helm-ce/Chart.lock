@@ -1,0 +1,12 @@
+dependencies:
+- name: medcat-service-helm
+  repository: file://../medcat-service-helm
+  version: 0.0.1
+- name: medcat-service-helm
+  repository: file://../medcat-service-helm
+  version: 0.0.1
+- name: medcat-trainer-helm
+  repository: file://../medcat-trainer-helm
+  version: 0.0.1
+digest: sha256:ed3f7c95117421145affc912bbec79151b7dd55062c7358b837074f0e0bf4641
+generated: "2026-02-26T12:55:11.318221565Z"

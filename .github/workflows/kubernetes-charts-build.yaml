@@ -94,9 +94,11 @@ jobs:
         echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
 
     - name: Package Helm Charts
+      # TODO: List the dir instead of hardcoding each one
       run: |
         helm package ./charts/medcat-service-helm --version  ${{ steps.version.outputs.chart_version }}
         helm package ./charts/medcat-trainer-helm --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
+        helm package ./charts/cogstack-helm-ce --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
 
     - name: Helm OCI login to Docker Hub
       run: helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
@@ -105,6 +107,7 @@ jobs:
       run: |
         helm push ./medcat-service-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
         helm push ./medcat-trainer-helm-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
+        helm push ./cogstack-helm-ce-${{ steps.version.outputs.chart_version }}.tgz oci://registry-1.docker.io/cogstacksystems
 
     - name: Release
       uses: softprops/action-gh-release@v2
@@ -112,5 +115,4 @@ jobs:
       with:
         draft: true
         files: |
-          ./deployment/kubernetes/medcat-service-helm-${{ steps.version.outputs.chart_version }}.tgz 
-          ./deployment/kubernetes/medcat-trainer-helm-${{ steps.version.outputs.chart_version }}.tgz 
+          ./deployment/kubernetes/*.tgz
