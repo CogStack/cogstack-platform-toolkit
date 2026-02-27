@@ -29,5 +29,6 @@ opensearch:
   extraEnvs:
     - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
       value: "opensearch-312$A"
+
 opensearch-dashboards:
   enabled: true
