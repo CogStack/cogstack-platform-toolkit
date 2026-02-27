@@ -21,8 +21,13 @@ export OPENSEARCH_SERVICE={{ template "opensearch.serviceName" .Subcharts.opense
 export OPENSEARCH_PORT={{ .Values.opensearch.httpPort }}
 kubectl --namespace {{ .Release.Namespace }} port-forward svc/$OPENSEARCH_SERVICE 9200:$OPENSEARCH_PORT &
 
+export OPENSEARCH_DASHBOARD_SERVICE={{ include "opensearch-dashboards.fullname" (index .Subcharts "opensearch-dashboards" ) }}
+export OPENSEARCH_DASHBOARD_PORT={{ index .Values "opensearch-dashboards" "service" "port"  }}
+kubectl --namespace {{ .Release.Namespace }} port-forward svc/$OPENSEARCH_DASHBOARD_SERVICE 5601:$OPENSEARCH_DASHBOARD_PORT &
+
 
 echo "Visit http://127.0.0.1:5000 to use MedCAT Service"
 echo "Visit http://127.0.0.1:5001 to use AnonCAT"
 echo "Visit http://127.0.0.1:8000 to use MedCAT Trainer"
-echo "Call http://127.0.0.1:9200 to use OpenSearch"
+echo "Call https://127.0.0.1:9200 to use OpenSearch"
+echo "Visit http://127.0.0.1:5601 to use OpenSearch Dashboards"

@@ -30,9 +30,6 @@ maintainers:
 icon: "https://avatars.githubusercontent.com/u/28688163"
 
 dependencies:
-  - name: opensearch
-    version: "3.5.0"
-    repository: "https://opensearch-project.github.io/helm-charts/"
   - name: medcat-service-helm
     alias: medcat-service
     version: "0.0.1"
@@ -45,3 +42,9 @@ dependencies:
     alias: medcat-trainer
     version: "0.0.1"
     repository: "file://../medcat-trainer-helm"
+  - name: opensearch
+    version: "3.5.0"
+    repository: "https://opensearch-project.github.io/helm-charts/"
+  - name: opensearch-dashboards
+    version: "3.5.0"
+    repository: "https://opensearch-project.github.io/helm-charts/"
