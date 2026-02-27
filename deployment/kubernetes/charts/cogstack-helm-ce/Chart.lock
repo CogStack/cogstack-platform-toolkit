@@ -8,5 +8,11 @@ dependencies:
 - name: medcat-trainer-helm
   repository: file://../medcat-trainer-helm
   version: 0.0.1
-digest: sha256:08371a768a9f330606777903fab163ca84918222bbe3f516fab2772f5563d390
-generated: "2026-02-26T15:00:09.073243923Z"
+- name: opensearch
+  repository: https://opensearch-project.github.io/helm-charts/
+  version: 3.5.0
+- name: opensearch-dashboards
+  repository: https://opensearch-project.github.io/helm-charts/
+  version: 3.5.0
+digest: sha256:5c0bf142e8060c45f3045a9a925a3801813f23b7f0a37d100ffe2a3ab3d387e7
+generated: "2026-02-27T14:25:01.321704435Z"

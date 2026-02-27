@@ -16,6 +16,21 @@ export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $TR
 export CONTAINER_PORT_API=$(kubectl get pod --namespace {{ .Release.Namespace }} $TRAINER_POD_NAME -o jsonpath="{.spec.containers[?(@.name==\"medcat-trainer\")].ports[0].containerPort}")
 kubectl --namespace {{ .Release.Namespace }} port-forward $TRAINER_POD_NAME 8000:$CONTAINER_PORT 8001:$CONTAINER_PORT_API &
 
+{{- if .Values.opensearch.enabled }}
+# 4. Opensearch
+export OPENSEARCH_SERVICE={{ template "opensearch.serviceName" .Subcharts.opensearch }}
+export OPENSEARCH_PORT={{ .Values.opensearch.httpPort }}
+kubectl --namespace {{ .Release.Namespace }} port-forward svc/$OPENSEARCH_SERVICE 9200:$OPENSEARCH_PORT &
+{{- end }}
+
+{{- if index .Values "opensearch-dashboards" "enabled" }}
+export OPENSEARCH_DASHBOARD_SERVICE={{ include "opensearch-dashboards.fullname" (index .Subcharts "opensearch-dashboards" ) }}
+export OPENSEARCH_DASHBOARD_PORT={{ index .Values "opensearch-dashboards" "service" "port"  }}
+kubectl --namespace {{ .Release.Namespace }} port-forward svc/$OPENSEARCH_DASHBOARD_SERVICE 5601:$OPENSEARCH_DASHBOARD_PORT &
+{{- end }}
+
 echo "Visit http://127.0.0.1:5000 to use MedCAT Service"
 echo "Visit http://127.0.0.1:5001 to use AnonCAT"
 echo "Visit http://127.0.0.1:8000 to use MedCAT Trainer"
+{{ if .Values.opensearch.enabled }}echo "Call https://127.0.0.1:9200 to use OpenSearch"{{- end }}
+{{ if index .Values "opensearch-dashboards" "enabled" }}echo "Visit http://127.0.0.1:5601 to use OpenSearch Dashboards"{{- end }}

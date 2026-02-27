@@ -5,7 +5,6 @@ minikube addons enable metrics-server
 minikube dashboard --url=true &
 
 helm upgrade medcat-service ./medcat-service-helm --install --recreate-pods  --wait --timeout 5m0s # Install if it doesnt already exist, else upgrade
-
 helm test medcat-service --logs
 
 # Run CT  Lint
@@ -21,7 +20,9 @@ helm test medcat-service --logs
 # Test medcat trainer
 # kubectl port-forward svc/nginx 8000:8000
 
-helm upgrade x ./medcat-trainer-helm --install  --wait --timeout 5m0s # Install if it doesnt already exist, else upgrade
+# helm upgrade x ./medcat-trainer-helm --install  --wait --timeout 5m0s # Install if it doesnt already exist, else upgrade
 # kubectl port-forward svc/medcat-trainer-solr 8983:8983
 
 ## helm install trainer-registry oci://registry-1.docker.io/cogstacksystems/medcat-trainer-helm --wait --timeout 5m0s
+
+helm upgrade cogstack-helm-ce ./cogstack-helm-ce --install --render-subchart-notes --wait --timeout 5m0s
