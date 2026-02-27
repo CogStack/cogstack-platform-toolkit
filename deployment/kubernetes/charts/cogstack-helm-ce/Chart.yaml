@@ -53,4 +53,4 @@ dependencies:
   - name: cogstack-jupyterhub
     condition: cogstack-jupyterhub.enabled
     version: "0.1.0"
-    repository: "file://charts/cogstack-jupyterhub"
+    repository: "file://charts/jupyterhub"
