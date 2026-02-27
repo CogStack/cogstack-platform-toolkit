@@ -32,3 +32,25 @@ opensearch:
 
 opensearch-dashboards:
   enabled: true
+
+cogstack-jupyterhub:
+  enabled: true
+  jupyterhub:
+    hub:
+      image:
+        name: cogstacksystems/jupyter-hub
+        tag: "2.2.2"
+      config:
+        JupyterHub:
+          authenticator_class: dummy
+        # - Authenticator set to hardcoded user/password
+        Authenticator:
+          admin_users:
+            - admin
+        DummyAuthenticator:
+          password: "SuperSecret"
+    singleuser:
+      image:
+        name: cogstacksystems/jupyter-singleuser
+        tag: "2.2.2"
+        pullPolicy: IfNotPresent

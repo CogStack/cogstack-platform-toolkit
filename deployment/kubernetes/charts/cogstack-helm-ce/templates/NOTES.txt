@@ -29,8 +29,16 @@ export OPENSEARCH_DASHBOARD_PORT={{ index .Values "opensearch-dashboards" "servi
 kubectl --namespace {{ .Release.Namespace }} port-forward svc/$OPENSEARCH_DASHBOARD_SERVICE 5601:$OPENSEARCH_DASHBOARD_PORT &
 {{- end }}
 
+# 5. Jupyterhub
+{{- if index .Values "cogstack-jupyterhub" "enabled" }}
+export JUPYTERHUB_PROXY_PUBLIC_SERVICE=proxy-public
+export JUPYTERHUB_PROXY_SERVICE_PORT=$(kubectl get svc $JUPYTERHUB_PROXY_PUBLIC_SERVICE -o jsonpath="{.spec.ports[0].port}" )
+kubectl --namespace {{ .Release.Namespace }} port-forward svc/$JUPYTERHUB_PROXY_PUBLIC_SERVICE 8000:$JUPYTERHUB_PROXY_SERVICE_PORT &
+{{- end }}
+
 echo "Visit http://127.0.0.1:5000 to use MedCAT Service"
 echo "Visit http://127.0.0.1:5001 to use AnonCAT"
 echo "Visit http://127.0.0.1:8000 to use MedCAT Trainer"
-{{ if .Values.opensearch.enabled }}echo "Call https://127.0.0.1:9200 to use OpenSearch"{{- end }}
+{{ if .Values.opensearch.enabled }}echo "Visit https://127.0.0.1:9200 to use OpenSearch"{{- end }}
 {{ if index .Values "opensearch-dashboards" "enabled" }}echo "Visit http://127.0.0.1:5601 to use OpenSearch Dashboards"{{- end }}
+{{ if index .Values "cogstack-jupyterhub" "enabled" }}echo "Visit http://127.0.0.1:8000 to use jupyterhub"{{- end }}
