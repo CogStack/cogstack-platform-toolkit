@@ -32,3 +32,97 @@ opensearch:
 
 opensearch-dashboards:
   enabled: true
+
+hub:
+  image:
+    name: cogstacksystems/jupyter-hub
+    tag: "2.2.2"
+    pullPolicy: IfNotPresent
+  extraConfig:
+    00-log-level: |
+      c.Application.log_level = 'DEBUG'
+  config:
+    JupyterHub:
+      authenticator_class: dummy
+    Authenticator:
+      admin_users:
+        - admin
+    DummyAuthenticator:
+      password: "SuperSecret"
+
+    KubeSpawner:
+      uid: 0
+      fs_gid: 0
+      start_timeout: 300
+      http_timeout: 120
+      notebook_dir: /home/jovyan/work
+
+    Spawner:
+      default_url: /lab/
+      notebook_dir: /home/jovyan/work
+
+  # Extra hub configuration for custom spawner settings
+  extraConfig:
+    00-custom-spawner: |
+      # Custom environment variables for user pods
+      c.KubeSpawner.environment = {
+          'GRANT_SUDO': '1',
+          'CHOWN_HOME': 'yes',
+          'CHOWN_HOME_OPTS': '-R',
+      }
+      # Allow root in notebooks
+      c.KubeSpawner.args = ['--allow-root']
+proxy:
+  service:
+    type: ClusterIP
+
+singleuser:
+  image:
+    name: cogstacksystems/jupyter-singleuser
+    tag: "2.2.2"
+    pullPolicy: IfNotPresent
+  # Lifecycle hook to copy notebooks from image to PVC on first run
+  lifecycleHooks:
+    postStart:
+      exec:
+        command:
+          - "sh"
+          - "-c"
+          - >
+            if [ ! -f /home/jovyan/work/.notebooks_initialized ]; then
+              echo "First run - copying notebooks and medcat-scripts...";
+              cp -r /srv/jupyterhub/notebooks/* /home/jovyan/work/;
+              cp -r /srv/jupyterhub/medcat-scripts /home/jovyan/work/;
+              touch /home/jovyan/work/.notebooks_initialized;
+              echo "Notebooks initialized successfully";
+            else
+              echo "Notebooks already initialized - skipping";
+            fi
+  networkPolicy:
+    enabled: false 
+
+  # User pod configuration
+  uid: 0
+  fsGid: 0
+  cmd: ["jupyterhub-singleuser"]
+
+  # Extra arguments passed to jupyterhub-singleuser
+  extraPodConfig:
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+
+  storage:
+    capacity: 10Gi
+
+
+cull:
+  enabled: false
+scheduling:
+  userScheduler:
+    replicas: 1
+prePuller:
+  hook:
+    enabled: false
+  continuous:
+    enabled: false
