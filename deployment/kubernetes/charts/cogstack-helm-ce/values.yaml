@@ -25,6 +25,9 @@ medcat-service:
     tag: "1.2.0"
 
 opensearch:
+  enabled: true
   extraEnvs:
     - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
       value: "opensearch-312$A"
+opensearch-dashboards:
+  enabled: true
