@@ -16,6 +16,13 @@ export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $TR
 export CONTAINER_PORT_API=$(kubectl get pod --namespace {{ .Release.Namespace }} $TRAINER_POD_NAME -o jsonpath="{.spec.containers[?(@.name==\"medcat-trainer\")].ports[0].containerPort}")
 kubectl --namespace {{ .Release.Namespace }} port-forward $TRAINER_POD_NAME 8000:$CONTAINER_PORT 8001:$CONTAINER_PORT_API &
 
+# 4. Opensearch
+export OPENSEARCH_SERVICE={{ template "opensearch.serviceName" .Subcharts.opensearch }}
+export OPENSEARCH_PORT={{ .Values.opensearch.httpPort }}
+kubectl --namespace {{ .Release.Namespace }} port-forward svc/$OPENSEARCH_SERVICE 9200:$OPENSEARCH_PORT &
+
+
 echo "Visit http://127.0.0.1:5000 to use MedCAT Service"
 echo "Visit http://127.0.0.1:5001 to use AnonCAT"
 echo "Visit http://127.0.0.1:8000 to use MedCAT Trainer"
+echo "Call http://127.0.0.1:9200 to use OpenSearch"
