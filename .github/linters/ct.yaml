@@ -3,6 +3,6 @@ remote: origin
 target-branch: main
 chart-dirs:
   - deployment/kubernetes/charts
-helm-extra-args: --timeout 600s
+helm-extra-args: --timeout 1000s
 chart-repos:
   - opensearch=https://opensearch-project.github.io/helm-charts
