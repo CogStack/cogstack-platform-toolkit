@@ -14,6 +14,10 @@ data:
   DB_PATH: "/home/api/db/db.sqlite3"
   MCT_VERSION: {{ .Values.image.tag | default .Chart.AppVersion }}
   API_URL: http://localhost:{{ .Values.service.apiPort }}/api/
+  {{- if and .Values.provisioning .Values.provisioning.enabled }}
+  LOAD_EXAMPLES: "1"
+  PROVISIONING_CONFIG_PATH: "/home/configs/provisioning.yaml"
+  {{- end }}
 {{- range $key, $value := .Values.env }}
   {{ $key }}: {{ $value | quote }}
 {{- end }}

@@ -85,6 +85,11 @@ spec:
               name: api-media
             - mountPath: /home/api/static
               name: api-static
+            {{- if and .Values.provisioning .Values.provisioning.enabled }}
+            - mountPath: /home/configs/provisioning.yaml
+              name: medcat-trainer-config
+              subPath: provisioning.yaml
+            {{- end }}
             {{- if eq .Values.DB_ENGINE "sqlite3" }}  
             - mountPath: /home/api/db
               name: api-db

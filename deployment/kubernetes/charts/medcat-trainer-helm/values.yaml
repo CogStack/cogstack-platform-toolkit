@@ -26,7 +26,6 @@ env:
   EMAIL_PORT: "465"
   EMAIL_USER: "example@cogstack.org"
   ENV: "non-prod"
-  LOAD_EXAMPLES: "0"
   LOAD_NUM_DOC_PAGES: "10"
   MAX_DATASET_SIZE: "10000"
   MAX_MEDCAT_MODELS: "2"
@@ -39,6 +38,24 @@ env:
   # DB_ENGINE: "sqlite3"
   DB_ENGINE: "postgresql"
   DB_PORT: "5432"
+
+provisioning:
+  # -- Set to true to enable provisioning of projects and models on startup..
+  enabled: false
+  # -- Put yaml file contents here.See https://docs.cogstack.org/projects/medcat-trainer/en/latest/provisioning/
+  config:
+    projects:
+      - dataset:
+          name: "Example Dataset - psych.csv"
+          url: "https://raw.githubusercontent.com/CogStack/cogstack-nlp/be9825f151da2d3b6faac80d49e5be91a1629c68/medcat-trainer/notebook_docs/example_data/psych.csv"
+          description: "Dataset from https://raw.githubusercontent.com/CogStack/cogstack-nlp/be9825f151da2d3b6faac80d49e5be91a1629c68/medcat-trainer/notebook_docs/example_data/psych.csv"
+        modelPack:
+          name: "Example Model Pack"
+          url: "https://github.com/CogStack/cogstack-nlp/raw/be9825f151da2d3b6faac80d49e5be91a1629c68/medcat-service/models/examples/example-medcat-v2-model-pack.zip"
+        project:
+          name: "Example Project"
+          description: "Example project for medcat trainer"
+          annotationGuidelineLink: "https://docs.google.com/document/d/1xxelBOYbyVzJ7vLlztP2q1Kw9F5Vr1pRwblgrXPS7QM/edit?usp=sharing"
 
 postgresql:
   enabled: true
