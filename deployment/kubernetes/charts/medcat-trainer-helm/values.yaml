@@ -40,6 +40,7 @@ env:
   DB_PORT: "5432"
 
 provisioning:
+  # -- Set to true to enable provisioning of projects and models on startup..
   enabled: false
   # -- Put yaml file contents here.See https://docs.cogstack.org/projects/medcat-trainer/en/latest/provisioning/
   config:
