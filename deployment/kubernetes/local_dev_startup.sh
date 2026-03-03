@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-minikube start
+minikube start --cni=calico --cpus=no-limit --memory=no-limit
 minikube addons enable metrics-server
 
 minikube dashboard --url=true &
