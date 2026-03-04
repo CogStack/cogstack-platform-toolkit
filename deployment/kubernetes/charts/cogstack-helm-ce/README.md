@@ -37,6 +37,7 @@ Key values in `values.yaml`:
 | `anoncat-service.env.APP_ENABLE_DEMO_UI` | `true` | Enable AnonCAT demo UI. |
 | `anoncat-service.env.DEID_MODE` | `true` | Run AnonCAT in de-identification mode. |
 | `anoncat-service.env.DEID_REDACT` | `false` | Redaction behaviour for de-identification. |
+| `medcat-trainer.env.CSRF_TRUSTED_ORIGINS` | `"http://localhost:8080"` | CSRF trusted origins for MedCAT Trainer frontend (set correct value for your deployment, this default works for port forwarding). |
 
 Subcharts (MedCAT service, AnonCAT service, MedCAT Trainer) support additional options; see their respective charts under `../medcat-service-helm` and `../medcat-trainer-helm`. Pass them under the same keys as in this chart’s `values.yaml` (e.g. `medcat-service.*`, `anoncat-service.*`, `medcat-trainer-helm.*`).
 
