@@ -42,7 +42,11 @@ env:
 provisioning:
   # -- Set to true to enable provisioning of projects and models on startup..
   enabled: false
-  # -- Put yaml file contents here.See https://docs.cogstack.org/projects/medcat-trainer/en/latest/provisioning/
+  # -- Optional: Reference an existing configmap for the provisioning config.
+  existingConfigMap: {}
+    # -- The name of an existing configmap. Contains a yaml definition under the key "provisioining.yaml"
+    # name: ""
+  # -- Put yaml file contents here. Can be templated See https://docs.cogstack.org/projects/medcat-trainer/en/latest/provisioning/
   config:
     projects:
       - dataset:

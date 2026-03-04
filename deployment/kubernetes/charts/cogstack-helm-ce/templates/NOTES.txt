@@ -38,7 +38,7 @@ kubectl --namespace {{ .Release.Namespace }} port-forward svc/$JUPYTERHUB_PROXY_
 
 echo "Visit http://127.0.0.1:5000 to use MedCAT Service"
 echo "Visit http://127.0.0.1:5001 to use AnonCAT"
-echo "Visit http://127.0.0.1:8000 to use MedCAT Trainer"
+echo "Visit http://127.0.0.1:8080 to use MedCAT Trainer"
 {{ if .Values.opensearch.enabled }}echo "Visit https://127.0.0.1:9200 to use OpenSearch"{{- end }}
 {{ if index .Values "opensearch-dashboards" "enabled" }}echo "Visit http://127.0.0.1:5601 to use OpenSearch Dashboards"{{- end }}
 {{ if index .Values "cogstack-jupyterhub" "enabled" }}echo "Visit http://127.0.0.1:8000 to use jupyterhub"{{- end }}
