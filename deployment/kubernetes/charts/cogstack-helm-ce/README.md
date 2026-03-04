@@ -24,18 +24,12 @@ helm install cogstack oci://registry-1.docker.io/cogstacksystems/cogstack-helm-c
 ```
 
 ## Configuration
-
-Key values in `values.yaml`:
+These are some values that are likely to need customization for your deployment:
 
 | Value | Default | Description |
 |-------|---------|-------------|
-| `imagePullSecrets` | `[]` | Secrets for pulling images from a private registry. |
-| `nameOverride` | `""` | Override the chart name used in resource names. |
-| `fullnameOverride` | `""` | Override the full name used in resource names. |
 | `medcat-service.replicasCount` | `1` | Number of MedCAT service replicas. |
 | `anoncat-service.replicasCount` | `1` | Number of AnonCAT service replicas. |
-| `anoncat-service.env.APP_ENABLE_DEMO_UI` | `true` | Enable AnonCAT demo UI. |
-| `anoncat-service.env.DEID_MODE` | `true` | Run AnonCAT in de-identification mode. |
 | `anoncat-service.env.DEID_REDACT` | `false` | Redaction behaviour for de-identification. |
 | `medcat-trainer.env.CSRF_TRUSTED_ORIGINS` | `"http://localhost:8080"` | CSRF trusted origins for MedCAT Trainer frontend (set correct value for your deployment, this default works for port forwarding). |
 
