@@ -233,3 +233,9 @@ networkPolicy:
       #           app.kubernetes.io/name: model-downloader
       #   ports:
       #     - port: 5000
+
+# Additional init containers to run before the main container. Can be templated
+extraInitContainers: []
+
+# Additional manifests to deploy to kubernetes. Can be templated
+extraManifests: []
