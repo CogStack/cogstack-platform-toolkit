@@ -14,7 +14,7 @@ kubectl --namespace {{ .Release.Namespace }} port-forward $MEDCAT_POD_NAME 5000:
 export TRAINER_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name=medcat-trainer,app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
 export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $TRAINER_POD_NAME -o jsonpath="{.spec.containers[?(@.name==\"nginx\")].ports[0].containerPort}")
 export CONTAINER_PORT_API=$(kubectl get pod --namespace {{ .Release.Namespace }} $TRAINER_POD_NAME -o jsonpath="{.spec.containers[?(@.name==\"medcat-trainer\")].ports[0].containerPort}")
-kubectl --namespace {{ .Release.Namespace }} port-forward $TRAINER_POD_NAME 8000:$CONTAINER_PORT 8001:$CONTAINER_PORT_API &
+kubectl --namespace {{ .Release.Namespace }} port-forward $TRAINER_POD_NAME 8080:$CONTAINER_PORT 8001:$CONTAINER_PORT_API &
 
 {{- if .Values.opensearch.enabled }}
 # 4. Opensearch
@@ -38,7 +38,7 @@ kubectl --namespace {{ .Release.Namespace }} port-forward svc/$JUPYTERHUB_PROXY_
 
 echo "Visit http://127.0.0.1:5000 to use MedCAT Service"
 echo "Visit http://127.0.0.1:5001 to use AnonCAT"
-echo "Visit http://127.0.0.1:8000 to use MedCAT Trainer"
+echo "Visit http://127.0.0.1:8080 to use MedCAT Trainer"
 {{ if .Values.opensearch.enabled }}echo "Visit https://127.0.0.1:9200 to use OpenSearch"{{- end }}
 {{ if index .Values "opensearch-dashboards" "enabled" }}echo "Visit http://127.0.0.1:5601 to use OpenSearch Dashboards"{{- end }}
 {{ if index .Values "cogstack-jupyterhub" "enabled" }}echo "Visit http://127.0.0.1:8000 to use jupyterhub"{{- end }}

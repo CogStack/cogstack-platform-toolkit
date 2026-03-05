@@ -24,6 +24,17 @@ medcat-service:
     repository: cogstacksystems/medcat-service
     tag: "1.2.0"
 
+
+medcat-trainer:
+  image:
+    tag: "latest@sha256:dcbd9f7c480dcb88e072189d233a146317f210a826573fd0c47d469da5360be0"
+  provisioning:
+    enabled: true
+    existingConfigMap:
+      name: "cogstack-helm-ce-example-trainer-provisioining"
+  env:
+    CSRF_TRUSTED_ORIGINS: "http://localhost:8080"
+
 opensearch:
   enabled: true
   extraEnvs:

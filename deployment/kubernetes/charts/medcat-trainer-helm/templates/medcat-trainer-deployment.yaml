@@ -87,8 +87,8 @@ spec:
               name: api-static
             {{- if and .Values.provisioning .Values.provisioning.enabled }}
             - mountPath: /home/configs/provisioning.yaml
-              name: medcat-trainer-config
-              subPath: provisioning.yaml
+              name: medcat-trainer-provisioning-config
+              subPath: {{ .Values.provisioning.existingConfigMap.subPath | default "provisioning.yaml" }}
             {{- end }}
             {{- if eq .Values.DB_ENGINE "sqlite3" }}  
             - mountPath: /home/api/db
@@ -140,6 +140,15 @@ spec:
         - name: medcat-trainer-config
           configMap:
             name: {{ include "medcat-trainer-helm.fullname" . }}-config
+        {{- if and .Values.provisioning .Values.provisioning.enabled }}
+        - name: medcat-trainer-provisioning-config
+          configMap:
+          {{- if .Values.provisioning.existingConfigMap.name }}
+            name: {{ .Values.provisioning.existingConfigMap.name }}
+          {{- else }}
+            name: {{ include "medcat-trainer-helm.fullname" . }}-provisioning
+          {{- end }}
+        {{- end }}
         - name: api-media
           persistentVolumeClaim:
             claimName: {{ include "medcat-trainer-helm.fullname" . }}-api-media

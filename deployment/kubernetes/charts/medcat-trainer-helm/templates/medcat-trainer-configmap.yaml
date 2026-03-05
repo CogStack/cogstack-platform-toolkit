@@ -39,7 +39,3 @@ data:
     stderr_logfile=/dev/stderr
     stderr_logfile_maxbytes=0
     autorestart=true
-{{- if and .Values.provisioning .Values.provisioning.enabled }}
-  provisioning.yaml: |
-{{ toYaml .Values.provisioning.config | indent 4 }}
-{{- end }}
