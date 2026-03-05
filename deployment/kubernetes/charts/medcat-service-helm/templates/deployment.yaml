@@ -113,8 +113,9 @@ spec:
             - name: models
               mountPath: /models
       {{- end }}
+      {{- $root := . -}}
       {{- with .Values.extraInitContainers }}
-        {{- tpl (toYaml .) . | nindent 8 }}
+        {{- tpl (toYaml .) $root | nindent 8 }}
       {{- end }}
       {{- if or .Values.model.downloadUrl .Values.volumes }}
       volumes:
