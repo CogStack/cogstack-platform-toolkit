@@ -1,9 +1,10 @@
+# This values file is used to test the init container functionality
+# It shows using an initContainer and a volume to run custom code to download a model pack.
 env:
   APP_MEDCAT_MODEL_PACK: "/my/models/custom-model.zip"
 volumeMounts:
   - name: model-volume
     mountPath: /my/models
-
 volumes:
   - name: model-volume
     persistentVolumeClaim:
