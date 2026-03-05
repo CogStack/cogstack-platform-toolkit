@@ -9,24 +9,35 @@ We will use the CLI to interact with the cluster, then use Terraform to declarat
 - Terraform CLI
 
 ## Helm Terraform Provider
-Terraform is the recommended way to declaritively run CogStack using helm.
+Terraform is a recommended way to declaritively run CogStack using helm.
 
 ```hcl
 resource "helm_release" "medcat-service" {
-  name         = "medcat-service-terraform"
+  name         = "medcat-service-helm"
   chart        = "oci://registry-1.docker.io/cogstacksystems/medcat-service-helm"
-  timeout      = 600
-  atomic       = true
 }
 ```
+
+### Values
+We can pass values into the helm chart to customize it.
+
+```hcl
+resource "helm_release" "medcat-service" {
+  name         = "medcat-service-helm"
+  chart        = "oci://registry-1.docker.io/cogstacksystems/medcat-service-helm"
+  values = [<<EOT
+replicaCount: 3
+EOT
+    ]
+}
+```
+
 
 ### CogStack Helm Module 
 The above resource is enough to deploy a helm chart using terraform.
 
 An example module has been created to provide further examples of using Terraform to deploy helm. Please see [Cogstack Helm Module](./cogstack-helm-module.md) for more details.
 
-## Values
-We can pass values into the helm chart to customize it.
 
 
 ## Helm CLI Install

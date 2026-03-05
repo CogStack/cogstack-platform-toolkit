@@ -79,15 +79,17 @@ spec:
           {{- if or .Values.model.downloadUrl .Values.volumeMounts }}
           volumeMounts:
             {{- if .Values.volumeMounts }}
-            {{- toYaml .Values.volumeMounts | nindent 2 }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end }}
             {{- if .Values.model.downloadUrl }}
             - name: models
               mountPath: /models
             {{- end }}
           {{- end }}
-      {{- if .Values.model.downloadUrl }}
+      {{- if or .Values.extraInitContainers .Values.model.downloadUrl }}
       initContainers:
+      {{- end }}
+      {{- if .Values.model.downloadUrl }}
         - name: model-downloader
           image: busybox:1.28
           command: 
@@ -111,11 +113,14 @@ spec:
             - name: models
               mountPath: /models
       {{- end }}
-      
+      {{- $root := . -}}
+      {{- with .Values.extraInitContainers }}
+        {{- tpl (toYaml .) $root | nindent 8 }}
+      {{- end }}
       {{- if or .Values.model.downloadUrl .Values.volumes }}
       volumes:
         {{- if .Values.volumes }}
-        {{- toYaml .Values.volumes | nindent 2 }}
+        {{- toYaml .Values.volumes | nindent 8 }}
         {{- end }}
         {{- if .Values.model.downloadUrl }}
         - name: models
