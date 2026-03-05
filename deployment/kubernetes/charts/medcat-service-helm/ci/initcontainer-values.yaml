@@ -1,8 +1,8 @@
 env:
   APP_MEDCAT_MODEL_PACK: "/my/models/custom-model.zip"
 volumeMounts:
-  name: model-volume
-  mountPath: /my/models
+  - name: model-volume
+    mountPath: /my/models
 
 volumes:
   - name: model-volume
