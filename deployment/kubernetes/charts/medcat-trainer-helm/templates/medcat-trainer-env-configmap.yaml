@@ -19,10 +19,15 @@ data:
   {{- if .Values.tracing.otlp.enabled }}
     # Tracing configuration
   MCT_ENABLE_TRACING: {{ .Values.tracing.otlp.enabled | quote }}
-  OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.tracing.otlp.grpc.endpoint | quote }}
   OTEL_TRACES_EXPORTER: otlp
   OTEL_SERVICE_NAME: {{ .Values.tracing.serviceName | quote }}
-  OTEL_EXPORTER_OTLP_PROTOCOL: {{ if .Values.tracing.otlp.grpc.enabled }}"grpc"{{ else if .Values.tracing.otlp.http.enabled }}"http/protobuf"{{ else }}""{{ end }}
+  {{- if .Values.tracing.otlp.grpc.enabled }}
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.tracing.otlp.grpc.endpoint | quote }}
+  OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+  {{- else if .Values.tracing.otlp.http.enabled }}
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.tracing.otlp.http.endpoint | quote }}
+  OTEL_EXPORTER_OTLP_PROTOCOL: "http/protobuf"
+  {{- end }}
   OTEL_METRICS_EXPORTER: none
   OTEL_LOGS_EXPORTER: none
   OTEL_PYTHON_DJANGO_EXCLUDED_URLS: /api/health/*,/metrics

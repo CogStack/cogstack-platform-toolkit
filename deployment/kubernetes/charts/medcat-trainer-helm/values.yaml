@@ -85,7 +85,7 @@ tracing:
     k8s.pod.uid: "$(K8S_POD_UID)"
     k8s.pod.name: "$(K8S_POD_NAME)"
     k8s.namespace.name: "$(K8S_POD_NAMESPACE)"
-    k8s.node.name: "$(K8S_NODE_NAME)" 
+    k8s.node.name: "$(K8S_NODE_NAME)"
   experimentalResourceDetectors: "containerid,os"
   # Optionally disable the db instrumentations due to noise.
   disabledInstrumentations: "psycopg,sqlite3"
@@ -102,7 +102,6 @@ tracing:
       enabled: false
       # The endpoint to send the traces to
       endpoint: "http://<unused>:4318"
-
 
 postgresql:
   enabled: true
