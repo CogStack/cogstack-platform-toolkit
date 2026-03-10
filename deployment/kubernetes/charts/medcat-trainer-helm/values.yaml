@@ -39,6 +39,21 @@ env:
   DB_ENGINE: "postgresql"
   DB_PORT: "5432"
 
+# Allow setting env values from field/configmap/secret references. Defaults to include k8s details for observability.
+envValueFrom:
+  K8S_NODE_NAME:
+    fieldRef:
+      fieldPath: spec.nodeName
+  K8S_POD_NAME:
+    fieldRef:
+      fieldPath: metadata.name
+  K8S_POD_UID:
+    fieldRef:
+      fieldPath: metadata.uid
+  K8S_POD_NAMESPACE:
+    fieldRef:
+      fieldPath: metadata.namespace
+
 provisioning:
   # -- Set to true to enable provisioning of projects and models on startup..
   enabled: false
@@ -60,6 +75,34 @@ provisioning:
           name: "Example Project"
           description: "Example project for medcat trainer"
           annotationGuidelineLink: "https://docs.google.com/document/d/1xxelBOYbyVzJ7vLlztP2q1Kw9F5Vr1pRwblgrXPS7QM/edit?usp=sharing"
+
+# Enable tracing with opentelemetry for the medcat-trainer backend
+tracing:
+  # The name of the service in the tracing system
+  serviceName: "medcat-trainer"
+  # Resource attributes to add to the traces
+  resourceAttributes:
+    k8s.pod.uid: "$(K8S_POD_UID)"
+    k8s.pod.name: "$(K8S_POD_NAME)"
+    k8s.namespace.name: "$(K8S_POD_NAMESPACE)"
+    k8s.node.name: "$(K8S_NODE_NAME)" 
+  experimentalResourceDetectors: "containerid,os"
+  # Optionally disable the db instrumentations due to noise.
+  disabledInstrumentations: "psycopg,sqlite3"
+  otlp:
+    # Set to true to enable tracing
+    enabled: false
+    grpc:
+      # Set to true to enable grpc tracing
+      enabled: false
+      # The endpoint to send the traces to
+      endpoint: "http://<unused>:4317"
+    http:
+      # Set to true to enable http tracing over http/protobug
+      enabled: false
+      # The endpoint to send the traces to
+      endpoint: "http://<unused>:4318"
+
 
 postgresql:
   enabled: true

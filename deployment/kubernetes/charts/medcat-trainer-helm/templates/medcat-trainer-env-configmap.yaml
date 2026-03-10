@@ -14,6 +14,23 @@ data:
   DB_PATH: "/home/api/db/db.sqlite3"
   MCT_VERSION: {{ .Values.image.tag | default .Chart.AppVersion }}
   API_URL: http://localhost:{{ .Values.service.apiPort }}/api/
+  REMOTE_MODEL_SERVICE_TYPE: "medcat" # TODO: Remove this for REMOTE_MODEL_SERVICE_TYPE after resolving pr-363 in cogstack-nlp
+
+  {{- if .Values.tracing.otlp.enabled }}
+    # Tracing configuration
+  MCT_ENABLE_TRACING: {{ .Values.tracing.otlp.enabled | quote }}
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.tracing.otlp.grpc.endpoint | quote }}
+  OTEL_TRACES_EXPORTER: otlp
+  OTEL_SERVICE_NAME: {{ .Values.tracing.serviceName | quote }}
+  OTEL_EXPORTER_OTLP_PROTOCOL: {{ if .Values.tracing.otlp.grpc.enabled }}"grpc"{{ else if .Values.tracing.otlp.http.enabled }}"http/protobuf"{{ else }}""{{ end }}
+  OTEL_METRICS_EXPORTER: none
+  OTEL_LOGS_EXPORTER: none
+  OTEL_PYTHON_DJANGO_EXCLUDED_URLS: /api/health/*,/metrics
+  OTEL_EXPERIMENTAL_RESOURCE_DETECTORS: {{ .Values.tracing.experimentalResourceDetectors | quote }}
+  OTEL_PYTHON_DISABLED_INSTRUMENTATIONS: {{ .Values.tracing.disabledInstrumentations | quote }}
+  OTEL_RESOURCE_ATTRIBUTES: {{ include "medcat-trainer-helm.tracingResourceAttributesCsv" . }}
+  {{- end }}
+
   {{- if and .Values.provisioning .Values.provisioning.enabled }}
   LOAD_EXAMPLES: "1"
   PROVISIONING_CONFIG_PATH: "/home/configs/provisioning.yaml"
