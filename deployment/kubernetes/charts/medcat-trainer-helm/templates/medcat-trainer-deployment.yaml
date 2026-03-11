@@ -66,6 +66,8 @@ spec:
               {{- tpl (toYaml $value) $ | nindent 14 }}
           {{- end }}
           {{- if .Values.tracing.otlp.enabled }}
+          - name: K8S_CONTAINER_NAME
+            value: medcat-trainer
           - name: OTEL_RESOURCE_ATTRIBUTES  
             value: {{ include "medcat-trainer-helm.tracingResourceAttributesCsv" . }}
           {{- end }}

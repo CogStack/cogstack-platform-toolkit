@@ -110,11 +110,13 @@ Validate tracing.otlp: when otlp.enabled is true, at least one of grpc.enabled o
 
 {{/*
 Convert tracing.resourceAttributes (object) to OTEL CSV format: key1=value1,key2=value2,...
+Values in the map are templated (e.g. "{{ .Release.Name }}") so they are evaluated at render time.
 */}}
 {{- define "medcat-trainer-helm.tracingResourceAttributesCsv" -}}
+{{- $root := . -}}
 {{- $parts := list -}}
 {{- range $name, $value := .Values.tracing.resourceAttributes -}}
-{{- $parts = append $parts (printf "%s=%s" $name $value) -}}
+{{- $parts = append $parts (printf "%s=%s" $name (tpl (toString $value) $root)) -}}
 {{- end -}}
 {{- join "," $parts | quote -}}
 {{- end -}}

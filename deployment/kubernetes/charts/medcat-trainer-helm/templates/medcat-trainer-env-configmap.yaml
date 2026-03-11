@@ -19,7 +19,7 @@ data:
   {{- if .Values.tracing.otlp.enabled }}
     # Tracing configuration
   MCT_ENABLE_TRACING: {{ .Values.tracing.otlp.enabled | quote }}
-  OTEL_TRACES_EXPORTER: console
+  OTEL_TRACES_EXPORTER: "otlp"
   OTEL_SERVICE_NAME: {{ .Values.tracing.serviceName | quote }}
   {{- if .Values.tracing.otlp.grpc.enabled }}
   OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.tracing.otlp.grpc.endpoint | quote }}
