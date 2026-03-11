@@ -3,6 +3,7 @@ site_url: http://localhost:8080/docs/
 
 theme:
   name: material
+  custom_dir: overrides
   favicon: assets/cogstack-logo.png
   logo: assets/cogstack-logo.png
   icon:
@@ -92,6 +93,10 @@ nav:
 plugins:
   - search
   - termynal
+
+extra:
+  analytics:
+    provider: custom
 
 markdown_extensions:
   - admonition
