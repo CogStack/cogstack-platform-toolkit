@@ -29,8 +29,8 @@ export OPENSEARCH_DASHBOARD_PORT={{ index .Values "opensearch-dashboards" "servi
 kubectl --namespace {{ .Release.Namespace }} port-forward svc/$OPENSEARCH_DASHBOARD_SERVICE 5601:$OPENSEARCH_DASHBOARD_PORT &
 {{- end }}
 
-# 5. Jupyterhub
 {{- if index .Values "cogstack-jupyterhub" "enabled" }}
+# 5. Jupyterhub
 export JUPYTERHUB_PROXY_PUBLIC_SERVICE=proxy-public
 export JUPYTERHUB_PROXY_SERVICE_PORT=$(kubectl get svc $JUPYTERHUB_PROXY_PUBLIC_SERVICE -o jsonpath="{.spec.ports[0].port}" )
 kubectl --namespace {{ .Release.Namespace }} port-forward svc/$JUPYTERHUB_PROXY_PUBLIC_SERVICE 8000:$JUPYTERHUB_PROXY_SERVICE_PORT &

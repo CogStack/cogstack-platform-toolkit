@@ -24,10 +24,9 @@ medcat-service:
     repository: cogstacksystems/medcat-service
     tag: "1.2.0"
 
-
 medcat-trainer:
   image:
-    tag: "latest@sha256:dcbd9f7c480dcb88e072189d233a146317f210a826573fd0c47d469da5360be0"
+    tag: latest@sha256:103215a7540ad614c32866f4cb00ddd91e7aff37cea9abc25dc226c577f9506d
   provisioning:
     enabled: true
     existingConfigMap:

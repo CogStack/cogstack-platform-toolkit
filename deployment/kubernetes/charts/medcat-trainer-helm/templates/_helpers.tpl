@@ -97,6 +97,30 @@ Return full Solr URL: combines host and port
 http://{{ include "medcat-trainer-helm.solrHost" . }}:{{ include "medcat-trainer-helm.solrPort" . }}
 {{- end }}
 
+{{/*
+Validate tracing.otlp: when otlp.enabled is true, at least one of grpc.enabled or http.enabled must be true.
+*/}}
+{{- define "medcat-trainer-helm.validateTracing" -}}
+{{- if and .Values.tracing .Values.tracing.otlp (eq .Values.tracing.otlp.enabled true) -}}
+{{- if not (or (index .Values.tracing.otlp.grpc "enabled") (index .Values.tracing.otlp.http "enabled")) -}}
+{{- fail "tracing.otlp.enabled is true but neither tracing.otlp.grpc.enabled nor tracing.otlp.http.enabled is true. Enable at least one of tracing.otlp.grpc.enabled or tracing.otlp.http.enabled." -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Convert tracing.resourceAttributes (object) to OTEL CSV format: key1=value1,key2=value2,...
+Values in the map are templated (e.g. "{{ .Release.Name }}") so they are evaluated at render time.
+*/}}
+{{- define "medcat-trainer-helm.tracingResourceAttributesCsv" -}}
+{{- $root := . -}}
+{{- $parts := list -}}
+{{- range $name, $value := .Values.tracing.resourceAttributes -}}
+{{- $parts = append $parts (printf "%s=%s" $name (tpl (toString $value) $root)) -}}
+{{- end -}}
+{{- join "," $parts | quote -}}
+{{- end -}}
+
 {{- define "postgres.service-name" -}}
 {{ include "postgresql.v1.primary.fullname" (dict "Values" .Values.postgresql "Chart" (dict "Name" "postgresql") "Release" .Release) }}
 {{- end -}}
