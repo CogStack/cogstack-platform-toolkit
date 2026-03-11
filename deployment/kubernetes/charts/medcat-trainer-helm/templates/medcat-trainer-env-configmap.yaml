@@ -19,7 +19,7 @@ data:
   {{- if .Values.tracing.otlp.enabled }}
     # Tracing configuration
   MCT_ENABLE_TRACING: {{ .Values.tracing.otlp.enabled | quote }}
-  OTEL_TRACES_EXPORTER: otlp
+  OTEL_TRACES_EXPORTER: console
   OTEL_SERVICE_NAME: {{ .Values.tracing.serviceName | quote }}
   {{- if .Values.tracing.otlp.grpc.enabled }}
   OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.tracing.otlp.grpc.endpoint | quote }}
@@ -33,7 +33,7 @@ data:
   OTEL_PYTHON_DJANGO_EXCLUDED_URLS: /api/health/*,/metrics
   OTEL_EXPERIMENTAL_RESOURCE_DETECTORS: {{ .Values.tracing.experimentalResourceDetectors | quote }}
   OTEL_PYTHON_DISABLED_INSTRUMENTATIONS: {{ .Values.tracing.disabledInstrumentations | quote }}
-  OTEL_RESOURCE_ATTRIBUTES: {{ include "medcat-trainer-helm.tracingResourceAttributesCsv" . }}
+
   {{- end }}
 
   {{- if and .Values.provisioning .Values.provisioning.enabled }}

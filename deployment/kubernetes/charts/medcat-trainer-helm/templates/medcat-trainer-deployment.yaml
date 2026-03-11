@@ -65,10 +65,10 @@ spec:
             valueFrom:
               {{- tpl (toYaml $value) $ | nindent 14 }}
           {{- end }}
-          # {{- if .Values.tracing.otlp.enabled }}
-          # - name: OTEL_RESOURCE_ATTRIBUTES  
-          #   value: {{ include "medcat-trainer-helm.tracingResourceAttributesCsv" . }}
-          # {{- end }}
+          {{- if .Values.tracing.otlp.enabled }}
+          - name: OTEL_RESOURCE_ATTRIBUTES  
+            value: {{ include "medcat-trainer-helm.tracingResourceAttributesCsv" . }}
+          {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
