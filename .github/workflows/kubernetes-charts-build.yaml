@@ -111,21 +111,29 @@ jobs:
           fi
           echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Install Helm Cascade plugin
+      - name: Recursive dependency update (all charts, including nested)
+        # Waiting on helm recursive feature https://github.com/helm/helm/pull/30855
+        # Could alternatively switch to helm "cascade" plugin
+        working-directory: .
         run: |
-          helm plugin install https://github.com/origranot/helm-cascade
-
-      - name: Build chart dependencies with Helm Cascade
-        run: |
-          # Build dependencies recursively for the umbrella chart (includes cogstack-jupyterhub -> jupyterhub)
-          helm cascade build ./charts/cogstack-helm-ce
+          # Run twice so nested subcharts (like cogstack-jupyterhub -> jupyterhub) are fully updated
+          for _ in 1 2; do
+            # Find every Chart.yaml under deployment/kubernetes/charts and run helm dependency update in its directory
+            while IFS= read -r chartfile; do
+              chart_dir="$(dirname "$chartfile")"
+              if grep -q "^dependencies:" "$chartfile" 2>/dev/null; then
+                echo "Updating dependencies for $chart_dir"
+                helm dependency update "$chart_dir"
+              fi
+            done < <(find deployment/kubernetes/charts -type f -name Chart.yaml)
+          done
 
       - name: Package Helm Charts
         # TODO: List the dir instead of hardcoding each one
         run: |
           helm package ./charts/medcat-service-helm --version  ${{ steps.version.outputs.chart_version }}
-          helm package ./charts/medcat-trainer-helm --version  ${{ steps.version.outputs.chart_version }}
-          helm package ./charts/cogstack-helm-ce --version  ${{ steps.version.outputs.chart_version }}
+          helm package ./charts/medcat-trainer-helm --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
+          helm package ./charts/cogstack-helm-ce --version  ${{ steps.version.outputs.chart_version }} --dependency-update
 
       - name: Helm OCI login to Docker Hub
         run: helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
