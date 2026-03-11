@@ -110,6 +110,19 @@ jobs:
           fi
           echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: Recursive dependency update (all charts)
+        working-directory: .
+        run: |
+          # Run twice so nested subcharts (like cogstack-jupyterhub -> jupyterhub) are fully updated
+          for _ in 1 2; do
+            for chart in deployment/kubernetes/charts/*/; do
+              if [[ -f "${chart}Chart.yaml" ]] && grep -q "^dependencies:" "${chart}Chart.yaml" 2>/dev/null; then
+                echo "Updating dependencies for $chart"
+                helm dependency update "$chart"
+              fi
+            done
+          done
+
       - name: Package Helm Charts
         # TODO: List the dir instead of hardcoding each one
         run: |
