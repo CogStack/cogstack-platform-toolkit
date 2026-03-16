@@ -60,3 +60,32 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Dependency URLs
+*/}}
+
+{{- define "opensearch.url" -}}
+{{- $serviceName := include "opensearch.serviceName" (index .Subcharts "opensearch") -}}
+{{- $scheme := default "https" .Values.opensearch.protocol -}}
+{{- $port := default 9200 .Values.opensearch.httpPort -}}
+{{- printf "%s://%s:%v" $scheme $serviceName $port -}}
+{{- end }}
+
+{{- define "opensearch-dashboards.url" -}}
+{{- $serviceName := include "opensearch-dashboards.fullname" (index .Subcharts "opensearch-dashboards") -}}
+{{- $scheme := "http" -}}
+{{- $port := default 5601 (index .Values "opensearch-dashboards" "service" "port") -}}
+{{- printf "%s://%s:%v" $scheme $serviceName $port -}}
+{{- end }}
+
+{{- define "opensearch.initialAdminPassword" -}}
+{{- $val := "" -}}
+{{- range .Values.opensearch.extraEnvs }}
+  {{- if eq .name "OPENSEARCH_INITIAL_ADMIN_PASSWORD" }}
+    {{- $val = .value -}}
+  {{- end }}
+{{- end }}
+{{- $val -}}
+{{- end }}
+

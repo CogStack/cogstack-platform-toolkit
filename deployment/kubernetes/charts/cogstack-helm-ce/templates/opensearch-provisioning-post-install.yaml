@@ -2,29 +2,39 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app.kubernetes.io/name: opensearch-provisioning
+    {{- include "cogstack-helm-ce.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "1"
-    #"helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
-    "helm.sh/hook-delete-policy": before-hook-creation
-  name: opensearch-provisioning
+    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
+    #"helm.sh/hook-delete-policy": before-hook-creation
+  name: {{ include "cogstack-helm-ce.fullname" . }}-opensearch-provisioning
 spec:
   restartPolicy: OnFailure
   containers:
-    - image: busybox:1.28
-      name: opensearch-provisioning
-      command: ["bash", "/etc/config/opensearch-provisioning-config/opensearch-provisioning.sh"]
-      env:
-        - name: OPENSEARCH_URL
-          value: https://localhost:9200
-        - name: OPENSEARCH_DASHBOARD_URL
-          value: http://localhost:5601
-        - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-          value: "opensearch-312$A"
-      volumeMounts:
-      - name: opensearch-provisioning-config
-        mountPath: /etc/config/opensearch-provisioning-config
+  - image: curlimages/curl
+    name: opensearch-provisioning
+    command: ["/bin/sh", "/etc/config/opensearch-provisioning-config/opensearch-provisioning.sh"]
+    env:
+      - name: OPENSEARCH_URL
+        value: {{ include "opensearch.url" . }}
+      - name: OPENSEARCH_DASHBOARD_URL
+        value: {{ include "opensearch-dashboards.url" . }}
+      - name: OPENSEARCH_USERNAME
+        value: admin
+      - name: OPENSEARCH_PASSWORD
+        value: {{ include "opensearch.initialAdminPassword" . }}
+      - name: CONFIG_DIR
+        value: /etc/config/opensearch-provisioning-config
+      - name: PROVISION_OPENSEARCH_DASHBOARDS_ENABLED
+        value: "true"
+      - name: PROVISION_OPENSEARCH_INDEX_TEMPLATE_ENABLED
+        value: "true"
+      - name: PROVISION_OPENSEARCH_EXAMPLE_DOCUMENTS_ENABLED
+        value: "true" 
+    volumeMounts:
+    - name: opensearch-provisioning-config
+      mountPath: /etc/config/opensearch-provisioning-config
   volumes:
     - name: opensearch-provisioning-config
       configMap:
