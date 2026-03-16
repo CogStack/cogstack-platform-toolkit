@@ -1,3 +1,4 @@
+{{- if .Values.provisioning.enabled }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -27,11 +28,11 @@ spec:
       - name: CONFIG_DIR
         value: /etc/config/opensearch-provisioning-config
       - name: PROVISION_OPENSEARCH_DASHBOARDS_ENABLED
-        value: "true"
+        value: "{{ .Values.provisioning.opensearchDashboards.createDashboards }}"
       - name: PROVISION_OPENSEARCH_INDEX_TEMPLATE_ENABLED
-        value: "true"
+        value: "{{ .Values.provisioning.opensearch.createIndexTemplate }}"
       - name: PROVISION_OPENSEARCH_EXAMPLE_DOCUMENTS_ENABLED
-        value: "true" 
+        value: "{{ .Values.provisioning.opensearch.createExampleDocuments }}"
     volumeMounts:
     - name: opensearch-provisioning-config
       mountPath: /etc/config/opensearch-provisioning-config
@@ -39,3 +40,4 @@ spec:
     - name: opensearch-provisioning-config
       configMap:
         name: opensearch-provisioning-config
+{{- end }}
