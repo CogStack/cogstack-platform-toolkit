@@ -1,6 +1,6 @@
 
 module "cogstack_docker_services" {
-  source = "../../../modules/cogstack-docker-services"
+  source = "../../../deployment/terraform/modules/cogstack-docker-services"
   hosts  = var.hosts
   service_targets = {
     observability  = { hostname = "cogstack-docker-controller" }
