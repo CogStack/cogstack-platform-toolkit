@@ -1,0 +1,120 @@
+{"index":{"_index":"admissions","_id":"1"}}
+{"subject_id":10000032,"hadm_id":22595853,"admittime":"2180-05-06 22:23:00","dischtime":"2180-05-07 17:15:00","admission_type":"URGENT","admit_provider_id":"P49AFC","admission_location":"TRANSFER FROM HOSPITAL","discharge_location":"HOME","insurance":"Medicaid","language":"English","marital_status":"WIDOWED","race":"WHITE","edregtime":"2180-05-06 19:17:00","edouttime":"2180-05-06 23:30:00","hospital_expire_flag":0}
+{"index":{"_index":"admissions","_id":"2"}}
+{"subject_id":10000032,"hadm_id":22841357,"admittime":"2180-06-26 18:27:00","dischtime":"2180-06-27 18:49:00","admission_type":"EW EMER.","admit_provider_id":"P784FA","admission_location":"EMERGENCY ROOM","discharge_location":"HOME","insurance":"Medicaid","language":"English","marital_status":"WIDOWED","race":"WHITE","edregtime":"2180-06-26 15:54:00","edouttime":"2180-06-26 21:31:00","hospital_expire_flag":0}
+{"index":{"_index":"admissions","_id":"3"}}
+{"subject_id":10001843,"hadm_id":26133978,"admittime":"2134-12-05 00:10:00","dischtime":"2134-12-06 12:54:00","deathtime":"2134-12-06 12:54:00","admission_type":"URGENT","admit_provider_id":"P67ATB","admission_location":"TRANSFER FROM HOSPITAL","discharge_location":"DIED","insurance":"Medicare","language":"English","marital_status":"SINGLE","race":"WHITE","hospital_expire_flag":1}
+{"index":{"_index":"admissions","_id":"4"}}
+{"subject_id":10001884,"hadm_id":26184834,"admittime":"2131-01-07 20:39:00","dischtime":"2131-01-20 05:15:00","deathtime":"2131-01-20 05:15:00","admission_type":"OBSERVATION ADMIT","admit_provider_id":"P49AFC","admission_location":"EMERGENCY ROOM","discharge_location":"DIED","insurance":"Medicare","language":"English","marital_status":"MARRIED","race":"BLACK/AFRICAN AMERICAN","edregtime":"2131-01-07 13:36:00","edouttime":"2131-01-07 22:13:00","hospital_expire_flag":1}
+{"index":{"_index":"admissions","_id":"5"}}
+{"subject_id":10002155,"hadm_id":20345487,"admittime":"2131-03-09 20:33:00","dischtime":"2131-03-10 01:55:00","deathtime":"2131-03-10 21:53:00","admission_type":"EW EMER.","admit_provider_id":"P579JR","admission_location":"EMERGENCY ROOM","discharge_location":"DIED","insurance":"Medicare","language":"English","marital_status":"MARRIED","race":"WHITE","edregtime":"2131-03-09 19:14:00","edouttime":"2131-03-09 21:33:00","hospital_expire_flag":1}
+{"index":{"_index":"admissions","_id":"6"}}
+{"subject_id":10003400,"hadm_id":23559586,"admittime":"2137-08-04 00:07:00","dischtime":"2137-09-02 17:05:00","deathtime":"2137-09-02 17:05:00","admission_type":"URGENT","admit_provider_id":"P32CSX","admission_location":"TRANSFER FROM HOSPITAL","discharge_location":"DIED","insurance":"Medicare","language":"English","marital_status":"MARRIED","race":"BLACK/AFRICAN AMERICAN","hospital_expire_flag":1}
+{"index":{"_index":"admissions","_id":"7"}}
+{"subject_id":10003637,"hadm_id":28317408,"admittime":"2150-05-14 19:51:00","dischtime":"2150-05-22 16:25:00","deathtime":"2150-05-22 16:25:00","admission_type":"EW EMER.","admit_provider_id":"P46834","admission_location":"WALK-IN/SELF REFERRAL","discharge_location":"DIED","insurance":"Medicare","language":"English","marital_status":"DIVORCED","race":"PORTUGUESE","edregtime":"2150-05-14 18:07:00","edouttime":"2150-05-14 21:59:00","hospital_expire_flag":1}
+{"index":{"_index":"admissions","_id":"8"}}
+{"subject_id":10004401,"hadm_id":25777141,"admittime":"2144-06-05 19:45:00","dischtime":"2144-06-18 21:30:00","deathtime":"2144-06-18 21:30:00","admission_type":"EW EMER.","admit_provider_id":"P43MIV","admission_location":"EMERGENCY ROOM","discharge_location":"DIED","insurance":"Medicare","language":"English","marital_status":"MARRIED","race":"WHITE","edregtime":"2144-06-05 16:08:00","edouttime":"2144-06-05 20:36:00","hospital_expire_flag":1}
+{"index":{"_index":"admissions","_id":"9"}}
+{"subject_id":10004720,"hadm_id":22081550,"admittime":"2186-11-12 18:01:00","dischtime":"2186-11-17 18:30:00","deathtime":"2186-11-17 18:30:00","admission_type":"EW EMER.","admit_provider_id":"P595QV","admission_location":"INFORMATION NOT AVAILABLE","discharge_location":"DIED","insurance":"Medicare","language":"English","marital_status":"SINGLE","race":"WHITE","edregtime":"2186-11-12 16:09:00","edouttime":"2186-11-12 19:55:00","hospital_expire_flag":1}
+{"index":{"_index":"admissions","_id":"10"}}
+{"subject_id":10005024,"hadm_id":25023471,"admittime":"2138-03-29 01:17:00","dischtime":"2138-04-19 11:30:00","deathtime":"2138-04-19 11:30:00","admission_type":"EW EMER.","admit_provider_id":"P94MJY","admission_location":"EMERGENCY ROOM","discharge_location":"DIED","insurance":"Medicaid","language":"English","marital_status":"SINGLE","race":"UNKNOWN","edregtime":"2138-03-28 23:30:00","edouttime":"2138-03-29 03:08:00","hospital_expire_flag":1}
+{"index":{"_index":"drgcodes","_id":"1"}}
+{"subject_id":10023075,"hadm_id":27859968,"drg_type":"APR","drg_code":304,"description":"DORSAL AND LUMBAR FUSION PROCEDURE EXCEPT FOR CURVATURE OF BACK","drg_severity":1,"drg_mortality":2}
+{"index":{"_index":"drgcodes","_id":"2"}}
+{"subject_id":10023075,"hadm_id":27859968,"drg_type":"HCFA","drg_code":460,"description":"SPINAL FUSION EXCEPT CERVICAL WITHOUT MCC"}
+{"index":{"_index":"drgcodes","_id":"3"}}
+{"subject_id":10023075,"hadm_id":29919442,"drg_type":"APR","drg_code":320,"description":"OTHER MUSCULOSKELETAL SYSTEM AND CONNECTIVE TISSUE PROCEDURES","drg_severity":4,"drg_mortality":4}
+{"index":{"_index":"drgcodes","_id":"4"}}
+{"subject_id":10023075,"hadm_id":29919442,"drg_type":"HCFA","drg_code":515,"description":"OTHER MUSCULOSKELETAL SYSTEM AND CONNECTIVE TISSUE O.R. PROCEDURES WITH"}
+{"index":{"_index":"drgcodes","_id":"5"}}
+{"subject_id":10023117,"hadm_id":21133938,"drg_type":"APR","drg_code":196,"description":"CARDIAC ARREST AND SHOCK","drg_severity":4,"drg_mortality":4}
+{"index":{"_index":"drgcodes","_id":"6"}}
+{"subject_id":10023117,"hadm_id":21133938,"drg_type":"HCFA","drg_code":291,"description":"HEART FAILURE & SHOCK W MCC"}
+{"index":{"_index":"drgcodes","_id":"7"}}
+{"subject_id":10023117,"hadm_id":21607814,"drg_type":"APR","drg_code":194,"description":"HEART FAILURE","drg_severity":4,"drg_mortality":3}
+{"index":{"_index":"drgcodes","_id":"8"}}
+{"subject_id":10023117,"hadm_id":21607814,"drg_type":"HCFA","drg_code":292,"description":"HEART FAILURE & SHOCK W CC"}
+{"index":{"_index":"drgcodes","_id":"9"}}
+{"subject_id":10023117,"hadm_id":24244087,"drg_type":"HCFA","drg_code":682,"description":"RENAL FAILURE W MCC"}
+{"index":{"_index":"drgcodes","_id":"10"}}
+{"subject_id":10023117,"hadm_id":28872262,"drg_type":"APR","drg_code":177,"description":"CARDIAC PACEMAKER AND DEFIBRILLATOR REVISION EXCEPT DEVICE REPLACEMENT","drg_severity":3,"drg_mortality":3}
+{"index":{"_index":"emar","_id":"1"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-421","emar_seq":421,"poe_id":"10011352-501","pharmacy_id":16237767,"enter_provider_id":"P62G22","charttime":"2133-03-17 08:25:00","medication":"Furosemide","event_txt":"Administered","scheduletime":"2133-03-17 08:26:00","storetime":"2133-03-17 08:32:00"}
+{"index":{"_index":"emar","_id":"2"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-422","emar_seq":422,"poe_id":"10011352-369","pharmacy_id":36268547,"enter_provider_id":"P62G22","charttime":"2133-03-17 08:32:00","medication":"Sodium Chloride 0.9%  Flush","event_txt":"Flushed","scheduletime":"2133-03-17 08:32:00","storetime":"2133-03-17 08:32:00"}
+{"index":{"_index":"emar","_id":"3"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-423","emar_seq":423,"poe_id":"10011352-357","pharmacy_id":55273397,"enter_provider_id":"P62G22","charttime":"2133-03-17 15:49:00","medication":"Sodium Chloride 0.9%  Flush","event_txt":"Flushed","scheduletime":"2133-03-17 15:49:00","storetime":"2133-03-17 15:50:00"}
+{"index":{"_index":"emar","_id":"4"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-424","emar_seq":424,"poe_id":"10011352-366","pharmacy_id":82384346,"enter_provider_id":"P62G22","charttime":"2133-03-17 15:49:00","medication":"Sodium Chloride 0.9%  Flush","event_txt":"Flushed","scheduletime":"2133-03-17 15:49:00","storetime":"2133-03-17 15:50:00"}
+{"index":{"_index":"emar","_id":"5"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-425","emar_seq":425,"poe_id":"10011352-382","pharmacy_id":42180932,"enter_provider_id":"P62G22","charttime":"2133-03-17 15:49:00","medication":"Sodium Chloride 0.9%  Flush","event_txt":"Flushed","scheduletime":"2133-03-17 15:49:00","storetime":"2133-03-17 15:50:00"}
+{"index":{"_index":"emar","_id":"6"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-426","emar_seq":426,"poe_id":"10011352-365","enter_provider_id":"P62G22","charttime":"2133-03-17 15:54:00","medication":"Influenza Vaccine Quadrivalent","event_txt":"Not Given","scheduletime":"2133-03-17 15:54:00","storetime":"2133-03-17 15:54:00"}
+{"index":{"_index":"emar","_id":"7"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-43","emar_seq":43,"poe_id":"10011352-43","pharmacy_id":54731632,"enter_provider_id":"P78BJU","charttime":"2133-03-01 08:35:00","medication":"FoLIC Acid","event_txt":"Administered","scheduletime":"2133-03-01 08:00:00","storetime":"2133-03-01 08:37:00"}
+{"index":{"_index":"emar","_id":"8"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-44","emar_seq":44,"poe_id":"10011352-86","pharmacy_id":78272665,"enter_provider_id":"P78BJU","charttime":"2133-03-01 08:35:00","medication":"Midodrine","event_txt":"Administered","scheduletime":"2133-03-01 08:00:00","storetime":"2133-03-01 08:37:00"}
+{"index":{"_index":"emar","_id":"9"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-45","emar_seq":45,"poe_id":"10011352-46","pharmacy_id":84497985,"enter_provider_id":"P78BJU","charttime":"2133-03-01 08:35:00","medication":"Multivitamins","event_txt":"Administered","scheduletime":"2133-03-01 08:00:00","storetime":"2133-03-01 08:37:00"}
+{"index":{"_index":"emar","_id":"10"}}
+{"subject_id":10011352,"hadm_id":29927609,"emar_id":"10011352-46","emar_seq":46,"poe_id":"10011352-48","pharmacy_id":47739534,"enter_provider_id":"P78BJU","charttime":"2133-03-01 08:35:00","medication":"Pantoprazole","event_txt":"Administered","scheduletime":"2133-03-01 08:00:00","storetime":"2133-03-01 08:37:00"}
+{"index":{"_index":"icustays","_id":"1"}}
+{"subject_id":10000032,"hadm_id":29079034,"stay_id":39553978,"first_careunit":"Medical Intensive Care Unit (MICU)","last_careunit":"Medical Intensive Care Unit (MICU)","intime":"2180-07-23 14:00:00","outtime":"2180-07-23 23:50:47","los":0.4102662}
+{"index":{"_index":"icustays","_id":"2"}}
+{"subject_id":10000690,"hadm_id":25860671,"stay_id":37081114,"first_careunit":"Medical Intensive Care Unit (MICU)","last_careunit":"Medical Intensive Care Unit (MICU)","intime":"2150-11-02 19:37:00","outtime":"2150-11-06 17:03:17","los":3.8932524}
+{"index":{"_index":"icustays","_id":"3"}}
+{"subject_id":10000980,"hadm_id":26913865,"stay_id":39765666,"first_careunit":"Medical Intensive Care Unit (MICU)","last_careunit":"Medical Intensive Care Unit (MICU)","intime":"2189-06-27 08:42:00","outtime":"2189-06-27 20:38:27","los":0.49753472}
+{"index":{"_index":"icustays","_id":"4"}}
+{"subject_id":10001217,"hadm_id":24597018,"stay_id":37067082,"first_careunit":"Surgical Intensive Care Unit (SICU)","last_careunit":"Surgical Intensive Care Unit (SICU)","intime":"2157-11-20 19:18:02","outtime":"2157-11-21 22:08:00","los":1.1180325}
+{"index":{"_index":"icustays","_id":"5"}}
+{"subject_id":10001217,"hadm_id":27703517,"stay_id":34592300,"first_careunit":"Surgical Intensive Care Unit (SICU)","last_careunit":"Surgical Intensive Care Unit (SICU)","intime":"2157-12-19 15:42:24","outtime":"2157-12-20 14:27:41","los":0.94811344}
+{"index":{"_index":"icustays","_id":"6"}}
+{"subject_id":10001725,"hadm_id":25563031,"stay_id":31205490,"first_careunit":"Medical/Surgical Intensive Care Unit (MICU/SICU)","last_careunit":"Medical/Surgical Intensive Care Unit (MICU/SICU)","intime":"2110-04-11 15:52:22","outtime":"2110-04-12 23:59:56","los":1.338588}
+{"index":{"_index":"icustays","_id":"7"}}
+{"subject_id":10001843,"hadm_id":26133978,"stay_id":39698942,"first_careunit":"Medical/Surgical Intensive Care Unit (MICU/SICU)","last_careunit":"Medical/Surgical Intensive Care Unit (MICU/SICU)","intime":"2134-12-05 18:50:03","outtime":"2134-12-06 14:38:26","los":0.8252662}
+{"index":{"_index":"icustays","_id":"8"}}
+{"subject_id":10001884,"hadm_id":26184834,"stay_id":37510196,"first_careunit":"Medical Intensive Care Unit (MICU)","last_careunit":"Medical Intensive Care Unit (MICU)","intime":"2131-01-11 04:20:05","outtime":"2131-01-20 08:27:30","los":9.171817}
+{"index":{"_index":"icustays","_id":"9"}}
+{"subject_id":10002013,"hadm_id":23581541,"stay_id":39060235,"first_careunit":"Cardiac Vascular Intensive Care Unit (CVICU)","last_careunit":"Cardiac Vascular Intensive Care Unit (CVICU)","intime":"2160-05-18 10:00:53","outtime":"2160-05-19 17:33:33","los":1.3143518}
+{"index":{"_index":"icustays","_id":"10"}}
+{"subject_id":10002114,"hadm_id":27793700,"stay_id":34672098,"first_careunit":"Coronary Care Unit (CCU)","last_careunit":"Coronary Care Unit (CCU)","intime":"2162-02-17 23:30:00","outtime":"2162-02-20 21:16:27","los":2.9072568}
+{"index":{"_index":"patients","_id":"1"}}
+{"subject_id":10000032,"gender":"F","anchor_age":52,"anchor_year":2180,"anchor_year_group":"2014 - 2016","dod":"2180-09-09"}
+{"index":{"_index":"patients","_id":"2"}}
+{"subject_id":10000048,"gender":"F","anchor_age":23,"anchor_year":2126,"anchor_year_group":"2008 - 2010"}
+{"index":{"_index":"patients","_id":"3"}}
+{"subject_id":10000058,"gender":"F","anchor_age":33,"anchor_year":2168,"anchor_year_group":"2020 - 2022"}
+{"index":{"_index":"patients","_id":"4"}}
+{"subject_id":10000068,"gender":"F","anchor_age":19,"anchor_year":2160,"anchor_year_group":"2008 - 2010"}
+{"index":{"_index":"patients","_id":"5"}}
+{"subject_id":10000084,"gender":"M","anchor_age":72,"anchor_year":2160,"anchor_year_group":"2017 - 2019","dod":"2161-02-13"}
+{"index":{"_index":"patients","_id":"6"}}
+{"subject_id":10000102,"gender":"F","anchor_age":27,"anchor_year":2136,"anchor_year_group":"2008 - 2010"}
+{"index":{"_index":"patients","_id":"7"}}
+{"subject_id":10000108,"gender":"M","anchor_age":25,"anchor_year":2163,"anchor_year_group":"2014 - 2016"}
+{"index":{"_index":"patients","_id":"8"}}
+{"subject_id":10000115,"gender":"M","anchor_age":24,"anchor_year":2154,"anchor_year_group":"2017 - 2019"}
+{"index":{"_index":"patients","_id":"9"}}
+{"subject_id":10000117,"gender":"F","anchor_age":48,"anchor_year":2174,"anchor_year_group":"2008 - 2010"}
+{"index":{"_index":"patients","_id":"10"}}
+{"subject_id":10000161,"gender":"M","anchor_age":60,"anchor_year":2163,"anchor_year_group":"2020 - 2022"}
+{"index":{"_index":"poe","_id":"1"}}
+{"poe_id":"13055950-257","poe_seq":257,"subject_id":13055950,"hadm_id":21079497,"ordertime":"2145-07-04 11:23:28","order_type":"General Care","order_subtype":"Other","transaction_type":"New","order_provider_id":"P64302","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"2"}}
+{"poe_id":"13055950-258","poe_seq":258,"subject_id":13055950,"hadm_id":21079497,"ordertime":"2145-07-05 06:09:50","order_type":"General Care","order_subtype":"Tubes/Drains","transaction_type":"D/C","discontinue_of_poe_id":"13055950-246","order_provider_id":"P64302","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"3"}}
+{"poe_id":"13055950-259","poe_seq":259,"subject_id":13055950,"hadm_id":21079497,"ordertime":"2145-07-05 06:09:50","order_type":"IV therapy","order_subtype":"IV fluids","transaction_type":"D/C","discontinue_of_poe_id":"13055950-240","order_provider_id":"P64302","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"4"}}
+{"poe_id":"13055950-268","poe_seq":268,"subject_id":13055950,"hadm_id":21079497,"ordertime":"2145-07-05 11:22:31","order_type":"Medications","transaction_type":"New","discontinued_by_poe_id":"13055950-269","order_provider_id":"P64302","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"5"}}
+{"poe_id":"13055950-308","poe_seq":308,"subject_id":13055950,"hadm_id":21079497,"ordertime":"2145-07-09 06:54:02","order_type":"Radiology","order_subtype":"General Xray","transaction_type":"New","order_provider_id":"P64302","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"6"}}
+{"poe_id":"13055950-360","poe_seq":360,"subject_id":13055950,"hadm_id":28507903,"ordertime":"2149-09-27 03:32:00","order_type":"Medications","transaction_type":"New","order_provider_id":"P758TM","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"7"}}
+{"poe_id":"13055950-372","poe_seq":372,"subject_id":13055950,"hadm_id":28507903,"ordertime":"2149-09-27 10:06:59","order_type":"Consults","order_subtype":"Physical Therapy","transaction_type":"New","order_provider_id":"P97CU2","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"8"}}
+{"poe_id":"13055950-387","poe_seq":387,"subject_id":13055950,"hadm_id":28507903,"ordertime":"2149-09-28 10:14:15","order_type":"IV therapy","order_subtype":"IV fluids","transaction_type":"Change","discontinue_of_poe_id":"13055950-386","discontinued_by_poe_id":"13055950-388","order_provider_id":"P85LAY","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"9"}}
+{"poe_id":"13055950-388","poe_seq":388,"subject_id":13055950,"hadm_id":28507903,"ordertime":"2149-09-28 10:15:49","order_type":"IV therapy","order_subtype":"IV fluids","transaction_type":"D/C","discontinue_of_poe_id":"13055950-387","order_provider_id":"P85LAY","order_status":"Inactive"}
+{"index":{"_index":"poe","_id":"10"}}
+{"poe_id":"13055950-397","poe_seq":397,"subject_id":13055950,"hadm_id":28507903,"ordertime":"2149-09-28 13:40:53","order_type":"Medications","transaction_type":"New","order_provider_id":"P78AKX","order_status":"Inactive"}

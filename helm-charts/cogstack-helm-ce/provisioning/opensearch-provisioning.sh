@@ -11,12 +11,12 @@ log() {
 : "${OPENSEARCH_USERNAME:?OPENSEARCH_USERNAME is required. }"
 : "${OPENSEARCH_PASSWORD:?OPENSEARCH_PASSWORD is required. }"
 
+ : "${PROVISION_OPENSEARCH_INDEX_TEMPLATE_ENABLED:?PROVISION_OPENSEARCH_INDEX_TEMPLATE_ENABLED is required. }"
+ : "${PROVISION_OPENSEARCH_EXAMPLE_DOCUMENTS_ENABLED:?PROVISION_OPENSEARCH_EXAMPLE_DOCUMENTS_ENABLED is required. }"
+ : "${PROVISION_OPENSEARCH_DASHBOARDS_ENABLED:?PROVISION_OPENSEARCH_DASHBOARDS_ENABLED is required. }"
+
 : "${CONFIG_DIR:?CONFIG_DIR is required. }"
 : "${CURL_BODY_FILE:=/tmp/curl_body.$$}"
-# OPENSEARCH_URL=https://localhost:9200
-# OPENSEARCH_DASHBOARD_URL=http://localhost:5601
-# OPENSEARCH_USERNAME=admin
-# OPENSEARCH_PASSWORD=opensearch-312$A
 
 wait_for_service() {
     local service_name="$1"
@@ -73,31 +73,15 @@ fi
 
 if [ "$PROVISION_OPENSEARCH_EXAMPLE_DOCUMENTS_ENABLED" = "true" ]; then
     wait_for_service "OpenSearch" "$OPENSEARCH_URL" "-u $OPENSEARCH_AUTH" || exit 1
-    log "Creating example admissions document - POST $OPENSEARCH_URL/admissions/_doc"
+    log "Creating example admissions document (bulk) - POST $OPENSEARCH_URL/_bulk"
     os_status="$(curl -sS \
         -o "$CURL_BODY_FILE" \
         -w "%{http_code}" \
-        -X POST "$OPENSEARCH_URL/admissions/_doc" \
-        -H "Content-Type: application/json" \
+        -X POST "$OPENSEARCH_URL/_bulk" \
+        -H "Content-Type: application/x-ndjson" \
         -u "$OPENSEARCH_AUTH" \
         -k \
-        -d '{
-  "subject_id": 10000032,
-  "hadm_id": 22595853,
-  "admittime": "2180-05-06 22:23:00",
-  "dischtime": "2180-05-07 17:15:00",
-  "admission_type": "URGENT",
-  "admit_provider_id": "P49AFC",
-  "admission_location": "TRANSFER FROM HOSPITAL",
-  "discharge_location": "HOME",
-  "insurance": "Medicaid",
-  "language": "English",
-  "marital_status": "WIDOWED",
-  "race": "WHITE",
-  "edregtime": "2180-05-06 19:17:00",
-  "edouttime": "2180-05-06 23:30:00",
-  "hospital_expire_flag": 0
-}')"
+        --data-binary @"${CONFIG_DIR}/document_bulk.ndjson")"
     if [ "$os_status" != "200" ] && [ "$os_status" != "201" ]; then
         log "Failed to create example admissions document (http_status=$os_status)"
         if [ -s "$CURL_BODY_FILE" ]; then
