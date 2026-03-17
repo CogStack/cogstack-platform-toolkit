@@ -218,6 +218,11 @@ tolerations: []
 
 affinity: {}
 
+# Host aliases for the pod
+hostAliases: []
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "foo.local"
 networkPolicy:
   # Choose to create a default network policy blocking all ingress other than to the service port.
   enabled: true
