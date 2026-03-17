@@ -34,6 +34,14 @@ medcat-trainer:
   env:
     CSRF_TRUSTED_ORIGINS: "http://localhost:8080"
 
+provisioning:
+  enabled: true
+  opensearch:
+    createIndexTemplate: true
+    createExampleDocuments: true
+  opensearchDashboards:
+    createDashboards: true
+
 opensearch:
   enabled: true
   extraEnvs:
