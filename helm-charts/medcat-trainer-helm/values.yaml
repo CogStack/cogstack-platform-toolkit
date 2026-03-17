@@ -319,3 +319,9 @@ affinity: {}
 
 # Runtime class name for the pod (e.g., "nvidia" for GPU workloads)
 runtimeClassName: ""
+
+# Host aliases for the pod
+hostAliases: []
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "foo.local"
