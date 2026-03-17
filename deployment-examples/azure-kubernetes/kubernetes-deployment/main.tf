@@ -33,7 +33,7 @@ locals {
 }
 module "cogstack_helm_services" {
   # depends_on            = [kubernetes_ingress_class.application_load_balancer]
-  source = "../../../modules/cogstack-helm-services"
+source                = "github.com/CogStack/cogstack-platform-toolkit//deployment/terraform/modules/cogstack-helm-services?ref=terraform-modules-v0.1.0"
   #   medcat_service_values = <<EOT
   # ingress:
   #     annotations:

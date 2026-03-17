@@ -1,5 +1,5 @@
 module "openstack_cogstack_infra" {
-  source = "../../../modules/openstack-cogstack-infra"
+  source = "github.com/CogStack/cogstack-platform-toolkit//deployment/terraform/modules/openstack-cogstack-infra?ref=terraform-modules-v0.1.0"
   host_instances = [
     { name = "cogstack-docker-controller", is_controller = true },
     { name = "cogstack-docker-medcat-nlp" }
