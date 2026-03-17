@@ -17,7 +17,7 @@ locals {
 }
 
 module "cogstack_helm_services" {
-  source                = "../../../deployment/terraform/modules/cogstack-helm-services"
+  source                = "github.com/CogStack/cogstack-platform-toolkit//deployment/terraform/modules/cogstack-helm-services?ref=terraform-modules-v0.1.0"
   medcat_service_values = <<EOT
 replicaCount: 2
 EOT
