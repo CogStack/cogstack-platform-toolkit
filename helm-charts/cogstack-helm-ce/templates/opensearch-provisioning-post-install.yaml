@@ -1,4 +1,4 @@
-{{- if .Values.provisioning.enabled }}
+{{- if and (.Values.provisioning.enabled) (or (.Values.opensearch.enabled) (index .Values "opensearch-dashboards" "enabled")) }}
 apiVersion: v1
 kind: Pod
 metadata:

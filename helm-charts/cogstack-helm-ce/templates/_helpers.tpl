@@ -66,10 +66,14 @@ Dependency URLs
 */}}
 
 {{- define "opensearch.url" -}}
+{{- if .Values.opensearch.enabled }}
 {{- $serviceName := include "opensearch.serviceName" (index .Subcharts "opensearch") -}}
 {{- $scheme := default "https" .Values.opensearch.protocol -}}
 {{- $port := default 9200 .Values.opensearch.httpPort -}}
 {{- printf "%s://%s:%v" $scheme $serviceName $port -}}
+{{- else -}}
+"opensearch-disabled"
+{{- end}}
 {{- end }}
 
 {{- define "opensearch-dashboards.url" -}}
