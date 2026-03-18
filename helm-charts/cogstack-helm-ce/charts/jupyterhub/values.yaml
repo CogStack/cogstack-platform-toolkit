@@ -67,7 +67,7 @@ jupyterhub:
               fi
     networkPolicy:
       enabled: false 
-
+    startTimeout: 600 # Give 10 minutes to start the container, which includes pulling the image.
     # User pod configuration
     uid: 0
     fsGid: 0
@@ -81,8 +81,18 @@ jupyterhub:
 
     storage:
       capacity: 5Gi
-
-
+      # NOTE: Prefer dictionary-form here to avoid Helm merge issues
+      # when this subchart is configured by a parent chart.
+      extraVolumes:
+        jupyter-examples:
+          name: jupyter-examples
+          configMap:
+            name: jupyter-examples
+      extraVolumeMounts:
+        jupyter-examples:
+          name: jupyter-examples
+          mountPath: /home/jovyan/work/examples
+          readOnly: true
   cull:
     enabled: false
   scheduling:
