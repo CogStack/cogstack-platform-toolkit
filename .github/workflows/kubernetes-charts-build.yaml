@@ -6,16 +6,16 @@ on:
     tags:
       - "helm-charts-v*.*.*" # e.g., helm-charts-v0.1.1
     paths:
-      - "deployment/kubernetes/charts/**"
+      - "helm-charts/**"
       - ".github/workflows/kubernetes-charts-build**"
   pull_request:
     paths:
-      - "deployment/kubernetes/charts/**"
+      - "helm-charts/**"
       - ".github/workflows/kubernetes**"
 
 defaults:
   run:
-    working-directory: ./deployment/kubernetes
+    working-directory: ./helm-charts
 
 jobs:
   helm-lint-test:
@@ -48,18 +48,17 @@ jobs:
           fi
 
       - name: Recursive dependency update (all charts, including nested)
-        working-directory: .
         run: |
           # Run twice so nested subcharts (like cogstack-jupyterhub -> jupyterhub) are fully updated
           for _ in 1 2; do
-            # Find every Chart.yaml under deployment/kubernetes/charts and run helm dependency update in its directory
+            # Find every Chart.yaml under helm-charts and run helm dependency update in its directory
             while IFS= read -r chartfile; do
               chart_dir="$(dirname "$chartfile")"
               if grep -q "^dependencies:" "$chartfile" 2>/dev/null; then
                 echo "Updating dependencies for $chart_dir"
                 helm dependency update "$chart_dir"
               fi
-            done < <(find deployment/kubernetes/charts -type f -name Chart.yaml)
+            done < <(find . -type f -name Chart.yaml)
           done
 
       - name: Run chart-testing (lint)
@@ -114,26 +113,24 @@ jobs:
       - name: Recursive dependency update (all charts, including nested)
         # Waiting on helm recursive feature https://github.com/helm/helm/pull/30855
         # Could alternatively switch to helm "cascade" plugin
-        working-directory: .
         run: |
           # Run twice so nested subcharts (like cogstack-jupyterhub -> jupyterhub) are fully updated
           for _ in 1 2; do
-            # Find every Chart.yaml under deployment/kubernetes/charts and run helm dependency update in its directory
+            # Find every Chart.yaml under helm-charts and run helm dependency update in its directory
             while IFS= read -r chartfile; do
               chart_dir="$(dirname "$chartfile")"
               if grep -q "^dependencies:" "$chartfile" 2>/dev/null; then
                 echo "Updating dependencies for $chart_dir"
                 helm dependency update "$chart_dir"
               fi
-            done < <(find deployment/kubernetes/charts -type f -name Chart.yaml)
+            done < <(find . -type f -name Chart.yaml)
           done
 
       - name: Package Helm Charts
-        # TODO: List the dir instead of hardcoding each one
         run: |
-          helm package ./charts/medcat-service-helm --version  ${{ steps.version.outputs.chart_version }}
-          helm package ./charts/medcat-trainer-helm --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
-          helm package ./charts/cogstack-helm-ce --version  ${{ steps.version.outputs.chart_version }} --dependency-update
+          helm package ./medcat-service-helm --version  ${{ steps.version.outputs.chart_version }}
+          helm package ./medcat-trainer-helm --version  ${{ steps.version.outputs.chart_version }} --dependency-update 
+          helm package ./cogstack-helm-ce --version  ${{ steps.version.outputs.chart_version }} --dependency-update
 
       - name: Helm OCI login to Docker Hub
         run: helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
@@ -150,4 +147,4 @@ jobs:
         with:
           draft: true
           files: |
-            ./deployment/kubernetes/*.tgz
+            helm-charts/*.tgz
