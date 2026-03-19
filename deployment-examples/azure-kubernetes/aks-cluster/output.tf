@@ -7,6 +7,7 @@ output "resource_group_name" {
 output "cluster_name" {
   description = "The name of the EKS cluster"
   value       = module.aks.resource.name
+  sensitive   = true
 }
 
 output "kubeconfig_file" {

@@ -4,8 +4,8 @@ module "aks" {
   # Using the Azure Verified Module AKS Dev/Test module
   # This is not recommended by Azure to be used for production deployments
 
-  # As of 26th 11 2025, the official module has a terminal bug on https://github.com/Azure/terraform-azurerm-avm-ptn-aks-dev/issues/55
-  # This error is fixed in this PR, weitch back to the official module path when it's merged in 
+  # As of 26th 11 2025, the official module has a fatal bug on https://github.com/Azure/terraform-azurerm-avm-ptn-aks-dev/issues/55
+  # This error is fixed in this PR, switch back to the official module path when it's merged in 
   # https://github.com/Azure/terraform-azurerm-avm-ptn-aks-dev/pull/42
   # For now use the fork for that PR:
   source              = "github.com/pauldotyu/terraform-azurerm-avm-ptn-aks-dev"
@@ -15,6 +15,7 @@ module "aks" {
   name                = module.naming.kubernetes_cluster.name_unique
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
+  kubernetes_version  = "1.35" # Set the k8s version to latest as of February 2026. This is to get the nodes running Ubuntu 24.04 and solve vm.max_map_count issue
 }
 
 # Alternative - use the Azure Verified Module AKS Production Module

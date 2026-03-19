@@ -2,7 +2,7 @@
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = ">= 0.3.0"
-  prefix  = ["cogstack", "terraform", local.random_prefix]
+  prefix  = ["cogstack", "terraform"]
 }
 
 data "azurerm_location" "this" {
